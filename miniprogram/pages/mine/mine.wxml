@@ -2,7 +2,7 @@
 <view>
 	<view class="userinfo">
 		<image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-		<text class="userinfo-nickname" src="{{userInfo.nickName}}"></text>
+		<text class="userinfo-nickname">{{userInfo.nickName}}</text>
 		<view class="userinfo-dig">开通我的「分答」</view>
 		<text class="userinfo-desc">收入90%归你，每晚结算，自动入库微信钱包</text>
 	</view>
