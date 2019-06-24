@@ -16,7 +16,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.7.2",
 	"appid": "wx05fe1d6200a8a0dc",
-	"projectname": "miniprogram-test-1",
+	"projectname": "fenda",
 	"miniprogramRoot": "miniprogram/",
 	"cloudfunctionRoot": "cloudfunctions/",
 	"cloudfunctionTemplateRoot": "",

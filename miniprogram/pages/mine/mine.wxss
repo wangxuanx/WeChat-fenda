@@ -13,13 +13,26 @@
     height: 128rpx;
     margin: 30rpx;
     border-radius: 50%;
-    box-shadow: 0px 0px 5px #767676;
 }
 
 .userinfo-nickname {
-    font-size: 30rpx;
-    margin: 0rpx 20rpx 40rpx;
+    margin: 20rpx;
     color: #300e0e;
+}
+
+.userinfo-dig {
+    margin: 15rpx auto;
+    padding: 20rpx 25rpx;
+    border-radius: 10rpx;
+    background-color: #f85f48;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.userinfo-desc {
+    color: #bbb;
+    font-size: 14rpx;
+    margin-bottom: 20rpx;
 }
 
 .profile-wrapper, .account-wrapper {
