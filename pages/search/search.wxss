@@ -58,11 +58,23 @@
 .master-fans{
 	color: #888;
 }
-.master-follow{
-	color: #ddd;
-	width: 80rpx;
+.master-not-follow{
+  width: 80rpx;
 	padding: 10rpx;
-	border-radius: 50rpx;
-	background-color: #999;
+  font-size: 20rpx;
+	border-radius: 10rpx;
+	background-color: #fff;
 	text-align: center;
+  color: #FFC000;
+  border:2rpx solid;
+}
+
+.master-follow{
+  width: 80rpx;
+	padding: 10rpx;
+  font-size: 20rpx;
+	border-radius: 10rpx;
+	background-color: #d9d9d9;
+	text-align: center;
+  color: #808080;
 }
