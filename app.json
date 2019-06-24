@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/feeds/feeds",
     "pages/search/search",
     "pages/mine/mine",
@@ -15,7 +16,7 @@
     "enablePullDownRefresh": false
   },
   "tabBar": {
-    "color": "#231815",
+    "color": "#767676",
     "selectedColor": "#81d4fa",
     "borderStyle": "white",
     "backgroundColor": "#f9f9f9",
