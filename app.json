@@ -9,7 +9,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "backgroundColor": "#eee",
-    "navigationBarBackgroundColor": "#81d4fa",
+    "navigationBarBackgroundColor": "#009688",
     "navigationBarTitleText": "分答 - 付费语音问答",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": false
