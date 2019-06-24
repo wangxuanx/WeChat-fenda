@@ -1,0 +1,12 @@
+<!--index.wxml-->
+<view>上传图片测试</view>
+<button bindtap="uploadImage">click upload</button>
+<!-- <image src='http://tmp/wx05fe1d6200a8a0dc.o6zAJs5q5fkYukidHWkwxTKB_h_A.PdetdTo8mslU59b29fd604408f01028b202873523237.png'></image> -->
+<scroll-view scroll-y="true" style="height: 100%;" bindscrolltoupper="upper" bindscrolltolower="lower">
+	<block wx:for="{{feedList}}" wx:key="item.id">
+	</block>
+</scroll-view>
+
+<loading hidden="{{hidden}}">
+	加载中...
+</loading>

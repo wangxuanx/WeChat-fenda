@@ -6,7 +6,8 @@ Page({
         hidden: true,
         motto: 'Hello World',
         userInfo: {},
-        feedList: []
+        feedList: [],
+        pics:[]
     },
     //事件处理函数
     bindViewTap: function() {
@@ -41,29 +42,27 @@ Page({
             setTimeout(that.getFeeds, 3000)
         }
     },
-    requestFlag: false,
-    getFeeds: function() {
-        var that = this
-        wx.request({
-            url: 'https://api.getweapp.com/thirdparty/fenda/stamp1206.json',
-            header: {
-                'Content-Type': 'application/json'
-            },
-            success: function(res) {
-                that.requestFlag = false
-                that.setData({
-                    hidden: true
-                })
-                var feedsStrorage = wx.getStorageSync('feeds') || []
-                feedsStrorage = feedsStrorage.concat(res.data)
-                that.setData({
-                    feedList: feedsStrorage
-                })
-                try {
-                    wx.setStorageSync('feeds', feedsStrorage)
-                } catch (e) {}
-                console.log("同步成功啦")
-            }
-        })
+    uploadImage:function() {
+      let that = this
+      let pics = that.data.pics
+      wx.chooseImage({
+        count: 9 - pics.length, // 最多可以选择的图片张数，默认9
+        sizeType: ['original', 'compressed'], // original 原图，compressed 压缩图，默认二者都有
+        sourceType: ['album', 'camera'], // album 从相册选图，camera 使用相机，默认二者都有
+        success: function (res) {
+          var imgsrc = res.tempFilePaths;
+          pics = pics.concat(imgsrc);
+          that.setData({
+            pics: pics
+          });
+          console.log(res)
+        },
+        fail: function () {
+          // fail      
+        },
+        complete: function (res) {
+          console.log(res)
+        }
+      })
     }
 })
