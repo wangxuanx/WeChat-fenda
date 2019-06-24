@@ -1,22 +1,18 @@
 {
-	"cloudfunctionRoot": "cloudfunctions/",
-	"miniprogramRoot": "miniprogram/",
 	"description": "项目配置文件",
 	"packOptions": {
 		"ignore": []
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
-		"autoAudits": false,
-		"checkInvalidKey": true,
-		"uglifyFileName": true
+		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.2",
+	"libVersion": "2.0.4",
 	"appid": "wx05fe1d6200a8a0dc",
 	"projectname": "miniprogram-test-1",
 	"debugOptions": {
