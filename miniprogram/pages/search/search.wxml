@@ -1,12 +1,13 @@
 <template name="master-column">
-	<view class="master-info" bindtap="toPerson" data-master="czy">
+	<view class="master-info" bindtap="toPerson" data-master="czy" data-user-id="{{id}}">
 		<image src="/img/avatar/{{avater}}"></image>
 		<view class="master-brief">
 			<view class="master-user">{{name}}</view>
 			<view class="master-intro">{{intro}}</view>
 			<view class="master-fans">{{fans}} 收听</view>
 		</view>
-		<view class="master-follow">收听</view>
+		<view wx:if="{{if_follow}}" class="master-not-follow" catchtap="handleFollowTap" data-follow-id="{{id}}">+ 收听</view>
+    <view class="master-follow" data-follow-id="{{id}}" data-follow-name="{{name}}" wx:else catchtap="handleNotFollowTap">已收听</view>
 	</view>
 </template>
 
