@@ -16,23 +16,39 @@
 }
 
 .userinfo-nickname {
-    margin: 20rpx;
+    font-size: 30rpx;
+    margin-bottom: 20rpx;
     color: #300e0e;
 }
 
-.userinfo-dig {
-    margin: 15rpx auto;
-    padding: 20rpx 25rpx;
-    border-radius: 10rpx;
-    background-color: #f85f48;
-    color: #fff;
-    letter-spacing: 1px;
+.operation{
+    display: flex;
+    width: 650rpx;
+    height: 150rpx;
+    box-shadow: 0px 0px 5px #81d4fa;
+    margin-bottom: 20rpx;
+    margin-top: 15rpx;
+    border-radius: 5px;
 }
 
-.userinfo-desc {
-    color: #bbb;
-    font-size: 14rpx;
-    margin-bottom: 20rpx;
+.cu-item{
+   align-items: center;
+   display: flex;
+   flex-direction: column;
+}
+.operation-image{
+    margin-top: 15rpx;
+    width: 79rpx;
+    height: 79rpx;
+}
+
+.operation-name{
+    font-size: 25rpx;
+    margin: 15rpx;
+}
+
+.home_grid{
+    padding: 20px 10px;
 }
 
 .profile-wrapper, .account-wrapper {
@@ -58,6 +74,10 @@
     height: 32rpx;
 }
 
-.btn-quit {
-    margin: 15rpx;
+.btn-quit {   
+    width: 80%;
+    margin-left: 10%;
+    margin-bottom: 20rpx;
+    border-radius: 98px;
+    box-shadow: 0px 0px 5px #ccc;
 }

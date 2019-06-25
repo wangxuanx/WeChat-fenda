@@ -1,0 +1,8 @@
+<view>
+  <view class="fenda-infor">
+    <image class="fendaIcon" src="/img/mainapp.png" ></image>
+    <text class="fendaText" >分答</text>
+    <text class="introd">分答是一款向别人分享自己的心声的软件，你可以在里面寻找与自己有相同爱好的用户，倾听他们的心声。</text>
+    <text class="version">v 1.0.0</text>
+  </view>
+</view>

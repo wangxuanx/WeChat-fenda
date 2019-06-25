@@ -1,10 +1,31 @@
 // mine.js
 var app = getApp()
 Page({
+    
     data: {
         userInfo: {},
-        myProfile: [{ "desc": "我的分币", "id": "coin" }, { "desc": "我问", "id": "myQues" }, { "desc": "我听", "id": "myHeared" }],
-        myAccount: ["手机号码", "帮助", "结算说明", "关于分答"]
+        myProfile: [
+          { "desc": "我的资料", "id": "mydata" }, 
+          { "desc": "我的主页", "id": "myQues" }, 
+          { "desc": "通用","id": "myHeared" }],
+        myAccount: [ 
+          {"name": "帮助","id": "help"},
+          {"name": "关于分答","id": "about"}],
+        myData: [{
+          id: "myhear",
+          name: "我的听众",
+          img: "../../img/my-hear.png",
+        },
+        {
+          id: "hearme",
+          name: "收听我的",
+          img: "../../img/hear-me.png",
+        },
+        {
+          id: "myvoice",
+          name: "我的心声",
+          img: "../../img/my-voice.png",
+        }],
     },
     onLoad: function() {
         console.log('onLoad')
@@ -20,7 +41,44 @@ Page({
     onShow: function() {
         console.info("show")
     },
+
     loadProfile: function(e) {
         console.log(e.target)
+    },
+
+    changeabout: function() {      //跳转到关于界面
+      wx.navigateTo({
+        url: '../mine/about/about-fenda',
+      })
+    },
+    changehelp: function() {           //跳转到登录界面
+      wx.navigateTo({
+        url: '../mine/help/help',
+      })
+    },
+    changenumber: function() {            //跳转到电话号码界面—————待定
+      wx.navigateTo({
+        url: '../main/number/number',
+      })
+    },
+    exitUser: function() {        //退出登录按钮事件
+      wx.reLaunch({
+        url: '../search/search',
+      })
+    },
+    jumpmyhear: function() {              //跳转到我的听众列表
+      wx.navigateTo({
+        url: '*****',              //此处url为听众列表界面
+      })
+    },
+    jumphearme: function() {                //跳转到收听我的界面
+      wx.navigateTo({
+        url: '*****',                //此处url链接到我的听众列表
+      })
+    },
+    jumpmyvoice: function() {               //跳转到我的心声界面
+      wx.navigateTo({
+        url: '*****',                 //此处url链接到我的心声列表，其中有我的心声
+      })
     }
 })

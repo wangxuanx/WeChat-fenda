@@ -1,0 +1,13 @@
+/* miniprogram/pages/mine/help/help.wxss */
+.helpmain{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color:  #fff;
+  height: 672px;
+}
+
+.helptext{
+  font-size: 25px;
+  margin: 30px;
+}

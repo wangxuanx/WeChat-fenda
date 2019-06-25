@@ -5,7 +5,10 @@
     "pages/search/search",
     "pages/mine/mine",
     "pages/person/person",
-    "pages/issue/issue"
+    "pages/issue/issue",
+    "pages/mine/about/about-fenda",
+    "pages/mine/help/help",
+    "pages/mine/mydata/mydata"
   ],
   "window": {
     "backgroundTextStyle": "light",
