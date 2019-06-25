@@ -1,10 +1,10 @@
 <template name="master-column">
 	<view class="master-info" bindtap="toPerson" data-master="czy" data-user-id="{{id}}">
-		<image class="cu-avatar round" src="/img/avatar/{{avater}}"></image>
+		<image class="cu-avatar round" src="{{avaterUrl}}"></image>
 		<view class="master-brief">
-			<view class="master-user text-orange text-xl">{{name}}</view>
-			<view class="master-intro text-sm">{{intro}}</view>
-			<view class="master-fans text-sm"><text class="text-bold text-black">{{fans}}</text> 收听</view>
+			<view class="master-user text-orange text-xl">{{nickName}}</view>
+			<view class="master-intro text-sm">{{desc}}</view>
+			<view class="master-fans text-sm"><text class="text-bold text-black">{{fan_num}}</text> 收听</view>
 		</view>
 		<view wx:if="{{if_follow}}" class="cu-btn sm line-orange" catchtap="handleFollowTap" data-follow-id="{{id}}">+ 收听</view>
     <view class="cu-btn sm bg-grey" data-follow-id="{{id}}" data-follow-name="{{name}}" wx:else catchtap="handleNotFollowTap">已收听</view>
@@ -25,10 +25,6 @@
 <view class="column-title">热推名人</view>
 <view class="column-wrapper">
 	<block wx:for="{{hotMasters}}" wx:key="item.id">
-		<template is="master-column" data="{{...item}}"/>
-	</block>
-
-  <block wx:for="{{hotMasters}}" wx:key="item.id">
 		<template is="master-column" data="{{...item}}"/>
 	</block>
 </view>

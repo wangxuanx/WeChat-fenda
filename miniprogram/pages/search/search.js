@@ -38,7 +38,23 @@ Page({
         }]
     },
     onLoad: function() {
+       wx.cloud.init()
+       let _this = this
+       const userCollection = wx.cloud.database().collection('user')
 
+  // 获取fan_num前20用户信息
+  try{
+    userCollection.orderBy('fan_num', 'desc').limit(20).get({
+      success: res => {
+        console.log(res)
+        _this.setData({
+          hotMasters: res.data
+        })
+      }
+    })
+  } catch(e){
+    console.error(e)
+  }
     },
     //跳转函数
     toPerson: function(event) {
