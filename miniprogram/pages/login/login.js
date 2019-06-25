@@ -40,14 +40,14 @@ Page({
   },
 
   bindGetUserInfo: function (e) {
-    if (e.detail.userInfo) {
+    let userInfo = e.detail.userInfo
+    if (userInfo) {
       //用户按了允许授权按钮
-      var that = this;
       // 获取到用户的信息了，打印到控制台上看下
-      console.log("用户的信息如下：");
-      console.log(e.detail.userInfo);
+      console.log("用户的信息如下：")
+      console.log(userInfo)
       //授权成功后,通过改变 isHide 的值，让实现页面显示出来，把授权页面隐藏起来
-      that.setData({
+      this.setData({
         isHide: false
       });
       wx.cloud.init()
@@ -55,6 +55,33 @@ Page({
         name: 'login',
         data: {
           userInfo: e.detail.userInfo
+        },
+        success: res => {console.log(res)
+          const userCollection = wx.cloud.database().collection('user')
+          userCollection.where({
+            _openid: res._openid
+          }).get().then(res => {
+            if (res.data.length == 0) {
+              debugInfo.push("New user, add into db.\n")
+              // 不存在则添加用户
+              userCollection.add({
+                data: {
+                  avatarUrl: userInfo.avatarUrl,
+                  desc: "写点东西介绍自己吧！",
+                  fan_list: [],
+                  fan_num: 0,
+                  follow_list: [],
+                  follow_num: 0,
+                  nickName: userInfo.nickName,
+                }, success: res => {
+                  
+                }, fail: err => {
+      
+                }
+              })
+            }
+          }
+          )
         }
       })
       wx.reLaunch({
