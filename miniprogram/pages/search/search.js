@@ -3,43 +3,9 @@ let top20userInfo
 
 Page({
     data: {
-        hotMasters: [{
-            id:0,
-            name: "陈章鱼",
-            avater: "czy.png",
-            intro: "知乎50万关注答主，人丑就该多读书",
-            fans: 2821,
-            if_follow: false
-        }, {
-            id:1,
-            name: "马东",
-            avater: "md.png",
-            intro: "米未传媒CEO",
-            fans: 18967
-        }, {
-            id:2,
-            name: "张翼",
-            avater: "lcx.png",
-            intro: "猫奴+转业军官+电影/电视剧 演员",
-            fans: 3646
-        }],
-        newMasters: [{
-            name: "张男双",
-            avater: "gzy.png",
-            intro: "天文学家",
-            fans: 4726
-        }, {
-            name: "龚琳娜",
-            avater: "df.png",
-            intro: "知乎50万关注答主，人丑就该多读书",
-            fans: 2821
-        }, {
-            name: "古典",
-            avater: "md.png",
-            intro: "《拆掉思维里的墙》作者",
-            fans: 3286
-        }]
+        hotMasters: []
     },
+
     onLoad: function() {
       wx.cloud.init()
       let _this = this
@@ -49,12 +15,13 @@ Page({
       // 获取fan_num前20用户信息
       userCollection.orderBy('fan_num', 'desc').limit(20).get({
         success: res => {
-          // console.log(res)
+          console.log(res)
           top20userInfo = res.data
           // 获取关注关系
           var fan_id = app.globalData.userInfo._openid
-          console.log(fan_id)
-          for(rk in res.data){
+          // console.log(fan_id)
+          for(let rk in res.data){
+            // console.log(rk)
             var follow_id = res.data[rk]._openid
             relationCollection.where({
               fan: fan_id,
@@ -62,9 +29,11 @@ Page({
             }).get().then(fd =>{
               if(fd.data.length>0){
                 res.data[rk].if_follow = true
+                console.log("已关注\n")
               }
               else{
                 res.data[rk].if_follow = false
+                console.log("未关注\n")
               }
             })
           }
@@ -86,15 +55,15 @@ Page({
     },
 
     handleFollowTap: function(event) {
-      // console.log(event)
+      console.log(event)
       var changeId = 'hotMasters[' + event.target.dataset.followId + '].if_follow';
       this.setData({
-        [changeId]:false
+        [changeId]:true
       })
       // 添加关注关系
       const relationCollection = wx.cloud.database().collection("relation")
       var fan_id = app.globalData.userInfo._openid
-      var follow_id = top20userInfo[event.currentTarget.followId]._openid
+      var follow_id = top20userInfo[event.target.dataset.followId]._openid
       relationCollection.where({
         fan: fan_id,
         follow: follow_id
@@ -124,11 +93,12 @@ Page({
             // console.log('用户点击确定');
             var changeId = 'hotMasters[' + event.target.dataset.followId + '].if_follow';
             _this.setData({
-              [changeId]: true
+              [changeId]: false
             })
             // 调用服务器接口
             var fan_id = app.globalData.userInfo._openid
-            var follow_id = top20userInfo[event.currentTarget.followId]._openid
+            var follow_id = top20userInfo[event.target.dataset.followId]._openid
+            const relationCollection = wx.cloud.database().collection("relation")
             relationCollection.where({
               fan: fan_id,
               follow: follow_id
