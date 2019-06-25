@@ -23,12 +23,17 @@ exports.main = async (event, context) => {
       openid: OPENID,
     }).get({
       success: res => {
-        if (res.length == 0) {
-          console.log("不存在该用户，添加到数据库")
+        if (res.data.length == 0) {
+          console.log("New user, add into db.")
           // 不存在则添加用户
           userCollection.add({
             data: {
               avatarUrl: userInfo.avatarUrl,
+              desc: "写点东西介绍自己吧！",
+              fan_list: [],
+              fan_num: 0,
+              follow_lis: [],
+              follow_num: 0,
               nickName: userInfo.nickName,
               openid: OPENID
             }, success: res => {

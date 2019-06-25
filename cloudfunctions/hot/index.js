@@ -13,7 +13,7 @@ exports.main = async (event, context) => {
   try{
     userCollection.orderBy('fan_num', 'asc').limit(20).get({
       success: res => {
-        return res
+        return res.data
       }
     })
   } catch(e){
