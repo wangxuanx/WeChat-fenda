@@ -19,11 +19,8 @@
 	<block wx:for="{{hotMasters}}" wx:key="item.id">
 		<template is="master-column" data="{{...item}}"/>
 	</block>
-</view>
 
-<view class="column-title">新晋榜</view>
-<view class="column-wrapper">
-	<block wx:for="{{newMasters}}" wx:key="item.id">
+  <block wx:for="{{hotMasters}}" wx:key="item.id">
 		<template is="master-column" data="{{...item}}"/>
 	</block>
 </view>
