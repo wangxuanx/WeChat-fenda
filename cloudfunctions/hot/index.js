@@ -11,7 +11,11 @@ exports.main = async (event, context) => {
 
   // 获取fan_num前20用户信息
   try{
-    return await userCollection.orderBy('fan_num', 'asc').limit(20).get()
+    userCollection.orderBy('fan_num', 'asc').limit(20).get({
+      success: res => {
+        return res
+      }
+    })
   } catch(e){
     console.error(e)
   }
