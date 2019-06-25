@@ -67,9 +67,11 @@
 	text-align: center;
   color: #FFC000;
   border:2rpx solid;
+  font-weight: bold;
 }
 
 .master-follow{
+  font-weight:bold;
   width: 80rpx;
 	padding: 10rpx;
   font-size: 20rpx;
