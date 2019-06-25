@@ -24,8 +24,11 @@ exports.main = async (event, context) => {
     userCollection.add({
       data: {
         avatarUrl: userInfo.avatarUrl,
+        desc: userInfo.desc,
         fan_list: [],
+        fan_num: 0,
         follow_list: [],
+        follow_num: 0,
         nickName: userInfo.nickName,
         openid: OPENID
       }, success: res => {
