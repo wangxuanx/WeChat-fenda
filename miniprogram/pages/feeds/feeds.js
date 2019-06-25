@@ -17,20 +17,6 @@ Page({
     onLoad: function() {
         var that = this
         console.log('onLoad')
-        wx.request({
-            url: 'https://api.getweapp.com/thirdparty/fenda/feeds-init.json',
-            header: {
-                'Content-Type': 'application/json'
-            },
-            success: function(res) {
-                that.setData({
-                    feedList: res.data
-                })
-                try {
-                    wx.setStorageSync('feeds', res.data)
-                } catch (e) {}
-            }
-        })
     },
     onPullDownRefresh: function() {
         console.info("被拉下了")
@@ -58,26 +44,5 @@ Page({
     requestFlag: false,
     getFeeds: function() {
         var that = this
-        wx.request({
-            url: 'https://api.getweapp.com/thirdparty/fenda/stamp1206.json',
-            header: {
-                'Content-Type': 'application/json'
-            },
-            success: function(res) {
-                that.requestFlag = false
-                that.setData({
-                    hidden: true
-                })
-                var feedsStrorage = wx.getStorageSync('feeds') || []
-                feedsStrorage = feedsStrorage.concat(res.data)
-                that.setData({
-                    feedList: feedsStrorage
-                })
-                try {
-                    wx.setStorageSync('feeds', feedsStrorage)
-                } catch (e) {}
-                console.log("同步成功啦")
-            }
-        })
     }
 })
