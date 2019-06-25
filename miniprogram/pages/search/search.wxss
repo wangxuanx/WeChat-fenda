@@ -37,7 +37,7 @@
 }
 .master-brief{
 	height: 120rpx;
-	padding-left: 40rpx;
+	padding-left: 30rpx;
 	flex: 1;
 	display: flex;
 	justify-content: space-between;
@@ -50,7 +50,6 @@
 }
 .master-intro {
 	color: #888;
-	width: 300rpx;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;

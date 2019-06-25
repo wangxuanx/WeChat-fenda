@@ -9,22 +9,22 @@
     <text class="userinfo-qianming">一生努力，一生所爱，想要的都拥有，得不到的都释怀。</text>
 
  <view class="padding flex text-center text-grey bg-white follow">
-    <view class="flex flex-sub flex-direction solid-right solid-top">
-      <view class="text-xxl text-orange">1.9k</view>
+    <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-orange text-bold">1.9k</view>
       <view class="margin-top-sm">
-        <text class="cuIcon-attentionfill" style="font-size:28rpx;"></text><text style="font-size:28rpx;">关注</text></view>
+        <text class="cuIcon-attentionfill" style="font-size:28rpx;"></text><text style="font-size:28rpx; font-weight:bold;">关注</text></view>
     </view>
-    <view class="flex flex-sub flex-direction solid-top">
-      <view class="text-xxl text-blue">2.5k</view>
+    <view class="flex flex-sub flex-direction">
+      <view class="text-xxl text-blue text-bold">2.5k</view>
       <view class="margin-top-sm">
-        <text class="cuIcon-favorfill" style="font-size:28rpx;"></text> <text style="font-size:28rpx;">点赞</text></view>
+        <text class="cuIcon-favorfill" style="font-size:28rpx;"></text> <text style="font-size:28rpx; font-weight:bold;">点赞</text></view>
     </view>
   </view>
 
   <view style="background-color:#eee; width:100%; height:20rpx;"></view>
   <view class="shadow voice" style="width:100%;">
       <text class="cuIcon-sound" style="font-size:40rpx;"></text>
-      <text style="text-align:left;"> 他的声音</text>
+      <text class="text-bold" style="text-align:left;"> 他的声音</text>
   </view>
   </view>
   
