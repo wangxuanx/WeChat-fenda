@@ -15,27 +15,38 @@ exports.main = async (event, context) => {
   const userInfo = event.userInfo
 
   // 判断用户是否存在
-  const result = await userCollection.where({
-    openid: OPENID,
-  })
-  if(result.count().total==0)
-  {
-    // 不存在则添加用户
-    userCollection.add({
-      data: {
-        avatarUrl: userInfo.avatarUrl,
-        fan_list: [],
-        follow_list: [],
-        nickName: userInfo.nickName,
-        openid: OPENID
-      }, success: res => {
-        console.log(res)
-      }, fail: err => {
-        console.log(err)
+  try{
+    await userCollection.where({
+      openid: OPENID,
+    }).get({
+      success: res => {
+        if (res.data.length == 0) {
+          console.log("New user, add into db.")
+          // 不存在则添加用户
+          userCollection.add({
+            data: {
+              avatarUrl: userInfo.avatarUrl,
+              desc: "写点东西介绍自己吧！",
+              fan_list: [],
+              fan_num: 0,
+              follow_lis: [],
+              follow_num: 0,
+              nickName: userInfo.nickName,
+              openid: OPENID
+            }, success: res => {
+              console.log(res)
+            }, fail: err => {
+              console.log(err)
+            }
+          })
+        }
       }
-    })
+    }
+    )
+  } catch(e){
+    console.error(e)
   }
-
+  
   return {
     event,
     openid: OPENID,
