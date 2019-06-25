@@ -1,0 +1,4 @@
+<!--miniprogram/pages/mine/help/help.wxml-->
+<view class="helpmain">
+    <text class="helptext">关于分答的帮助在之后给出</text>
+</view>
