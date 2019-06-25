@@ -13,9 +13,6 @@ exports.main = async (event, context) => {
   } = cloud.getWXContext()
   const userCollection = cloud.database().collection('user')
   const userInfo = event.userInfo
-  const result = userCollection.where({
-    openid: OPENID,
-  })
 
   // 判断用户是否存在
   try{
