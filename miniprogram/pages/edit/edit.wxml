@@ -1,0 +1,13 @@
+<!--miniprogram/pages/edit/edit.wxml-->
+<view class="edit-header">
+  <input type="text" placeholder="请输入标题" class="title"></input>
+</view>
+<view class="edit-content">
+  <textarea rows="20" cols="20" class="content" placeholder="请输入正文"></textarea>
+</view>
+<view class="submit-btn">
+  <button class="cu-btn bg-blue btn-color margin-tb-sm lg" catchtap="toSubmit">提交</button>
+</view>
+<view class="imageArea">
+  <text class="text-style">上传图片(可选)</text>
+</view>

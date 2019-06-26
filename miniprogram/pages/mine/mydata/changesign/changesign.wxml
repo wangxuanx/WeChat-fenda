@@ -1,2 +1,6 @@
 <!--miniprogram/pages/mine/mydata/changesign/changesign.wxml-->
-<text>miniprogram/pages/mine/mydata/changesign/changesign.wxml</text>
+<view>
+  <view class="input-view">
+    <input  class="input" placeholder="请输入新签名" maxlength="-1" type="tel" bindinput="getInput" />
+  </view>
+</view>
