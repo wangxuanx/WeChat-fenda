@@ -4,13 +4,6 @@ var app = getApp()
 Page({
     data: { 
         hidden: true,
-        motto: 'Hello World',
-        userInfo: {},
-        fllowList: [
-          "Maxing",
-        ],
-        page: 1,
-        pages: 0,
         feedList: [],
         followList: []
     },
@@ -35,6 +28,7 @@ Page({
     }, 1000);
   },
   onReachBottom: function() {
+    console.log('bottom')
       this.fetchVoiceList()
   },
   fetchVoiceList() {
@@ -56,6 +50,22 @@ Page({
           select_list = res.data
           for (let j = 0; j < select_list.length; j++) {
             if (follow_list.includes(select_list[j]._openid)) {
+              let fileId = select_list[j].image
+              if (fileId) {
+                // select_list[j].image = wx.cloud.downloadFile({
+                //   fileID: fileId
+                // })
+                wx.cloud.downloadFile({
+                  fileID: fileId,
+                  success: res => {
+                    console.log(res.tempFilePath)
+                    _this.setData({
+                      ['feedList['+j+'].image']: res.tempFilePath
+                    })
+                    // select_list[j].image = res.tempFilePath
+                  }
+                })
+              }
               user.where({
                 _openid: select_list[j]._openid
               }).get().then( res => {
