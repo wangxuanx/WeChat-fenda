@@ -1,13 +1,28 @@
 <!--miniprogram/pages/edit/edit.wxml-->
-<view class="edit-header">
-  <input type="text" placeholder="请输入标题" class="title"></input>
-</view>
 <view class="edit-content">
-  <textarea rows="20" cols="20" class="content" placeholder="请输入正文"></textarea>
+  <textarea rows="20" cols="20" class="content" placeholder="请输入正文。。。"></textarea>
+</view>
+<view class="imageArea"  catchtap="upLoadImage">
+  <view>
+    <text wx:if="{{images.length==0}}" class="text-style">上传图片(可选)</text>
+    <block wx:for="{{images}}" wx:key="*this" class="q-image-wrap">
+      <view>
+        <image src="{{item}}" class="q-image" mode="scaleToFill" data-idx="{{index}}"></image>
+      </view>
+    </block>
+  </view>
+</view>
+<view class="grid col-3 padding-sm">
+  <view class="margin-tb-sm text-center">
+    <button class="cu-btn round btn-style" catchtap="start">录音</button>
+  </view>
+  <view class="margin-tb-sm text-center">
+    <button class="cu-btn round btn-style" catchtap="stop">完成</button>
+  </view>
+  <view class="margin-tb-sm text-center">
+    <button class="cu-btn round btn-style" catchtap="play">播放</button>
+  </view>
 </view>
 <view class="submit-btn">
   <button class="cu-btn bg-blue btn-color margin-tb-sm lg" catchtap="toSubmit">提交</button>
-</view>
-<view class="imageArea">
-  <text class="text-style">上传图片(可选)</text>
 </view>

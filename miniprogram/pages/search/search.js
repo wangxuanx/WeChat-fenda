@@ -15,7 +15,7 @@ Page({
       const _ = wx.cloud.database().command;
 
       // 获取fan_num前20用户信息
-      userCollection.orderBy('fan_num', 'desc').where({
+      userCollection.where({
           _openid: _.neq(app.globalData.userInfo._openid)
         }).get({
         success: res => {

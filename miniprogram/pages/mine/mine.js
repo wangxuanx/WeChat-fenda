@@ -13,7 +13,7 @@ Page({
           {"name": "关于分答","id": "about"}],
         myData: [{
           id: "myhear",
-          name: "我的听众",
+          name: "我的收听",
           img: "../../img/my-hear.png",
         },
         {
@@ -28,7 +28,7 @@ Page({
         }],
     },
     onLoad: function() {
-        console.log('onLoad')
+        //console.log('onLoad')
         var that = this
             //调用应用实例的方法获取全局数据
         app.getUserInfo(function(userInfo) {
@@ -39,7 +39,7 @@ Page({
         })
     },
     onShow: function() {
-        console.info("show")
+        //console.info("show")
     },
 
     loadProfile: function(e) {
@@ -68,17 +68,17 @@ Page({
     },
     jumpmyhear: function() {              //跳转到我的听众列表
       wx.navigateTo({
-        url: '*****',              //此处url为听众列表界面
+        url: '/pages/mine/myhear/myhear',              //此处url为听众列表界面
       })
     },
     jumphearme: function() {                //跳转到收听我的界面
       wx.navigateTo({
-        url: '*****',                //此处url链接到我的听众列表
+        url: '/pages/mine/hearme/hearme',                //此处url链接到我的听众列表
       })
     },
     jumpmyvoice: function() {               //跳转到我的心声界面
       wx.navigateTo({
-        url: '*****',                 //此处url链接到我的心声列表，其中有我的心声
+        url: '/pages/mine/myvoice/myvoice',                 //此处url链接到我的心声列表，其中有我的心声
       })
     },
     mydata: function() {                 //跳转到我的资料设置
@@ -86,9 +86,9 @@ Page({
         url: '../mine/mydata/mydata',
       })
     },
-    mypage: function() {                //跳转到用户的主页
+    mypage: function() {                //跳转到用户自己的主页
       wx.navigateTo({
-        url: '****',
+        url: '/pages/person/person',
       })
     },
     normalsetting: function() {             //跳转到通用设置界面

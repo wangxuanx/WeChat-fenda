@@ -1,1 +1,7 @@
 /* miniprogram/pages/mine/normalsetting/normalsetting.wxss */
+.setting{
+  display: flex;
+  flex-direction: column;
+  font-size: 20px;
+  align-items: center;
+}

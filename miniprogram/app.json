@@ -13,7 +13,10 @@
     "pages/mine/mydata/changesign/changesign",
     "pages/search_res/search_res",
     "pages/edit/edit",
-    "pages/test/test"
+    "pages/test/test",
+    "pages/mine/myhear/myhear",
+    "pages/mine/hearme/hearme",
+    "pages/mine/myvoice/myvoice"
   ],
   "window": {
     "backgroundTextStyle": "light",
