@@ -8,20 +8,24 @@
       <view>
         <image src="{{image}}" class="q-image" mode="scaleToFill" data-idx="{{index}}"></image>
       </view>
-    
+  </view>
+  <view class="grid col-3 padding-sm distant">
+    <view class="margin-tb-sm text-center">
+      <button class="cu-btn round btn-style" catchtap="start">录音</button>
+    </view>
+    <view class="margin-tb-sm text-center">
+      <button class="cu-btn round btn-style" catchtap="stop">完成</button>
+    </view>
+    <view class="margin-tb-sm text-center">
+      <button class="cu-btn round btn-style" catchtap="play">播放</button>
+    </view>
+  </view>
+  <view>
+    <text class="time-style">{{num}}s</text>
+  </view>
+  <view class="submit-btn">
+    <button class="cu-btn bg-blue btn-color margin-tb-sm lg" catchtap="toSubmit">提交</button>
   </view>
 </view>
-<view class="grid col-3 padding-sm">
-  <view class="margin-tb-sm text-center">
-    <button class="cu-btn round btn-style" catchtap="start">录音</button>
-  </view>
-  <view class="margin-tb-sm text-center">
-    <button class="cu-btn round btn-style" catchtap="stop">完成</button>
-  </view>
-  <view class="margin-tb-sm text-center">
-    <button class="cu-btn round btn-style" catchtap="play">播放</button>
-  </view>
-</view>
-<view class="submit-btn">
-  <button class="cu-btn bg-blue btn-color margin-tb-sm lg" catchtap="toSubmit">提交</button>
-</view>
+
+

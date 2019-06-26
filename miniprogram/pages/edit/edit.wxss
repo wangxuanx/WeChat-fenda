@@ -1,11 +1,17 @@
 /* miniprogram/pages/edit/edit.wxss */
+.bg {
+  background-color: #fff;
+  height: 100%;
+}
 .edit-content {
   font-size: 30rpx;
   border: 1rpx dashed #bbb;
+  background-color: #fff;
 }
 
 .edit-content .content {
-  padding-left: 8rpx;
+  padding-top: 15rpx;
+  padding-left: 15rpx;
   letter-spacing: 3rpx;
 }
 
@@ -22,14 +28,14 @@
 .imageArea {
   margin-left: 0;
   border-radius: 5%;
-  height: 300rpx;
+  min-height: 300rpx;
+  height: auto;
   width: 650rpx；;
   border: 5rpx dashed #bbb;
 }
 
 .imageArea .text-style {
-  text-align: center;
-  margin-top: 15%;
+  padding-left: 30%;
   font-size: 50rpx;
   color: #bbb;
 }
@@ -45,5 +51,13 @@
 .btn-style {
   color: #81d4fa;
   border: 1rpx solid #81d4fa;
-  border-radius: 20%;
+  border-radius: 10%;
+}
+
+.time-style {
+  font-weight: bold;
+  align-items: center;
+  font-size: 35rpx;
+  margin-left: 48%;
+  letter-spacing: 5rpx;
 }

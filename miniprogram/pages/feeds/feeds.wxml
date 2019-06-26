@@ -30,7 +30,9 @@
     </view>
 	</block>
 </scroll-view>
-  <view class="cu-item addAction">
-    <navigator url="/pages/edit/edit" hover-class="hover"><text class="cuIcon-roundaddfill bg-color"></text>
+<view class="cu-item addAction">
+    <navigator url="/pages/edit/edit" class="chover">
+      <image class="img-plus"src="/img/cross.png"></image>
+      <!--<text class="cuIcon-roundaddfill bg-color plus"></text>-->
     </navigator>
-  </view>
+</view>
