@@ -7,6 +7,9 @@ Page({
    */
   data: {
     images: [],
+    setInter: '',
+    num: 0,
+    tempFilePath: '',
   },
 
 
@@ -96,8 +99,17 @@ Page({
       frameSize: 50,//指定帧大小，单位 KB
     }
     recorderManager.start(options);
+    var that = this
+    that.data.setInter = setInterval(
+      function () {
+        var numVal = that.data.num + 1;
+        that.setData({
+          num: numVal
+        });
+      }
+      , 1000)
     recorderManager.onStart(() => {
-      console.log('recorder start')
+      console.log('recorder start');
     });
     //错误回调
     recorderManager.onError((res) => {
@@ -109,7 +121,11 @@ Page({
     recorderManager.onStop((res) => {
       this.tempFilePath = res.tempFilePath;
       console.log('停止录音', res.tempFilePath)
-      const { tempFilePath } = res
+      clearInterval(this.data.setInter)
+      this.setData({
+        tempFilePath: res
+      })
+      console.log(this.data.tempFilePath)
     })
   },
   play: function () {

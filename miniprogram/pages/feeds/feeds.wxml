@@ -19,8 +19,8 @@
         <view class="text-content">
           {{item.text}}
         </view>
-        <view wx:if= "{{item.image}}" class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
-          <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url({{item.image}});">
+        <view wx:if= "{{item.image_group}}" class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
+          <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url({{item.image_group}});">
           </view>
         </view>
         <view class="text-gray text-lg text-right padding">

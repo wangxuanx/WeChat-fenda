@@ -14,8 +14,8 @@
 }
 
 .cu-card>.cu-item {
-  margin-left: 10rpx;
-  margin-right: 10rpx;
+  margin-left: 0rpx;
+  margin-right: 0rpx; 
   margin-bottom: 0;
   margin-top: 0rpx;
   border-bottom: 1rpx solid #ddd;
@@ -27,12 +27,15 @@
   top: 80%;
   opacity: 1;
   z-index: 555;
-  
+  border-radius: 98px;
+  background-color: #fff;
+  height: 50px;
+  width: 50px;
 }
 
 .bg-color {
   color: #81d4fa;
-  font-size: 100rpx;
+  font-size: 50px;
 }
 
 .hover {

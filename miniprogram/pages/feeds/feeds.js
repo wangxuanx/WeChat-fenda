@@ -11,8 +11,56 @@ Page({
         ],
         page: 1,
         pages: 0,
-        feedList: [],
-        followList: []
+        feedList: [
+          {
+            "_id": 1,
+            "userInfo": {
+              "nickName": "Maxing",
+              "avatarUrl": "/img/avatar/chenyu.jpg"
+            },
+            "date": "3月前",
+            "followed": true,
+            "image_group": ["https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"],
+            "thumbs": true,
+            "praise": 20 
+          },
+          {
+            "_id": 2,
+            "userInfo": {
+              "nickName": "Maxing",
+              "avatarUrl": "/img/avatar/chenyu.jpg"
+            },
+            "date": "3月前",
+            "followed": true,
+            "image_group": ["https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"],
+            "thumbs": true,
+            "praise": 20
+          },
+          {
+            "_id": 3,
+            "userInfo": {
+              "nickName": "Maxing",
+              "avatarUrl": "/img/avatar/chenyu.jpg"
+            },
+            "date": "3月前",
+            "followed": true,
+            "image_group": ["https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"],
+            "thumbs": true,
+            "praise": 20
+          },
+          {
+            "_id": 4,
+            "userInfo": {
+              "nickName": "Maxing",
+              "avatarUrl": "/img/avatar/chenyu.jpg"
+            },
+            "date": "3月前",
+            "followed": true,
+            "image_group": ["https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"],
+            "thumbs": true,
+            "praise": 20
+          },
+        ]
     },
   //事件处理函数
   bindViewTap: function () {
@@ -34,7 +82,7 @@ Page({
       wx.stopPullDownRefresh()
     }, 1000);
   },
-  onReachBottom: function() {
+  onReachBottom() {
       this.fetchVoiceList()
   },
   fetchVoiceList() {
