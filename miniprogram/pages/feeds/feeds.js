@@ -54,9 +54,6 @@ Page({
             if (follow_list.includes(select_list[j]._openid)) {
               let fileId = select_list[j].image
               if (fileId) {
-                // select_list[j].image = wx.cloud.downloadFile({
-                //   fileID: fileId
-                // })
                 wx.cloud.downloadFile({
                   fileID: fileId,
                   success: res => {
@@ -64,7 +61,6 @@ Page({
                     _this.setData({
                       ['feedList['+j+'].image']: res.tempFilePath
                     })
-                    // select_list[j].image = res.tempFilePath
                   }
                 })
               }
