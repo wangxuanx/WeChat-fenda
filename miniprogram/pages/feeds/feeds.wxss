@@ -24,99 +24,37 @@
 .addAction {
   position: fixed;
   right: 3%;
-  top: 80%;
+  top: 85%;
   opacity: 1;
   z-index: 555;
-  border-radius: 98px;
+  border-radius: 120px;
   background-color: #fff;
   height: 50px;
   width: 50px;
+  box-shadow: 0px 0px 5px #ccc;
 }
 
 .bg-color {
   color: #81d4fa;
   font-size: 50px;
+  left: 0px;
+  top: 0px;
 }
 
 .hover {
+  align-items: center;
   color: #81d4ff;
 }
 
-/* .post {
-  width: 100%;
-  height: auto;
-  display: block;
-  background: #fff;
-  border-bottom: 2rpx solid #aaa;
+.img-plus{
+  height: 50px;
+  width: 50px;
 }
 
-.container {
-  width: 90%;
-  margin-left:5%;
-  padding: 0;
+.chover{
+  width: 50px;
+  height: 50px;
 }
-
-.post-header {
-  height: auto;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: left;
-  padding: 10rpx;
-}
-
-.header-image {
-  height: 80rpx;
-  width: 80rpx;
-  display: inline-block;
-  overflow: hidden;
-  border-radius: 50%;
-}
-
-.master-brief{
-	height: 80rpx;
-	padding-left: 20rpx;
-	flex: 1;
-	display: flex;
-	justify-content: space-between;
-	flex-direction: column;
-	align-items: flex-start;
-}
-.master-user{
-	font-size: 30rpx;
-	letter-spacing: 1px;
-}
-
-.master-timestamp {
-	padding: 10rpx 30rpx;
-	letter-spacing: 1px;
-  color: #ccc;
-}
-
-.master-catch {
-  padding: 10rpx;
-  text-align: center;
-  font-size: 28rpx;
-  color: #aaa;
-  width: 80rpx;
-}
-
-.post-footer {
-  font-size: 10rpx;
-  display: flex;
-  justify-content: space-around;
-  flex-direction: row;
-}
-.catch-text {
-  padding: 4rpx;
-  border: 1rpx solid #aaa;
-  border-radius: 10%;
-}
-
-.post-content {
-  font-size:30rpx;
-  letter-spacing: 1px;
-} */
 
 .turnRed {
   color: red;
