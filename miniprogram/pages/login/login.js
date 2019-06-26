@@ -56,15 +56,14 @@ Page({
       wx.cloud.callFunction({
         name: 'login',
         success: res => {
-          console.log(res)
-          userInfo._openid = res._openid
+          console.log(res.result)
           const userCollection = wx.cloud.database().collection('user')
           userCollection.where({
-            _openid: res._openid
-          }).get().then(res => {
-            if (res.data.length == 0) {
-              debugInfo.push("New user, add into db.\n")
-              // 不存在则添加用户
+            _openid: res.result.openid
+          }).get().then(fd => {
+            // console.log(fd)
+            if (fd.data.length == 0) {
+              console.log("添加用户\n")
               userCollection.add({
                 data: {
                   avatarUrl: userInfo.avatarUrl,
@@ -80,6 +79,7 @@ Page({
                 }
               })
             }
+            else { console.log("用户已存在\n")}
           }
           )
         }
