@@ -11,6 +11,7 @@
     "pages/mine/mydata/mydata",
     "pages/mine/normalsetting/normalsetting",
     "pages/mine/mydata/changesign/changesign",
+    "pages/search_res/search_res",
     "pages/edit/edit",
     "pages/mine/myhear/myhear",
     "pages/mine/hearme/hearme",

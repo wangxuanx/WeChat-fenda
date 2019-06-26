@@ -1,18 +1,22 @@
 /* miniprogram/pages/edit/edit.wxss */
-
 .edit-content {
   font-size: 30rpx;
   border: 1rpx dashed #bbb;
 }
 
 .edit-content .content {
-  letter-spacing: 10rpx;
+  padding-left: 8rpx;
+  letter-spacing: 3rpx;
+}
+
+.voice-style {
+  color: #81d4fa;
 }
 
 .submit-btn {
   position: fixed;
   right: 3%;
-  top: 60%; 
+  top: 80%; 
 }
 
 .imageArea {
@@ -36,4 +40,10 @@
 
 .q-image {
   width: 100%;
+}
+
+.btn-style {
+  color: #81d4fa;
+  border: 1rpx solid #81d4fa;
+  border-radius: 20%;
 }

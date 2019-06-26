@@ -1,6 +1,6 @@
 <!--miniprogram/pages/mine/myhear/myhear.wxml-->
 <view class="column-wrapper">
-  <view wx:for="{{hotMasters}}" wx:key="" id='{{index}}'>
+  <view wx:for="{{hotMasters}}" wx:key="{{item.follow_list}}" id='{{index}}'>
     <view class="master-info" bindtap="toPerson" data-master="czy" data-user-id="{{id}}">
       <image class="cu-avatar round" src="{{item.avatarUrl}}"></image>
       <view class="master-brief">

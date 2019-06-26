@@ -3,7 +3,8 @@ let top20userInfo
 
 Page({
     data: {
-        hotMasters: []
+        hotMasters: [],
+        searchContent: ""
     },
 
     onLoad: function() {
@@ -14,7 +15,7 @@ Page({
       const _ = wx.cloud.database().command;
 
       // 获取fan_num前20用户信息
-      userCollection.orderBy('fan_num', 'desc').where({
+      userCollection.where({
           _openid: _.neq(app.globalData.userInfo._openid)
         }).get({
         success: res => {
@@ -185,5 +186,19 @@ Page({
           }
         }
       })
+    },
+    searchInput: function(event){
+      // console.log(event.detail.value);
+      this.setData({
+        searchContent:event.detail.value
+      })
+    },
+    search:function(event){
+
+      var targetUrl = '/pages/search_res/search_res?search=' + this.data.searchContent;
+      wx.navigateTo({
+        url: targetUrl//实际路径要写全
+      })
+
     }
 })
