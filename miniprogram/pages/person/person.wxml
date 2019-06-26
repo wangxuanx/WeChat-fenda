@@ -1,22 +1,85 @@
-<view class="about">
-	<view class="master-info">
-		<image src="/img/avatar/{{userInfo.avater}}" wx:if="{{userInfo.avater}}"></image>
-		<view class="master-brief">
-			<view class="master-user">{{userInfo.name}}</view>
-			<view class="master-fans"><text class="bold">{{userInfo.fans}}</text> 收听</view>
-		</view>
-		<view class="master-follow">收听</view>
-	</view>
-	<view class="master-intro">{{userInfo.intro}}</view>
-	<view class="detail">
-		<view>{{userInfo.detail}}</view>
-	</view>
-</view>
-<view class="quiz-wrapper">
-	<view class="quiz-info">公开提问</view>
-	<view class="quiz-input">
-		<textarea placeholder="向TA提问，等TA语音回答；超过48小时未回答，将按支付路径全额退款，被回答后可免费向TA追问" maxlength="5">向TA提问，等TA语音回答；超过48小时未回答，将按支付路径全额退款，被回答后可免费向TA追问</textarea>
-	</view>
-	<view class="quiz-cost">{{userInfo.quizCost + "￥"}}</view>
-	<button class="submit">写好了</button>
+<!--mine.wxml-->
+<view>
+	<view class="userinfo">
+		<image class="userinfo-avatar" src="../../img/avatar/chenyu.jpg" background-size="cover"></image>
+		<view class="name">
+      <text class="userinfo-nickname">陈宇</text>
+      <text class="cuIcon-male" style="color:#000; font-size:45rpx;"></text>
+    </view>
+    <text class="userinfo-qianming">一生努力，一生所爱，想要的都拥有，得不到的都释怀。</text>
+
+ <view class="padding flex text-center text-grey bg-white follow">
+    <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-orange text-bold">1.9k</view>
+      <view class="margin-top-sm">
+        <text class="cuIcon-attentionfill" style="font-size:28rpx;"></text><text style="font-size:28rpx; font-weight:bold;">关注</text></view>
+    </view>
+    <view class="flex flex-sub flex-direction">
+      <view class="text-xxl text-blue text-bold">2.5k</view>
+      <view class="margin-top-sm">
+        <text class="cuIcon-favorfill" style="font-size:28rpx;"></text> <text style="font-size:28rpx; font-weight:bold;">点赞</text></view>
+    </view>
+  </view>
+
+  <view style="background-color:#eee; width:100%; height:20rpx;"></view>
+  <view class="shadow voice" style="width:100%;">
+      <text class="cuIcon-sound" style="font-size:40rpx;"></text>
+      <text class="text-bold" style="text-align:left;"> 他的声音</text>
+  </view>
+  </view>
+  
+
+  <scroll-view scroll-y="true" style="height: 100%;" bindscrolltoupper="upper" bindscrolltolower="lower">
+	<block wx:for="{{feedList}}" wx:key="item._id" id="{{index}}">
+		<!-- <view class="post">
+      <view class="container">
+        <view class="post-header">
+          <image class="header-image" src="{{item.UserImage}}"></image>
+          <view class="master-brief">
+            <view class="master-user">{{item.UserName}}</view>
+            <view class="master-timestamp">{{item.TimeStamp}}</view>
+          </view>
+          <view class="master-catch">
+          <text class="catch-text">+关注</text>
+          </view>
+        </view>
+        <view class="post-content">
+          {{item.ContentText}}
+        </view>
+        <view class="post-footer">
+          <view class="iconfont ion-ios-zhuanfa" hover-class="TurnRed">转发</view>
+          <view class="iconfont ion-ios-buoumaotubiao48">评论</view>
+          <view class="iconfont ion-ios-chakandianzan">点赞</view>
+        </view>
+      </view>
+    </view> -->
+    <view class="cu-card dynamic {{isCard?'no-card':''}}">
+      <view class="cu-item shadow">
+        <view class="cu-list menu-avatar">
+          <view class="cu-item">
+            <view class="cu-avatar round lg" style="background-image:url({{item.user.avatarUrl}});"></view>
+            <view class="content flex-sub">
+              <view>{{item.user.nickName}}</view>
+              <view class="text-gray text-sm flex justify-between date-style">
+                {{item.date}}
+              </view>
+            </view>
+            <button class="cu-btn block line-grey btnRight" id="{{index}}" catchtap="toFollow">
+                <text class="{{item.followed? '':'cuIcon-add'}}"></text>{{item.followed? "已关注":"关注"}}</button>
+          </view>
+        </view>
+        <view class="text-content">
+          {{item.text}}
+        </view>
+        <view class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
+          <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url({{item.image_group}});">
+          </view>
+        </view>
+        <view class="text-gray text-lg text-right padding">
+          <text id="{{index}}" class="cuIcon-appreciatefill margin-lr-xs {{item.thumbs? 'turnRed':''}}" catchtap="toLike"></text>{{item.praise}}
+        </view>
+      </view>
+    </view>
+	</block>
+</scroll-view>
 </view>

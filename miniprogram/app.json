@@ -16,7 +16,7 @@
     "backgroundTextStyle": "light",
     "backgroundColor": "#eee",
     "navigationBarBackgroundColor": "#81d4fa",
-    "navigationBarTitleText": "分答 - 付费语音问答",
+    "navigationBarTitleText": "个人界面",
     "navigationBarTextStyle": "white",
     "enablePullDownRefresh": false
   },
