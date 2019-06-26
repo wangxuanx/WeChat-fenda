@@ -1,6 +1,6 @@
 <!--miniprogram/pages/edit/edit.wxml-->
 <view class="edit-content">
-  <textarea rows="20" cols="20" class="content" placeholder="请输入正文">{{text}}</textarea>
+  <textarea rows="20" cols="20" class="content" bindinput='inputText' placeholder="请输入正文"></textarea>
 </view>
 <view class="imageArea"  catchtap="upLoadImage">
   <view>

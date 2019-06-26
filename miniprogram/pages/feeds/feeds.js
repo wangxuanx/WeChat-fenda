@@ -13,7 +13,7 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function() {
+  onShow: function() {
     this.fetchVoiceList();
   },
   onPullDownRefresh: function () {

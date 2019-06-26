@@ -15,7 +15,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+  
+  },
 
+  inputText(e) {
+    console.log(e)
+    this.setData({
+      text: e.detail.value
+    })
   },
 
 
@@ -23,20 +30,39 @@ Page({
     wx.cloud.init()
     let _this = this
     let path = this.data.image
-    let timestamp = Date.parse(new Date());
-    const cloudPath = 'images'+timestamp + path.match(/\.[^.]+?$/)[0]
+    let voice = wx.cloud.database().collection('my-voice')
     let fileID = ''
-    wx.cloud.uploadFile({
-      cloudPath,
-      filePath: path, // 文件路径
-    }).then(res => {
-      // get resource ID
-      console.log(res.fileID)
-      let voice = wx.cloud.database().collection('my-voice')
+    if (path.length) {
+      console.log('in')
+      let timestamp = Date.parse(new Date());
+      const cloudPath = 'images' + timestamp + path.match(/\.[^.]+?$/)[0]
+      wx.cloud.uploadFile({
+        cloudPath,
+        filePath: path, // 文件路径
+      }).then(res => {
+        // get resource ID
+        console.log(res.fileID)
+        voice.add({
+          data: {
+            date: wx.cloud.database().serverDate(),
+            image: res.fileID,
+            text: _this.data.text
+          },
+          success: res => {
+            console.log(res)
+            wx.navigateBack({
+              delta: 1
+            })
+          }
+        })
+      }).catch(error => {
+        console.log(error)
+        // handle error
+      })
+    } else {
       voice.add({
         data: {
           date: wx.cloud.database().serverDate(),
-          image: res.fileID,
           text: _this.data.text
         },
         success: res => {
@@ -46,10 +72,7 @@ Page({
           })
         }
       })
-    }).catch(error => {
-      console.log(error)
-      // handle error
-    })
+    }
   },
 
   upLoadImage() {
@@ -64,54 +87,6 @@ Page({
         })
       },
     })
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
   },
   start: function () {
     //开始录音
