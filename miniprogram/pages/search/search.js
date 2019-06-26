@@ -11,36 +11,45 @@ Page({
       let _this = this
       const userCollection = wx.cloud.database().collection("user")
       const relationCollection = wx.cloud.database().collection("relation")
-      
+      const _ = wx.cloud.database().command;
+
       // 获取fan_num前20用户信息
-      userCollection.orderBy('fan_num', 'desc').limit(20).get({
+      userCollection.orderBy('fan_num', 'desc').where({
+          _openid: _.neq(app.globalData.userInfo._openid)
+        }).get({
         success: res => {
-          console.log(res)
+          // console.log(res)
+          _this.setData({
+            hotMasters: res.data
+          })
           top20userInfo = res.data
           // 获取关注关系
           var fan_id = app.globalData.userInfo._openid
           // console.log(fan_id)
-          for(let rk in res.data){
+          for (let rk in top20userInfo){
             // console.log(rk)
-            var follow_id = res.data[rk]._openid
+            var follow_id = top20userInfo[rk]._openid
             relationCollection.where({
               fan: fan_id,
               follow: follow_id,
             }).get().then(fd =>{
+              var changeId = 'hotMasters[' + rk + '].if_follow';
               if(fd.data.length>0){
-                res.data[rk].if_follow = true
+                this.setData({
+                  [changeId]: true
+                })
+                top20userInfo[rk].if_follow = true;
                 console.log("已关注\n")
               }
               else{
-                res.data[rk].if_follow = false
+                this.setData({
+                  [changeId]: false
+                })
+                top20userInfo[rk].if_follow = false;
                 console.log("未关注\n")
               }
             })
           }
-          // 设置页面数据
-          _this.setData({
-            hotMasters: res.data
-          })
         }
       })
     },
@@ -63,7 +72,7 @@ Page({
       // 添加关注关系
       const relationCollection = wx.cloud.database().collection("relation")
       var fan_id = app.globalData.userInfo._openid
-      var follow_id = top20userInfo[event.target.dataset.followId]._openid
+      var follow_id = top20userInfo[event.currentTarget.dataset.followId]._openid
       relationCollection.where({
         fan: fan_id,
         follow: follow_id
@@ -104,10 +113,7 @@ Page({
               follow: follow_id
             }).get().then(res => {
               if(res.data.length>0){
-                relationCollection.where({
-                  fan: fan_id,
-                  follow: follow_id
-                }).remove({
+                relationCollection.doc(res.data[0]._id).remove({
                   success() { console.log("数据库取消关注成功\n") },
                   fail() { console.log("数据库关注关系删除失败\n") }
                 })
