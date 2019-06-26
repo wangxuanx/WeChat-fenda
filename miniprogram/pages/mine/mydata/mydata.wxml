@@ -1,2 +1,59 @@
 <!--miniprogram/pages/mine/mydata/mydata.wxml-->
-<text>miniprogram/pages/mine/mydata/mydata.wxml</text>
+<view>
+  <view style="1" class="user-info">
+    <text class="head">头像</text>
+    <image class="user-avatar" src="{{userInfo.avatarUrl}}"></image>
+  </view>
+
+  <view class="user-sign" bindtap="changeSign">
+    <view class="sign" bindtap="changeSign">
+      <text>签名</text>
+    </view>
+    <view class="user-signs">
+      <text>喜欢唱、跳、rap、篮球，机你太美。</text>
+    </view>
+  </view>
+
+  <view class="user-name">
+    <view class="name">
+      <text>用户名</text>
+    </view>
+    <view class="user-nickname">
+      <text>{{userInfo.nickName}}</text>
+    </view>
+    
+  </view>
+  <view class="user-sex">
+    <text class="sex">性别</text>
+    <text class="user-sexer" wx:if="{{userInfo.gender==1}}">男</text>
+    <text class="user-sexer" wx:if="{{userInfo.gender==2}}">女</text>
+    <text class="user-sexer" wx:if="{{userInfo.gender==0}}">未知</text>
+  </view>
+
+  <view class="user-country">
+    <view class="country">
+      <text>国家</text>
+    </view>
+    <view class="user-countrys">
+      <text>{{userInfo.country}}</text>
+    </view>
+  </view>
+  
+  <view class="user-province">
+    <view class="province">
+      <text>省份</text>
+    </view>
+    <view class="user-provinces">
+      <text>{{userInfo.province}}</text>
+    </view>
+  </view>
+
+  <view class="user-city">
+    <view class="city">
+      <text>城市</text>
+    </view>
+    <view class="user-citys">
+      <text>{{userInfo.city}}</text>
+    </view>
+  </view>
+</view>

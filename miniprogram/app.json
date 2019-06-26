@@ -8,7 +8,9 @@
     "pages/issue/issue",
     "pages/mine/about/about-fenda",
     "pages/mine/help/help",
-    "pages/mine/mydata/mydata"
+    "pages/mine/mydata/mydata",
+    "pages/mine/normalsetting/normalsetting",
+    "pages/mine/mydata/changesign/changesign"
   ],
   "window": {
     "backgroundTextStyle": "light",

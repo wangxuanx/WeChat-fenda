@@ -1,1 +1,75 @@
 /* miniprogram/pages/mine/mydata/mydata.wxss */
+.user-info{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  height: 100%;
+  margin-bottom: 10px;
+}
+
+.user-name, .user-province, .user-country, .user-city{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  height: 100%;
+  margin-bottom: 1px;
+  justify-content: space-between;
+}
+
+.user-sex{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: #fff;
+  height: 100%;
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+
+.user-sign{
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  margin-bottom: 8px;
+  margin-top: 5px;
+}
+
+.head, .name, .sex, .province, .country, .city{
+  font-size: 18px;
+  margin-left: 12px;
+  color: #aaa;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.sign{
+  font-size: 18px;
+  margin-left: 12px;
+  color: #aaa;
+  margin-top: 10px;
+}
+
+.user-avatar{
+  width: 80px;
+  height: 80px;
+  margin: 10px;
+  margin-left: 65%;
+}
+
+.user-nickname, .user-sexer, .user-provinces, .user-citys, .user-countrys{
+  display: flex;
+  font-size: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 18px;
+}
+
+.user-signs{
+  display: flex;
+  font-size: 15PX; 
+  margin-bottom: 10px;
+  margin-left: 12px;
+  justify-content: flex-end;
+}

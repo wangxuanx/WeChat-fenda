@@ -6,8 +6,8 @@ Page({
         userInfo: {},
         myProfile: [
           { "desc": "我的资料", "id": "mydata" }, 
-          { "desc": "我的主页", "id": "myQues" }, 
-          { "desc": "通用","id": "myHeared" }],
+          { "desc": "我的主页", "id": "mypage" }, 
+          { "desc": "通用","id": "normalsetting" }],
         myAccount: [ 
           {"name": "帮助","id": "help"},
           {"name": "关于分答","id": "about"}],
@@ -79,6 +79,21 @@ Page({
     jumpmyvoice: function() {               //跳转到我的心声界面
       wx.navigateTo({
         url: '*****',                 //此处url链接到我的心声列表，其中有我的心声
+      })
+    },
+    mydata: function() {                 //跳转到我的资料设置
+      wx.navigateTo({
+        url: '../mine/mydata/mydata',
+      })
+    },
+    mypage: function() {                //跳转到用户的主页
+      wx.navigateTo({
+        url: '****',
+      })
+    },
+    normalsetting: function() {             //跳转到通用设置界面
+      wx.navigateTo({
+        url: '../mine/normalsetting/normalsetting',
       })
     }
 })
