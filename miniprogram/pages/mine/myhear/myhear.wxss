@@ -1,1 +1,62 @@
 /* miniprogram/pages/mine/myhear/myhear.wxss */
+.column-wrapper{
+	margin-bottom: 30rpx;
+}
+.master-info{
+	border-top: 1rpx solid #efefef;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row;
+	align-items: center;
+	padding: 30rpx;
+	background-color: #fff;
+}
+.master-info image{
+	width: 100rpx;
+	height: 100rpx;
+	border-radius: 50%;
+}
+.master-brief{
+	height: 120rpx;
+	padding-left: 30rpx;
+	flex: 1;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: column;
+	align-items: flex-start;
+}
+.master-user{
+	font-size: 30rpx;
+	letter-spacing: 1px;
+}
+.master-intro {
+	color: #888;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+}
+.master-fans{
+	color: #888;
+}
+.master-not-follow{
+  width: 80rpx;
+	padding: 10rpx;
+  font-size: 20rpx;
+	border-radius: 10rpx;
+	background-color: #fff;
+	text-align: center;
+  color: #FFC000;
+  border:2rpx solid;
+  font-weight: bold;
+}
+
+.master-follow{
+  font-weight:bold;
+  width: 80rpx;
+	padding: 10rpx;
+  font-size: 20rpx;
+	border-radius: 10rpx;
+	background-color: #d9d9d9;
+	text-align: center;
+  color: #808080;
+}
