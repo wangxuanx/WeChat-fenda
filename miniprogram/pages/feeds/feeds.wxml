@@ -1,17 +1,36 @@
 <!--index.wxml-->
 <scroll-view scroll-y="true" style="height: 100%;" bindscrolltoupper="upper" bindscrolltolower="lower">
-	<block wx:for="{{feedList}}" wx:key="item.id">
-		<navigator class="scroll-view-item" url="../issue/issue?stamp={{item.stamp}}">
-			<text class="item-ques">{{item.question}}</text>
-			<view class="item-ans">
-				<image src="/img/avatar/{{item.masterAvatar}}" mode="aspectFill" catchtap="toPerson" data-master="{{item.masterID}}"></image>
-				<view class="item-voice">1元偷偷听</view>
-				<view class="item-pv">{{item.pv}}</view>
-			</view>
-		</navigator>
+	<block wx:for="{{feedList}}" wx:key="item._id" id="{{index}}">
+    <view class="cu-card dynamic {{isCard?'no-card':''}}">
+      <view class="cu-item shadow">
+        <view class="cu-list menu-avatar">
+          <view class="cu-item">
+            <view class="cu-avatar round lg" style="background-image:url({{item.user.avatarUrl}});"></view>
+            <view class="content flex-sub">
+              <view>{{item.user.nickName}}</view>
+              <view class="text-gray text-sm flex justify-between date-style">
+                {{item.date}}
+              </view>
+            </view>
+            <button class="cu-btn block line-grey btnRight" id="{{index}}" catchtap="toFollow">
+                <text class="{{item.followed? '':'cuIcon-add'}}"></text>{{item.followed? "已关注":"关注"}}</button>
+          </view>
+        </view>
+        <view class="text-content">
+          {{item.text}}
+        </view>
+        <view class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
+          <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url({{item.image_group}});">
+          </view>
+        </view>
+        <view class="text-gray text-lg text-right padding">
+          <text id="{{index}}" class="cuIcon-appreciatefill margin-lr-xs {{item.thumbs? 'turnRed':''}}" catchtap="toLike"></text>{{item.praise}}
+        </view>
+      </view>
+    </view>
 	</block>
 </scroll-view>
-
-<loading hidden="{{hidden}}">
-	加载中...
-</loading>
+  <view class="cu-item addAction">
+    <navigator url="/pages/edit/edit" hover-class="hover"><text class="cuIcon-roundaddfill bg-color"></text>
+    </navigator>
+  </view>

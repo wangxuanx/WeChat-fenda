@@ -4,9 +4,7 @@ Page({
 
   data: {
     userInfo: {},
-    userSex:[{"id":0,"SEX":"未知"},
-             {"id":1,"SEX":"男"},
-             {"id":2,"SEX":"女"}]
+    userSign: {},
   },
   onLoad: function () {            //获取全局数据
     console.log('onLoad')

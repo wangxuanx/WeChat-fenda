@@ -10,7 +10,8 @@
     "pages/mine/help/help",
     "pages/mine/mydata/mydata",
     "pages/mine/normalsetting/normalsetting",
-    "pages/mine/mydata/changesign/changesign"
+    "pages/mine/mydata/changesign/changesign",
+    "pages/edit/edit"
   ],
   "window": {
     "backgroundTextStyle": "light",
