@@ -10,7 +10,7 @@
     <text wx:if="{{images.length==0}}" class="text-style">上传图片(可选)</text>
     <block wx:for="{{images}}" wx:key="*this" class="q-image-wrap">
       <view>
-        <image src="{{item}}" mode="aspectFill" data-idx="{{index}}"></image>
+        <image src="{{item}}" class="q-image" mode="scaleToFill" data-idx="{{index}}"></image>
       </view>
     </block>
   </view>
