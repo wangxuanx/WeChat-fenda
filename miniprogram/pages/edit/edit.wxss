@@ -1,0 +1,40 @@
+/* miniprogram/pages/edit/edit.wxss */
+
+.edit-header {
+  border-bottom: 1rpx dashed #bbb;
+  font-size: 50rpx;
+  height:60rpx;
+  padding: 0;
+}
+
+.edit-content {
+  margin-top: 1%;
+  font-size: 30rpx;
+}
+
+.edit-content .content {
+  letter-spacing: 15rpx;
+}
+
+.submit-btn {
+  position: fixed;
+  right: 3%;
+  top: 80%; 
+}
+
+.imageArea {
+  margin-top: 5%;
+  margin-left: 20%;
+  border-radius: 5%;
+  height: 200rpx;
+  width: 60%;
+  border: 5rpx dashed #bbb;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+}
+
+.imageArea .text-style {
+  font-size: 50rpx;
+  color: #bbb;
+}

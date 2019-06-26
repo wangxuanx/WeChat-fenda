@@ -1,2 +1,14 @@
 <!--miniprogram/pages/mine/mydata/changesign/changesign.wxml-->
-<text>miniprogram/pages/mine/mydata/changesign/changesign.wxml</text>
+<view>
+  <!--<view class="input-view">
+    <textarea class="input" rows="20" cols="3" placeholder="请输入新签名">
+    </textarea>
+  </view>
+  <button class="submit" type="default" bindtap="changeSign">确认修改</button>-->
+  <view class="input-view">
+    <form bindsubmit='bindFormsubmit'>
+      <textarea class="input" rows="20" cols="3" placeholder="请输入新签名" name="textarea" />
+      <button  id="addTask" form-type='submit'>输入完成</button>
+    </form>
+  </view> 
+</view>
