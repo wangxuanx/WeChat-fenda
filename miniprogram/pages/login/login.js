@@ -23,13 +23,13 @@ Page({
                   res.userInfo._openid = log_res.result.openid
                   app.globalData.userInfo = res.userInfo
                   console.log(app.globalData)
+                  wx.reLaunch({
+                    url: '../feeds/feeds',
+                  })
                 }
               })
             }
           });
-          wx.reLaunch({
-            url: '../feeds/feeds',
-          })
         } 
         else {
           // 用户没有授权
@@ -63,7 +63,6 @@ Page({
           }).get().then(fd => {
             // console.log(fd)
             if (fd.data.length == 0) {
-              console.log("添加用户\n")
               userCollection.add({
                 data: {
                   avatarUrl: userInfo.avatarUrl,
@@ -74,12 +73,14 @@ Page({
                   follow_num: 0,
                   nickName: userInfo.nickName,
                 }, success: res => {
-                  app.globalData.userInfo = userInfo
+                  console.log("添加用户成功\n")
                 }, fail: err => {
+                  console.log("添加用户失败\n")
                 }
               })
             }
             else { console.log("用户已存在\n")}
+            app.globalData.userInfo = userInfo
           }
           )
         }
