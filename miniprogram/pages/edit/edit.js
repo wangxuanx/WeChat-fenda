@@ -87,7 +87,7 @@ Page({
       },
     })
   },
-
+  
   start: function () {
     //开始录音
     var options = {
