@@ -2,24 +2,24 @@
 //获取应用实例
 var app = getApp()
 Page({
-    data: { 
-        hidden: true,
-        motto: 'Hello World',
-        userInfo: {},
-        fllowList: [
-          "Maxing",
-        ],
-        page: 1,
-        pages: 0,
-        feedList: []
-    },
+  data: {
+    hidden: true,
+    motto: 'Hello World',
+    userInfo: {},
+    fllowList: [
+      "Maxing",
+    ],
+    page: 1,
+    pages: 0,
+    feedList: []
+  },
   //事件处理函数
   bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
-  onLoad: function() {
+  onLoad: function () {
     console.log("load")
     this.fetchVoiceList();
   },
@@ -31,10 +31,10 @@ Page({
       wx.stopPullDownRefresh()
     }, 1000);
   },
-  onReachBottom: function() {
+  onReachBottom: function () {
     setTimeout(() => {
       this.fetchVoiceList();
-    },500) 
+    }, 500)
   },
   fetchVoiceList() {
     var that = this
@@ -54,14 +54,14 @@ Page({
       }
     })
   },
-  toFollow(event){
+  toFollow(event) {
     var index = event.currentTarget.id;
     console.log(index);
     if (this.data.feedList[index]) {
       var followed = this.data.feedList[index].followed;
-      if(followed){
+      if (followed) {
         this.data.feedList[index].followed = false;
-      }else{
+      } else {
         this.data.feedList[index].followed = true;
       }
       this.setData({
@@ -70,23 +70,23 @@ Page({
     }
   },
   toLike: function (event) {
-   var index = event.currentTarget.id;
-   if (this.data.feedList[index]) {
-     var hasChange = this.data.feedList[index].thumbs;
-     if (hasChange !== undefined) {
-       var onum = this.data.feedList[index].praise;
-       if(hasChange) {
-         this.data.feedList[index].praise = (onum - 1);
-         this.data.feedList[index].thumbs = false;
-       }else {
-         this.data.feedList[index].praise = (onum + 1);
-         this.data.feedList[index].thumbs = true;
-       }
-       this.setData({
-         feedList: this.data.feedList
-       })
-     }
-   }
+    var index = event.currentTarget.id;
+    if (this.data.feedList[index]) {
+      var hasChange = this.data.feedList[index].thumbs;
+      if (hasChange !== undefined) {
+        var onum = this.data.feedList[index].praise;
+        if (hasChange) {
+          this.data.feedList[index].praise = (onum - 1);
+          this.data.feedList[index].thumbs = false;
+        } else {
+          this.data.feedList[index].praise = (onum + 1);
+          this.data.feedList[index].thumbs = true;
+        }
+        this.setData({
+          feedList: this.data.feedList
+        })
+      }
+    }
   },
   toPerson: function (e) {
     console.log(e)

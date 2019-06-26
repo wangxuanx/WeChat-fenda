@@ -11,7 +11,10 @@
     "pages/mine/mydata/mydata",
     "pages/mine/normalsetting/normalsetting",
     "pages/mine/mydata/changesign/changesign",
-    "pages/edit/edit"
+    "pages/feeds/edit/edit",
+    "pages/mine/myhear/myhear",
+    "pages/mine/hearme/hearme",
+    "pages/mine/myvoice/myvoice"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -6,7 +6,7 @@
   </view>
 
   <view class="user-sign" bindtap="changeSign">
-    <view class="sign" bindtap="changeSign">
+    <view class="sign">
       <text>签名</text>
     </view>
     <view class="user-signs">

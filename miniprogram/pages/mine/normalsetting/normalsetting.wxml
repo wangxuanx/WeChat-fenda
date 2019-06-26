@@ -1,2 +1,4 @@
 <!--miniprogram/pages/mine/normalsetting/normalsetting.wxml-->
-<text>miniprogram/pages/mine/normalsetting/normalsetting.wxml</text>
+<view>
+  <text class="setting">用户通用设置界面</text>
+</view>

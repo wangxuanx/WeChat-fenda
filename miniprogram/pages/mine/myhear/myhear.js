@@ -1,11 +1,14 @@
-// miniprogram/pages/edit/edit.js
+// miniprogram/pages/mine/myhear/myhear.js
+let app = getApp()
+let top20userInfo
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    
   },
 
   /**
@@ -62,12 +65,5 @@ Page({
    */
   onShareAppMessage: function () {
 
-  },
-
-  toSubmit() {
-    console.log("成功")
-    wx.navigateBack({
-      delta: 1
-    })
   }
 })

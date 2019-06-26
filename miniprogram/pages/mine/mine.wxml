@@ -24,5 +24,6 @@
       <image class="account-arrow" src="/img/arrow.png"></image>
 		</view>
 	</view>
-	<button type="default;" class="btn-quit" bindtap="exitUser"> 退出登录 </button>
+	<button type="default;" class="btn-quit" bindtap="exitUser"> 退出小程序 </button>
+  
 </view>

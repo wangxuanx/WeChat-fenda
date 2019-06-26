@@ -1,19 +1,12 @@
 /* miniprogram/pages/edit/edit.wxss */
 
-.edit-header {
-  border-bottom: 1rpx dashed #bbb;
-  font-size: 50rpx;
-  height:60rpx;
-  padding: 0;
-}
-
 .edit-content {
-  margin-top: 1%;
   font-size: 30rpx;
+  border: 1rpx dashed #bbb;
 }
 
 .edit-content .content {
-  letter-spacing: 15rpx;
+  letter-spacing: 10rpx;
 }
 
 .submit-btn {
@@ -23,18 +16,20 @@
 }
 
 .imageArea {
-  margin-top: 5%;
-  margin-left: 20%;
+  margin-left: 25%;
   border-radius: 5%;
   height: 200rpx;
-  width: 60%;
+  width: 400rpx;
   border: 5rpx dashed #bbb;
-  text-align: center;
-  vertical-align: middle;
-  display: table-cell;
 }
 
 .imageArea .text-style {
+  text-align: center;
+  margin-top: 15%;
   font-size: 50rpx;
   color: #bbb;
+}
+
+.image-container {
+  z-index: 100;
 }

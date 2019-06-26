@@ -25,10 +25,10 @@
     display: flex;
     width: 650rpx;
     height: 150rpx;
-    box-shadow: 0px 0px 5px #81d4fa;
+    box-shadow: 0px 0px 10px #ccc;
     margin-bottom: 20rpx;
     margin-top: 15rpx;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 .cu-item{
