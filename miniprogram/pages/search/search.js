@@ -80,5 +80,17 @@ Page({
           }
         }
       })
-    }
+    },
+  searchBtn:function(){
+    wx.cloud.init();
+    wx.cloud.callFunction({
+      // 云函数名称
+      name: 'add',
+      // 传给云函数的参数
+      success: function (res) {
+        console.log(res.result) // 3
+      },
+      fail: console.error
+    })
+  }
 })
