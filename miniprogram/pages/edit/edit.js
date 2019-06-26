@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    images: [],
+    image: "",
     text: ''
   },
 
@@ -20,10 +20,9 @@ Page({
 
 
   toSubmit() {
-    // let cp = 
-    console.log('submit')
     wx.cloud.init()
-    let path = this.data.images[0]
+    let _this = this
+    let path = this.data.image
     let timestamp = Date.parse(new Date());
     const cloudPath = 'images'+timestamp + path.match(/\.[^.]+?$/)[0]
     let fileID = ''
@@ -33,39 +32,35 @@ Page({
     }).then(res => {
       // get resource ID
       console.log(res.fileID)
-      fileID = res.fileID
-      wx.navigateBack({
-        delta: 1
+      let voice = wx.cloud.database().collection('my-voice')
+      voice.add({
+        data: {
+          date: wx.cloud.database().serverDate(),
+          image: res.fileID,
+          text: _this.data.text
+        },
+        success: res => {
+          console.log(res)
+          wx.navigateBack({
+            delta: 1
+          })
+        }
       })
     }).catch(error => {
       console.log(error)
       // handle error
     })
-    let voice = wx.cloud.database().collection('my-voice')
-    voice.add({
-      data: {
-        date: wx.cloud.database().serverDate(),
-        image_group:[fileID],
-        text: this.data.text
-      },
-      success: res => {
-        console.log(res)
-        wx.navigateBack({
-        delta: 1
-      })
-      }
-    })
   },
 
-  upLoadImages() {
-    var that = this
+  upLoadImage() {
+    let that = this
     wx.chooseImage({
       success: function(res) {
         console.log(res)
         count: 9;
         console.log(res.tempFilePaths)
         that.setData({
-          images: res.tempFilePaths,
+          image: res.tempFilePaths[0],
         })
       },
     })

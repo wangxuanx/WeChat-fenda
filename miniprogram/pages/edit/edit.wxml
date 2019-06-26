@@ -4,12 +4,11 @@
 </view>
 <view class="imageArea"  catchtap="upLoadImage">
   <view>
-    <text wx:if="{{images.length==0}}" class="text-style">上传图片(可选)</text>
-    <block wx:for="{{images}}" wx:key="*this" class="q-image-wrap">
+    <text class="text-style">上传图片(可选)</text>
       <view>
-        <image src="{{item}}" class="q-image" mode="scaleToFill" data-idx="{{index}}"></image>
+        <image src="{{image}}" class="q-image" mode="scaleToFill" data-idx="{{index}}"></image>
       </view>
-    </block>
+    
   </view>
 </view>
 <view class="grid col-3 padding-sm">

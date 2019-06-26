@@ -128,14 +128,7 @@ Page({
   },
   lower: function () {
     console.log("到底啦")
-    if (this.requestFlag === false) {
-      this.requestFlag = true
-      this.setData({
-        hidden: false
-      })
-      var that = this
-      setTimeout(that.getFeeds, 3000)
-    }
+    this.fetchVoiceList()
   },
   requestFlag: false,
   getFeeds: function () {
