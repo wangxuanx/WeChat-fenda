@@ -13,9 +13,11 @@ Page({
       url: '../logs/logs'
     })
   },
+
   onShow: function() {
     this.fetchVoiceList();
   },
+
   onPullDownRefresh: function () {
     wx.showNavigationBarLoading()
     this.setData({

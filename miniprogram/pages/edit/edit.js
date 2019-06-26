@@ -80,14 +80,13 @@ Page({
       success: function (res) {
         console.log(res)
         count: 9;
-        console.log(res.tempFilePaths)
         that.setData({
           image: res.tempFilePaths[0],
         })
       },
     })
   },
-  
+
   start: function () {
     //开始录音
     var options = {
