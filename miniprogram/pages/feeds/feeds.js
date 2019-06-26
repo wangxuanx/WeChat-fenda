@@ -13,6 +13,18 @@ Page({
     pages: 0,
     feedList: []
   },
+    data: { 
+        hidden: true,
+        motto: 'Hello World',
+        userInfo: {},
+        fllowList: [
+          "Maxing",
+        ],
+        page: 1,
+        pages: 0,
+        feedList: [],
+        followList: []
+    },
   //事件处理函数
   bindViewTap: function () {
     wx.navigateTo({
@@ -37,22 +49,24 @@ Page({
     }, 500)
   },
   fetchVoiceList() {
-    var that = this
-    wx.request({
-      url: 'http://localhost:3000/feedList',
-      header: {
-        'Content-Type': 'application/json'
-      },
-      success: function (res) {
-        const articles = that.data.feedList
-        that.setData({
-          feedList: articles.concat(res.data)
-        })
-        try {
-          wx.setStorageSync('feeds', res.data)
-        } catch (e) { }
-      }
+    console.log(app.globalData)
+    var _this = this
+    wx.cloud.init()
+    let user = wx.cloud.database().collection('user')
+    let voice = wx.cloud.database().collection('my-voice')
+    user.where({
+      _openid : app.globalData.userInfo._openid
+    }).get().then(res => {
+      console.log(res)
+      _this.setData({
+        followList: res.data.followList
+      })
     })
+    for (let item in this.data.followList) {
+      console.log(item)
+    }
+    // voice.where()
+
   },
   toFollow(event) {
     var index = event.currentTarget.id;
@@ -111,26 +125,5 @@ Page({
   requestFlag: false,
   getFeeds: function () {
     var that = this
-    wx.request({
-      url: 'https://api.getweapp.com/thirdparty/fenda/stamp1206.json',
-      header: {
-        'Content-Type': 'application/json'
-      },
-      success: function (res) {
-        that.requestFlag = false
-        that.setData({
-          hidden: true
-        })
-        var feedsStrorage = wx.getStorageSync('feeds') || []
-        feedsStrorage = feedsStrorage.concat(res.data)
-        that.setData({
-          feedList: feedsStrorage
-        })
-        try {
-          wx.setStorageSync('feeds', feedsStrorage)
-        } catch (e) { }
-        console.log("同步成功啦")
-      }
-    })
   }
 })
