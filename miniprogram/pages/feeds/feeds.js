@@ -25,6 +25,9 @@ Page({
   },
   onPullDownRefresh: function () {
     wx.showNavigationBarLoading()
+    this.setData({
+      feedList: []
+    })
     this.fetchVoiceList()
     setTimeout(() => {
       wx.hideNavigationBarLoading()
@@ -32,9 +35,7 @@ Page({
     }, 1000);
   },
   onReachBottom: function() {
-    setTimeout(() => {
-      this.fetchVoiceList();
-    },500) 
+      this.fetchVoiceList()
   },
   fetchVoiceList() {
     let _this = this
@@ -51,7 +52,7 @@ Page({
       let feedList = _this.data.feedList
       for (let i = 0; i < 10; i++) {
         let select_list = []
-        voice.limit(10).get().then( res => {
+        voice.skip(feedList.length).limit(10).get().then( res => {
           select_list = res.data
           for (let j = 0; j < select_list.length; j++) {
             if (follow_list.includes(select_list[j]._openid)) {
