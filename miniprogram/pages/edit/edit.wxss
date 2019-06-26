@@ -12,7 +12,7 @@
 .submit-btn {
   position: fixed;
   right: 3%;
-  top: 80%; 
+  top: 60%; 
 }
 
 .imageArea {
