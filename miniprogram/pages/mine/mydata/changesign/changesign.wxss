@@ -6,7 +6,7 @@
 }
 
 .input{
-  padding: 2px;
+  padding: 10px;
   font-size: 20px;
   max-height: 100%;
   width: 100%;
