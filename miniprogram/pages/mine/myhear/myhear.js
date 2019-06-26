@@ -1,6 +1,7 @@
 // miniprogram/pages/mine/myhear/myhear.js
 let app = getApp()
 let userFollow
+let top20userInfo
 /*需要展示follow_list中的信息,
   登录用户的收听。
  */
@@ -14,49 +15,39 @@ Page({
 
     wx.cloud.init()
     let _this = this
-    const userCollection = wx.cloud.database().collection("user")
+    const userCollection = wx.cloud.database().collection("user")           //用户集合
     const relationCollection = wx.cloud.database().collection("relation")
-    const _ = wx.cloud.database().command;
+    const com = wx.cloud.database().command;
 
     // 获取fan_num前20用户信息
-    userCollection.orderBy('fan_num', 'follow_list').where({
-      _openid: _.neq(app.globalData.userInfo._openid)  
+    userCollection.where({
+      _openid: com.eq(app.globalData.userInfo._openid)  
+    }).field({
+      follow_list: true,
+    }).get({
+      success: res => {
+        _this.setData({
+          userFollow: res.data[0].follow_list
+        })
+        console.log(userFollow)
+      }
+    })
+
+    //获取非自己用户的头像、昵称、介绍和听众数目
+    userCollection.where({
+      _openid: com.neq(app.globalData.userInfo._openid)
+    }).field({
+      avatarUrl: true,
+      desc: true,
+      follow_num: true,
+      nickName: true
     }).get({
       success: res => {
         console.log(res)
         _this.setData({
-          hotMasters: res.data
+          top20userInfo: res.data
         })
-        userFollow = res.data
-        console.log(userFollow)
-
-        // 获取关注关系
-        var fan_id = app.globalData.userInfo._openid
-        console.log(fan_id)
-        for (let rk in userFollow) {
-          //console.log(rk)
-          var follow_id = userFollow[rk]._openid
-          relationCollection.where({
-            fan: fan_id,
-            follow: follow_id,
-          }).get().then(fd => {
-            var changeId = 'hotMasters[' + rk + '].if_follow';
-            if (fd.data.length > 0) {
-              this.setData({
-                [changeId]: true
-              })
-              userFollow[rk].if_follow = true;
-              //console.log("已关注\n")
-            }
-            else {
-              this.setData({
-                [changeId]: false
-              })
-              userFollow[rk].if_follow = false;
-              //console.log("未关注\n")
-            }
-          })
-        }
+        console.log(res.data)
       }
     })
   },
