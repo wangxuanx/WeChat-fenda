@@ -3,7 +3,8 @@ let top20userInfo
 
 Page({
     data: {
-        hotMasters: []
+        hotMasters: [],
+        searchContent: ""
     },
 
     onLoad: function() {
@@ -122,5 +123,19 @@ Page({
           }
         }
       })
+    },
+    searchInput: function(event){
+      // console.log(event.detail.value);
+      this.setData({
+        searchContent:event.detail.value
+      })
+    },
+    search:function(event){
+
+      var targetUrl = '/pages/search_res/search_res?search=' + this.data.searchContent;
+      wx.navigateTo({
+        url: targetUrl//实际路径要写全
+      })
+
     }
 })
