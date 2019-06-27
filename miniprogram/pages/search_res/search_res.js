@@ -256,7 +256,9 @@ Page({
 
   //跳转函数
   toPerson: function (event) {
-    var targetUrl = '/pages/person/person?id=' + event.currentTarget.dataset.userId;
+    console.log(this.data.users);
+    let _openid = this.data.users[event.currentTarget.dataset.index]._openid
+    var targetUrl = '/pages/person/person?_openid=' + _openid;
     console.log(event);
     wx.navigateTo({
       url: targetUrl//实际路径要写全
