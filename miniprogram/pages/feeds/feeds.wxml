@@ -23,6 +23,19 @@
           <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url({{item.image}});">
           </view>
         </view>
+        <view class='output-audio' wx:if="{{item.audio!=''}}">
+
+          <!-- 默认状态 -->
+          <view class='audio' wx:if="{{item.bl==false}}" catchtap='audioPlay' id="{{index}}" data-bl="{{item.bl}}">
+            <image class='ico' src='https://xcx.quan5fen.com/Public/xcx-hitui/image/imgs-jyh/yuyin-ico.png' />
+          </view>
+
+          <!-- 当前正在播放状态 -->
+          <view class='audio' wx:if="{{item.bl==true}}" catchtap='audioStop' id="{{index}}" data-bl="{{item.bl}}">
+            <image class='ico' src='https://xcx.quan5fen.com/Public/xcx-hitui/image/imgs-jyh/yuyin-gif.gif' />
+          </view>
+
+          </view>
         <view class="text-gray text-lg text-right padding">
           <text id="{{index}}" class="cuIcon-appreciatefill margin-lr-xs {{item.thumbs? 'turnRed':''}}" catchtap="toLike"></text>{{item.praise}}
         </view>
