@@ -1,66 +1,27 @@
 //feeds.js
 //获取应用实例
 var app = getApp()
+var shipLength = 0;
 Page({
   data: {
     hidden: true,
-    motto: 'Hello World',
-    userInfo: {},
-    fllowList: [
-      "Maxing",
-    ],
-    page: 1,
-    pages: 0,
-    feedList: [
-      {
-        "_id": 1,
-        "userInfo": {
-          "nickName": "Maxing",
-          "avatarUrl": "/img/avatar/chenyu.jpg"
-        },
-        "date": "3月前",
-        "followed": true,
-        "image_group": ["https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"],
-        "thumbs": true,
-        "praise": 20
-      },
-      {
-        "_id": 2,
-        "userInfo": {
-          "nickName": "Maxing",
-          "avatarUrl": "/img/avatar/chenyu.jpg"
-        },
-        "date": "3月前",
-        "followed": true,
-        "image_group": ["https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"],
-        "thumbs": true,
-        "praise": 20
-      },
-      {
-        "_id": 3,
-        "userInfo": {
-          "nickName": "Maxing",
-          "avatarUrl": "/img/avatar/chenyu.jpg"
-        },
-        "date": "3月前",
-        "followed": true,
-        "image_group": ["https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"],
-        "thumbs": true,
-        "praise": 20
-      },
-      {
-        "_id": 4,
-        "userInfo": {
-          "nickName": "Maxing",
-          "avatarUrl": "/img/avatar/chenyu.jpg"
-        },
-        "date": "3月前",
-        "followed": true,
-        "image_group": ["https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"],
-        "thumbs": true,
-        "praise": 20
-      },
-    ]
+    feedList: [],
+    userInfo: null
+  },
+  onLoad: function(){
+    wx.cloud.init()
+    var _this = this;
+    let userid = app.globalData.userInfo._openid;
+    let user = wx.cloud.database().collection('user')
+    user.where({
+      _openid: userid
+    }).get().then(res => {
+      _this.setData({
+        userInfo: res.data[0]
+      })
+    })
+    console.log(this.userInfo);
+    this.fetchVoiceList();
   },
   //事件处理函数
   bindViewTap: function () {
@@ -68,93 +29,59 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function () {
-    this.fetchVoiceList();
-  },
+
   onPullDownRefresh: function () {
     wx.showNavigationBarLoading()
     this.setData({
       feedList: []
     })
+    shipLength = 0;
     this.fetchVoiceList()
     setTimeout(() => {
       wx.hideNavigationBarLoading()
       wx.stopPullDownRefresh()
     }, 1000);
   },
-  onReachBottom() {
+  onReachBottom: function () {
+    console.log('bottom')
     this.fetchVoiceList()
   },
   fetchVoiceList() {
     let _this = this
-    wx.cloud.init()
-    let user = wx.cloud.database().collection('user')
-    let voice = wx.cloud.database().collection('my-voice')
-    user.where({
-      _openid: app.globalData.userInfo._openid
-    }).get().then(res => {
-      let follow_list = res.data[0].follow_list
-      _this.setData({
-        followList: follow_list
-      })
+    let voice = wx.cloud.database().collection('voice-test')
+    
+    let userid = app.globalData.userInfo._openid;
+
+    //获取voice
+    voice.where({
+      _openid:userid
+    }).skip(shipLength*10).limit(10).get().then(res => {
       let feedList = _this.data.feedList
-      for (let i = 0; i < 10; i++) {
-        let select_list = []
-        voice.skip(feedList.length).limit(10).get().then(res => {
-          select_list = res.data
-          for (let j = 0; j < select_list.length; j++) {
-            if (follow_list.includes(select_list[j]._openid)) {
-              user.where({
-                _openid: select_list[j]._openid
-              }).get().then(res => {
-                select_list[j].userInfo = res.data[0]
-                feedList = feedList.concat(select_list[j])
-                _this.setData({
-                  feedList: feedList
-                })
-              })
+      let select_list = res.data;
+      //console.log(res.data);
+      for (let i = 0; i < select_list.length; i++) {
+        let fileId = select_list[i].image;
+        if (fileId) {
+          wx.cloud.downloadFile({
+            fileID: fileId,
+            success: res => {
+              console.log(res.tempFilePath)
+              select_list[i] = res.tempFilePath;
             }
-          }
-        })
-        if (select_list.length < 9) break;
-        if (feedList.length > 9) break
+          })
+        }
       }
+      //下次跳过读取
+      shipLength +=1;
+      feedList = feedList.concat(select_list)
+      console.log(feedList)
+      _this.setData({
+        feedList: feedList
+      })
+      //console.log(tempList);
     })
   },
-  toFollow(event) {
-    var index = event.currentTarget.id;
-    console.log(index);
-    if (this.data.feedList[index]) {
-      var followed = this.data.feedList[index].followed;
-      if (followed) {
-        this.data.feedList[index].followed = false;
-      } else {
-        this.data.feedList[index].followed = true;
-      }
-      this.setData({
-        feedList: this.data.feedList
-      })
-    }
-  },
-  toLike: function (event) {
-    var index = event.currentTarget.id;
-    if (this.data.feedList[index]) {
-      var hasChange = this.data.feedList[index].thumbs;
-      if (hasChange !== undefined) {
-        var onum = this.data.feedList[index].praise;
-        if (hasChange) {
-          this.data.feedList[index].praise = (onum - 1);
-          this.data.feedList[index].thumbs = false;
-        } else {
-          this.data.feedList[index].praise = (onum + 1);
-          this.data.feedList[index].thumbs = true;
-        }
-        this.setData({
-          feedList: this.data.feedList
-        })
-      }
-    }
-  },
+
   toPerson: function (e) {
     console.log(e)
     wx.navigateTo({
@@ -166,14 +93,7 @@ Page({
   },
   lower: function () {
     console.log("到底啦")
-    if (this.requestFlag === false) {
-      this.requestFlag = true
-      this.setData({
-        hidden: false
-      })
-      var that = this
-      setTimeout(that.getFeeds, 3000)
-    }
+    this.fetchVoiceList()
   },
   requestFlag: false,
   getFeeds: function () {
