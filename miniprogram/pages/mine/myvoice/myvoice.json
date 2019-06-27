@@ -1,3 +1,4 @@
 {
-  "navigationBarTitleText": "我的心声"
+  "navigationBarTitleText": "我的心声",
+  "enablePullDownRefresh": true
 }

@@ -11,16 +11,13 @@
                 {{item.date}}
               </view>
             </view>
-            <!-- <button class="cu-btn block line-grey btnRight" id="{{index}}" catchtap="toFollow">
-                <text class="{{item.followed? '':'cuIcon-add'}}"></text>{{item.followed? "已关注":"关注"}}</button> -->
           </view>
         </view>
-        <view class="text-content">
+        <view class="text-content-myview">
           {{item.text}}
         </view>
-        <view wx:if= "{{item.image_group}}" class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
-          <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url({{item.image_group}});">
-          </view>
+        <view>
+          <image class="bg-img" src="{{item.image_group}}" mode="widthFix"></image>
         </view>
         <view class="text-gray text-lg text-right padding">
           <text id="{{index}}" class="cuIcon-appreciatefill margin-lr-xs {{item.thumbs? 'turnRed':''}}" catchtap="toLike"></text>{{item.praise}}

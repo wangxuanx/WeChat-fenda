@@ -17,16 +17,11 @@
 .cu-card {
   margin-left: 0rpx;
   margin-right: 0rpx; 
-  margin-bottom: 0;
-  margin-top: 0rpx;
-  margin: 10px;
+  margin-bottom: 0rpx;
+  margin-top: -5px;
 }
 
 .cu-item {
-  margin-left: 0rpx;
-  margin-right: 0rpx; 
-  margin-bottom: 0;
-  margin-top: 0rpx;
   border-bottom: 1rpx solid #ddd;
   box-shadow: 0px 0px 5px #ccc;
 }
@@ -53,6 +48,6 @@
   height: 50px;
 }
 
-.turnRed {
-  color: red;
+.bg-img{
+  width: 100%;
 }
