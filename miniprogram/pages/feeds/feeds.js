@@ -1,10 +1,32 @@
 //feeds.js
 //获取应用实例
+const myaudio = wx.createInnerAudioContext();
 var app = getApp()
 Page({
     data: { 
         hidden: true,
-        feedList: [],
+        feedList: [
+          {
+            _id: 1,
+            userInfo: {
+              avatarUrl: '/img/avatar/chenyu.jpg',
+              nickName: "陈宇sm"
+            },
+            audio: "http://music.163.com/song/media/outer/url?id=562598065.mp3",
+            text: "",
+            bl: false
+          },
+          {
+            _id: 2,
+            userInfo: {
+              avatarUrl: '/img/avatar/chenyu.jpg',
+              nickName: "陈宇sm"
+            },
+            audio: "",
+            bl: false,
+            text: "君子如玉，温润而泽，慧心如兰，知书达理，乃得四方"
+          }
+        ],
         followList: []
     },
   //事件处理函数
@@ -131,5 +153,68 @@ Page({
   requestFlag: false,
   getFeeds: function () {
     var that = this
-  }
+  },
+  //音频播放  
+  audioPlay: function (e) {
+    console.log(e.currentTarget.dataset.key)
+    var that = this,
+      id = e.currentTarget.id,
+      key = e.currentTarget.id,
+      audioArr = that.data.feedList,
+      vidSrc = audioArr[key].audio;
+      myaudio.src = vidSrc;
+      myaudio.autoplay = true;
+
+    //切换显示状态
+    for (var i = 0; i < audioArr.length; i++) {
+      audioArr[i].bl = false;
+    }
+    audioArr[key].bl = true;
+
+    myaudio.play();
+
+    //开始监听
+    myaudio.onPlay(() => {
+      that.setData({
+        feedList: audioArr
+      })
+    })
+
+    //结束监听
+    myaudio.onEnded(() => {
+      audioArr[key].bl = false;
+      that.setData({
+        feedList: audioArr,
+      })
+    })
+
+  },
+
+  // 音频停止
+  audioStop: function (e) {
+    var that = this,
+      key = e.currentTarget.id,
+      audioArr = that.data.feedList;
+    //切换显示状态
+    for (var i = 0; i < audioArr.length; i++) {
+      audioArr[i].bl = false;
+    }
+    audioArr[key].bl = false;
+
+    myaudio.stop();
+    //停止监听
+    myaudio.onStop(() => {
+      audioArr[key].bl = false;
+      that.setData({
+        feedList: audioArr,
+      })
+    })
+    //结束监听
+    myaudio.onEnded(() => {
+      audioArr[key].bl = false;
+      that.setData({
+        feedList: audioArr,
+      })
+    })
+  }, 
 })
