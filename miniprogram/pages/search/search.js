@@ -1,10 +1,13 @@
 let app = getApp()
 let top20userInfo
 
+var toast = require('../../utils/toast/toast.js');
+
 Page({
-  data: {
-    hotMasters: []
-  },
+    data: {
+        hotMasters: [],
+        searchContent: ""
+    },
 
   onLoad: function () {
     wx.cloud.init()
@@ -195,20 +198,24 @@ Page({
           console.log('用户点击取消');
         }
       }
-    })
-  },
-  searchInput: function (event) {
-    // console.log(event.detail.value);
-    this.setData({
-      searchContent: event.detail.value
-    })
-  },
-  search: function (event) {
+      })
+    },
+    searchInput: function(event){
+      // console.log(event.detail.value);
+      this.setData({
+        searchContent:event.detail.value
+      })
+    },
+    search:function(event){
+      var content = this.data.searchContent.replace(/\s+/g, "");
+      if(content.length == 0){
+        toast.showToast(this, "请输入正确的信息！", 700, true);
+        return;
+      }
+      var targetUrl = '/pages/search_res/search_res?search=' + content;
+      wx.navigateTo({
+        url: targetUrl//实际路径要写全
+      })
 
-    var targetUrl = '/pages/search_res/search_res?search=' + this.data.searchContent;
-    wx.navigateTo({
-      url: targetUrl//实际路径要写全
-    })
-
-  }
+    }
 })
