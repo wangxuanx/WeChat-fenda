@@ -55,9 +55,10 @@ exports.main = async (event, context) => {
 
 async function upload (image, audio) {
   if (image.length) {
-    cloudPath = 'images/'+ Date.parse(new Date()) + image.match(/\.[^.]+?$/)[0]
+    // cloudPath = 'images/'+ Date.parse(new Date()) + image.match(/\.[^.]+?$/)[0]
+    cloudPath = Date.parse(new Date()) + image.match(/\.[^.]+?$/)[0]
     await cloud.uploadFile({
-      cloudPath,
+      cloudPath: cloudPath,
       fileContent: image
     }).then( res => {
       image = res.fileID

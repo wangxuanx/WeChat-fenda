@@ -9,31 +9,93 @@ Page({
     image: '',
     text: '',
     audio: '',
-     setInter: '',
-     num: 0,
-     tempFilePath: '',
-     isHidePlaceholder: false,
+    setInter: '',
+    num: 0,
+    tempFilePath: '',
+    isHidePlaceholder: false,
   },
 
   toSubmit() {
     wx.cloud.init()
     let _this = this
-    wx.cloud.callFunction({
-      name: 'upLoadVoice',
-      data: {
-        image: _this.data.image,
-        text: _this.data.text,
-        audio: _this.data.audio
-      },
-      success: res => {
-        wx.navigateBack({
-          delta: 1
+    let image = this.data.image, audio = this.data.audio
+    if (this.data.text.length || image.length || audio.length) {
+      let voice = wx.cloud.database().collection('my-voice')
+      let db = wx.cloud.database()
+      if (image.length) {
+        let cloudPath = 'images/'+ Date.parse(new Date()) + image.match(/\.[^.]+?$/)[0]
+        wx.cloud.uploadFile({
+          cloudPath: cloudPath,
+          filePath: image
+        }).then( res => {
+          // console.log(res)
+          image = res.fileID
+          if (audio.length) {
+            let cloudPath = 'audioes/'+ Date.parse(new Date()) + audio.match(/\.[^.]+?$/)[0]
+            wx.cloud.uploadFile({
+              cloudPath: cloudPath,
+              filePath: audio
+            }).then( res => {
+              // console.log(res)
+              audio = res.fileID
+              voice.add({
+                data: {
+                  text: _this.data.text,
+                  audio: audio,
+                  image: image,
+                  date: db.serverDate(),
+                },
+                success: res => {
+                 // console.log(res)
+                 wx.navigateBack({
+                  delta: 1
+                })
+               }
+             })
+            })
+          } else {
+            voice.add({
+              data: {
+                text: _this.data.text,
+                audio: audio,
+                image: image,
+                date: db.serverDate(),
+              },
+              success: res => {
+                 // console.log(res)
+                 wx.navigateBack({
+                  delta: 1
+                })
+               }
+             })
+          }   
         })
-      }, 
-      fail: res => {
-        console.log(res)
+      } else if (audio.length) {
+        let cloudPath = 'audioes/'+ Date.parse(new Date()) + audio.match(/\.[^.]+?$/)[0]
+        wx.cloud.uploadFile({
+          cloudPath: cloudPath,
+          filePath: audio
+        }).then( res => {
+          // console.log(res)
+          audio = res.fileID
+          voice.add({
+            data: {
+              text: _this.data.text,
+              audio: audio,
+              image: image,
+              date: db.serverDate(),
+            },
+            success: res => {
+                 // console.log(res)
+                 wx.navigateBack({
+                  delta: 1
+                })
+               }
+             })
+        })
       }
-    })
+
+    }
   },
   upLoadImage() {
     var that = this
@@ -88,10 +150,11 @@ Page({
   },
   stop: function () {
     recorderManager.stop();
+    let _this = this
     recorderManager.onStop((res) => {
       console.log('停止录音', res.tempFilePath)
       clearInterval(this.data.setInter)
-      this.setData({
+      _this.setData({
         audio: res.tempFilePath
       })
     })

@@ -25,12 +25,12 @@
 
           <!-- 默认状态 -->
           <view class='audio' wx:if="{{item.bl==false}}" catchtap='audioPlay' id="{{index}}" data-bl="{{item.bl}}">
-            <image class='ico' src='https://xcx.quan5fen.com/Public/xcx-hitui/image/imgs-jyh/yuyin-ico.png' />
+            <image class='ico' src='../../img/yuyin-ico.png' />
           </view>
 
           <!-- 当前正在播放状态 -->
           <view class='audio' wx:if="{{item.bl==true}}" catchtap='audioStop' id="{{index}}" data-bl="{{item.bl}}">
-            <image class='ico' src='https://xcx.quan5fen.com/Public/xcx-hitui/image/imgs-jyh/yuyin-gif.gif' />
+            <image class='ico' src='../../img/yuyin-gif.gif' />
           </view>
 
           </view>

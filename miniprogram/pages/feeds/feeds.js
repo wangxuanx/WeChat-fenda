@@ -58,18 +58,31 @@ Page({
           let image_file = feedList[i].image
           // console.log(fileId)
           if (image_file.length) {
-           wx.cloud.downloadFile({
-            fileID: image_file,
-            success: res => {
-              // console.log(res)
-              _this.setData({
-                ['feedList['+ length +'].image']: res.tempFilePath
+            wx.cloud.getTempFileURL({
+              fileList: [{
+                fileID: image_file,
+                maxAge: 60 * 60, 
+              }]
+            }).then(res => {
+              // console.log(res.fileList)
+               _this.setData({
+                ['feedList['+ length +'].image']: res.fileList[0].tempFileURL
               })
-            }
-          })
-         }
-         let fileId = feedList[i].audio
-         if (fileId.length) {
+            }).catch(error => {
+  // handle error
+})
+          //   wx.cloud.downloadFile({
+          //     fileID: image_file
+          //     success: res => {
+          //     // console.log(res)
+          //     _this.setData({
+          //       ['feedList['+ length +'].image']: res.tempFilePath
+          //     })
+          //   }
+          // })
+          }
+          let fileId = feedList[i].audio
+          if (fileId.length) {
            wx.cloud.downloadFile({
             fileID: fileId,
             success: res => {
