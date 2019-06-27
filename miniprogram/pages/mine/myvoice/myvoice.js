@@ -1,66 +1,182 @@
-// miniprogram/pages/mine/myvoice/myvoice.js
+//feeds.js
+//获取应用实例
+var app = getApp()
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    hidden: true,
+    motto: 'Hello World',
+    userInfo: {},
+    fllowList: [
+      "Maxing",
+    ],
+    page: 1,
+    pages: 0,
+    feedList: [
+      {
+        "_id": 1,
+        "userInfo": {
+          "nickName": "Maxing",
+          "avatarUrl": "/img/avatar/chenyu.jpg"
+        },
+        "date": "3月前",
+        "followed": true,
+        "image_group": ["https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"],
+        "thumbs": true,
+        "praise": 20
+      },
+      {
+        "_id": 2,
+        "userInfo": {
+          "nickName": "Maxing",
+          "avatarUrl": "/img/avatar/chenyu.jpg"
+        },
+        "date": "3月前",
+        "followed": true,
+        "image_group": ["https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"],
+        "thumbs": true,
+        "praise": 20
+      },
+      {
+        "_id": 3,
+        "userInfo": {
+          "nickName": "Maxing",
+          "avatarUrl": "/img/avatar/chenyu.jpg"
+        },
+        "date": "3月前",
+        "followed": true,
+        "image_group": ["https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"],
+        "thumbs": true,
+        "praise": 20
+      },
+      {
+        "_id": 4,
+        "userInfo": {
+          "nickName": "Maxing",
+          "avatarUrl": "/img/avatar/chenyu.jpg"
+        },
+        "date": "3月前",
+        "followed": true,
+        "image_group": ["https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg"],
+        "thumbs": true,
+        "praise": 20
+      },
+    ]
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  //事件处理函数
+  bindViewTap: function () {
+    wx.navigateTo({
+      url: '../logs/logs'
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  onLoad: function () {
+    this.fetchVoiceList();
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
+    wx.showNavigationBarLoading()
+    this.setData({
+      feedList: []
+    })
+    this.fetchVoiceList()
+    setTimeout(() => {
+      wx.hideNavigationBarLoading()
+      wx.stopPullDownRefresh()
+    }, 1000);
+  },
+  onReachBottom() {
+    this.fetchVoiceList()
+  },
+  fetchVoiceList() {
+    let _this = this
+    wx.cloud.init()
+    let user = wx.cloud.database().collection('user')
+    let voice = wx.cloud.database().collection('my-voice')
+    user.where({
+      _openid: app.globalData.userInfo._openid
+    }).get().then(res => {
+      let follow_list = res.data[0].follow_list
+      _this.setData({
+        followList: follow_list
+      })
+      let feedList = _this.data.feedList
+      for (let i = 0; i < 10; i++) {
+        let select_list = []
+        voice.skip(feedList.length).limit(10).get().then(res => {
+          select_list = res.data
+          for (let j = 0; j < select_list.length; j++) {
+            if (follow_list.includes(select_list[j]._openid)) {
+              user.where({
+                _openid: select_list[j]._openid
+              }).get().then(res => {
+                select_list[j].userInfo = res.data[0]
+                feedList = feedList.concat(select_list[j])
+                _this.setData({
+                  feedList: feedList
+                })
+              })
+            }
+          }
+        })
+        if (select_list.length < 9) break;
+        if (feedList.length > 9) break
+      }
+    })
+  },
+  toFollow(event) {
+    var index = event.currentTarget.id;
+    console.log(index);
+    if (this.data.feedList[index]) {
+      var followed = this.data.feedList[index].followed;
+      if (followed) {
+        this.data.feedList[index].followed = false;
+      } else {
+        this.data.feedList[index].followed = true;
+      }
+      this.setData({
+        feedList: this.data.feedList
+      })
+    }
+  },
+  toLike: function (event) {
+    var index = event.currentTarget.id;
+    if (this.data.feedList[index]) {
+      var hasChange = this.data.feedList[index].thumbs;
+      if (hasChange !== undefined) {
+        var onum = this.data.feedList[index].praise;
+        if (hasChange) {
+          this.data.feedList[index].praise = (onum - 1);
+          this.data.feedList[index].thumbs = false;
+        } else {
+          this.data.feedList[index].praise = (onum + 1);
+          this.data.feedList[index].thumbs = true;
+        }
+        this.setData({
+          feedList: this.data.feedList
+        })
+      }
+    }
+  },
+  toPerson: function (e) {
+    console.log(e)
+    wx.navigateTo({
+      url: '../person/person?master=' + e.target.dataset.master
+    })
+  },
+  upper: function () {
 
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
+  lower: function () {
+    console.log("到底啦")
+    if (this.requestFlag === false) {
+      this.requestFlag = true
+      this.setData({
+        hidden: false
+      })
+      var that = this
+      setTimeout(that.getFeeds, 3000)
+    }
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  requestFlag: false,
+  getFeeds: function () {
+    var that = this
   }
 })

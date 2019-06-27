@@ -6,8 +6,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    image: '',
-    text: ''
+    images: [],
+    setInter: '',
+    num: 0,
+    tempFilePath: '',
+    isHidePlaceholder: false,
+    inputdata: "",
   },
 
 
@@ -15,73 +19,73 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+
   },
 
-  inputText(e) {
-    console.log(e)
-    this.setData({
-      text: e.detail.value
-    })
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
   },
 
   toSubmit() {
-    wx.cloud.init()
-    let _this = this
-    let path = this.data.image
-    let voice = wx.cloud.database().collection('my-voice')
-    let fileID = ''
-    if (path.length) {
-      console.log('in')
-      let timestamp = Date.parse(new Date());
-      const cloudPath = 'images' + timestamp + path.match(/\.[^.]+?$/)[0]
-      wx.cloud.uploadFile({
-        cloudPath,
-        filePath: path, // 文件路径
-      }).then(res => {
-        // get resource ID
-        console.log(res.fileID)
-        voice.add({
-          data: {
-            date: wx.cloud.database().serverDate(),
-            image: res.fileID,
-            text: _this.data.text
-          },
-          success: res => {
-            console.log(res)
-            wx.navigateBack({
-              delta: 1
-            })
-          }
-        })
-      }).catch(error => {
-        console.log(error)
-        // handle error
-      })
-    } else {
-      voice.add({
-        data: {
-          date: wx.cloud.database().serverDate(),
-          text: _this.data.text
-        },
-        success: res => {
-          console.log(res)
-          wx.navigateBack({
-            delta: 1
-          })
-        }
-      })
-    }
+    wx.navigateBack({
+      delta: 1
+    })
   },
-
   upLoadImage() {
     var that = this
+    console.log(this.data.inputdata)
     wx.chooseImage({
-      success: function (res) {
+      success: function(res) {
         console.log(res)
-        count: 9;
+        count: 1;
+        console.log(res.tempFilePaths)
         that.setData({
-          image: res.tempFilePaths[0],
+          images: res.tempFilePaths,
         })
       },
     })
@@ -89,7 +93,7 @@ Page({
   start: function () {
     //开始录音
     var options = {
-      duration: 10000,//指定录音的时长，单位 ms
+      duration: 1000000,//指定录音的时长，单位 ms
       sampleRate: 16000,//采样率
       numberOfChannels: 1,//录音通道数
       encodeBitRate: 96000,//编码码率
@@ -98,6 +102,14 @@ Page({
     }
     recorderManager.start(options);
     var that = this
+    if(this.data.num!=0) {
+      this.data.num = 0
+      recorderManager.stop();
+      recorderManager.onStop((res) => {
+        console.log('重新录音', res.tempFilePath)
+        clearInterval(this.data.setInter)
+    })
+    } 
     that.data.setInter = setInterval(
       function () {
         var numVal = that.data.num + 1;
@@ -137,4 +149,23 @@ Page({
       console.log(res.errCode)
     })
   },
+  // textarea 输入时触发
+  getTextareaInput: function (e) {
+    var that = this;
+    if (e.detail.cursor > 0) {
+      that.setData({
+        isHidePlaceholder: true
+      })
+    } else {
+      that.setData({
+        isHidePlaceholder: false
+      })
+    }
+  },
+  inputedit(e) {
+    let name = e.currentTarget.dataset.name;
+    let nameMap = {}
+    nameMap[name] = e.detail && e.detail.value
+    this.setData(nameMap)
+  }
 })

@@ -1,5 +1,5 @@
 /* miniprogram/pages/edit/edit.wxss */
-.bg {
+/* .bg {
   background-color: #fff;
   height: 100%;
 }
@@ -60,4 +60,113 @@
   font-size: 35rpx;
   margin-left: 48%;
   letter-spacing: 5rpx;
+} */
+.bg {
+  background-color: #fff;
+  height: 100%;
 }
+.page-box{
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 2%;
+  height: 100%;
+}
+
+.wrap {
+  height: auto;
+  min-height: 75rpx;
+}
+
+.header {
+  color: #888;
+  font-size: 30rpx;
+  font-weight:600;
+  height: 60rpx;
+}
+
+.content {
+  padding-top: 0;
+  height: auto;
+  min-height: 40rpx;
+  border-bottom: 1rpx solid #bbb;
+}
+
+.detail-textarea {
+  font-size: 28rpx;
+  line-height: 8rpx;
+  color: #000;
+  letter-spacing: 5rpx;
+}
+
+.padding-top{
+  padding-top: 3%;
+}
+
+.padding-bottom {
+  padding-bottom: 3%;
+}
+
+.img-add{
+  float: right;
+  color: #fff;
+  font-size: 28rpx;
+  background-color: #81d4fa;
+  text-align: center;
+}
+button {
+  line-height: 2.5;
+}
+
+.q-image-wrap {
+  min-height: 0;
+  max-height: 200rpx;
+  min-width: 0;
+  width: 100%;
+  padding-top: 3%;
+  border-bottom: 1rpx solid #bbb;
+}
+
+image {
+  width: 100%;
+}
+
+.btn-style {
+  font-size: 28rpx;
+  border-radius: 0;
+  color: #000;
+}
+
+.cu-bar.tabbar{
+  min-height: 75rpx;
+  height: auto;
+}
+
+.int-clock {
+  font-size: 30rpx;
+  width: 30%;
+  color: #000;
+  font-weight: bold;
+  text-align: center;
+  letter-spacing: 5rpx;
+}
+
+.light1 {
+  background-color: #fffafa;
+}
+.light2 {
+  background-color: #f7f7f7;
+}
+.light3 {
+  background-color: #f2f2f2;
+}
+
+.submit-padding {
+  padding-top: 10%;
+}
+.submit-padding .cu-btn {
+  background-color: #81d4fa;
+  color: #fff;
+}
+
+
+

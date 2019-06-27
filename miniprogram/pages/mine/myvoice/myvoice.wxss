@@ -1,1 +1,58 @@
 /* miniprogram/pages/mine/myvoice/myvoice.wxss */
+/**feeds.wxss**/
+
+.padding-top {
+  z-index: 100;
+  font-size: 25rpx;
+}
+
+.date-style {
+  padding-top: 15rpx;
+}
+
+.btnRight {
+  margin-right: 3%;
+}
+
+.cu-card {
+  margin-left: 0rpx;
+  margin-right: 0rpx; 
+  margin-bottom: 0;
+  margin-top: 0rpx;
+  margin: 10px;
+}
+
+.cu-item {
+  margin-left: 0rpx;
+  margin-right: 0rpx; 
+  margin-bottom: 0;
+  margin-top: 0rpx;
+  border-bottom: 1rpx solid #ddd;
+  box-shadow: 0px 0px 5px #ccc;
+}
+
+.bg-color {
+  color: #81d4fa;
+  font-size: 50px;
+  left: 0px;
+  top: 0px;
+}
+
+.hover {
+  align-items: center;
+  color: #81d4ff;
+}
+
+.img-plus{
+  height: 50px;
+  width: 50px;
+}
+
+.chover{
+  width: 50px;
+  height: 50px;
+}
+
+.turnRed {
+  color: red;
+}
