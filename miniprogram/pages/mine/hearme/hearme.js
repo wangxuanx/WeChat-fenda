@@ -4,7 +4,8 @@ let top20userInfo
 
 Page({
   data: {
-    hotMasters: []
+    hotMasters: [],
+    ifEmpty:true
   },
 
   onLoad: function () {
@@ -33,6 +34,9 @@ Page({
             console.log(res)
             fan_info = res.data
             for (var idx in fan_info) {
+              _this.setData({
+                isEmpty:false
+              })
               if (follow_list.includes(fan_info[idx]._openid)) {
                 fan_info[idx].if_follow = true
                 this.setData({
