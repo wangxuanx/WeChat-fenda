@@ -1,6 +1,5 @@
 // miniprogram/pages/mine/hearme/hearme.js
 let app = getApp()
-let top20userInfo
 
 Page({
   data: {
@@ -43,10 +42,22 @@ Page({
 
   //跳转函数
   toPerson: function (event) {
-    var targetUrl = '/pages/person/person?id=' + event.currentTarget.dataset.userId;
-    console.log(event);
-    wx.navigateTo({
-      url: targetUrl//实际路径要写全
+    console.log(event)
+    var follow_list = []
+    const userCollection = wx.cloud.database().collection("user")
+    userCollection.where({
+      _openid: app.globalData.userInfo._openid
+    }).get({
+      success: res => {
+        console.log(res)
+        follow_list = res.data[0].follow_list
+        var targetUrl = '/pages/person/person?_openid=' + follow_list[event.currentTarget.dataset.index];
+        console.log(targetUrl)
+        wx.navigateTo({
+          url: targetUrl
+        })
+      },
+      fail: res => { console.log(res) }
     })
   },
 
