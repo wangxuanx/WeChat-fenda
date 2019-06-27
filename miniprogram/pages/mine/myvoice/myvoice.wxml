@@ -1,3 +1,4 @@
+<view>
 <scroll-view scroll-y="true" style="height: 100%;" bindscrolltoupper="upper" bindscrolltolower="lower">
 	<block wx:for="{{feedList}}" wx:key="item._id" id="{{index}}">
     <view class="cu-card dynamic {{isCard?'no-card':''}}">
@@ -13,17 +14,17 @@
             </view>
           </view>
         </view>
-        <view class="text-content-myview">
+        <view class="text-content">
           {{item.text}}
         </view>
-        <view wx:if= "{{item.image.length}}" class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
-          <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url({{item.image}});">
-          </view>
+        <view wx:if= "{{item.image}}" class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
+        <image src='{{item.image}}'></image>
         </view>
         <view class="text-gray text-lg text-right padding">
-          <text id="{{index}}" class="cuIcon-appreciatefill margin-lr-xs {{item.thumbs? 'turnRed':''}}"></text>{{item.praise}}
+          <text id="{{index}}" class="cuIcon-appreciatefill margin-lr-xs {{item.thumbs? 'turnRed':''}}" catchtap="toLike"></text>{{item.praise}}
         </view>
       </view>
     </view>
 	</block>
 </scroll-view>
+</view>

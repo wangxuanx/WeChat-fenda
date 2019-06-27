@@ -19,8 +19,9 @@ Page({
       _this.setData({
         userInfo: res.data[0]
       })
+      //console.log(res.data[0].avatarUrl);
     })
-    console.log(this.userInfo);
+    
     this.fetchVoiceList();
   },
   //事件处理函数
@@ -31,15 +32,17 @@ Page({
   },
 
   onPullDownRefresh: function () {
+    var _this = this;
+    console.log("用户下拉")
     wx.showNavigationBarLoading()
-    this.setData({
-      feedList: []
-    })
     shipLength = 0;
-    this.fetchVoiceList()
     setTimeout(() => {
       wx.hideNavigationBarLoading()
       wx.stopPullDownRefresh()
+      _this.setData({
+        feedList: []
+      })
+      _this.fetchVoiceList();
     }, 1000);
   },
   onReachBottom: function () {
@@ -74,7 +77,7 @@ Page({
       //下次跳过读取
       shipLength +=1;
       feedList = feedList.concat(select_list)
-      console.log(feedList)
+      //console.log(feedList)
       _this.setData({
         feedList: feedList
       })
