@@ -75,3 +75,12 @@
   color: #fff;
    width: 26rpx; height: 30rpx; float: left; 
 }
+.loading-wrap {
+  display: flex;
+  justify-content: center;
+}
+.loading{
+  text-align: center;
+  height: 60rpx;
+  width: 240rpx;
+}
