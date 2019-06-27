@@ -4,7 +4,8 @@ let top20userInfo
 
 Page({
   data: {
-    hotMasters: []
+    hotMasters: [],
+    isEmpty:true
   },
 
   onLoad: function () {
@@ -30,6 +31,9 @@ Page({
             console.log(res)
             follow_info = res.data
             for (var idx in follow_info) {
+              _this.setData({
+                isEmpty:false
+              })
               follow_info[idx].if_follow = true
               this.setData({
                 ['hotMasters[' + idx + '].if_follow']: true,

@@ -12,4 +12,8 @@
       <view class="cu-btn sm bg-grey" data-follow-id="{{index}}" wx:else catchtap="handleNotFollowTap" data-follow-name="{{item.nickName}}">已收听</view>
     </view>
   </view>
+ 
+</view>
+<view wx:if="{{isEmpty}}">
+    <view class='no-message'>空空如也~</view>
 </view>
