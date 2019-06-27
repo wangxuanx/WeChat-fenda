@@ -15,8 +15,10 @@ exports.main = async (event, context) => {
   var follow2fan_num = 0
   var follow2fan_id = 0
   var fan_id = event.userInfo.openId
-  var follow_id = event.top20userInfo[event.followId]._openid
+  var follow_id = event.follow_id
   var index = 0
+
+  /*从follow_id的fan列表中删除fan_id */
 
   await userCollection.where({
     _openid: follow_id
