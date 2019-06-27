@@ -1,6 +1,8 @@
 //feeds.js
 //获取应用实例
 var app = getApp()
+const myaudio = wx.createInnerAudioContext()
+myaudio.autoplay = true
 var shipLength = 0;
 Page({
   data: {
@@ -64,12 +66,32 @@ Page({
       //console.log(res.data);
       for (let i = 0; i < select_list.length; i++) {
         let fileId = select_list[i].image;
+        let audioFile =select_list[i].audio;
         if (fileId) {
+          wx.cloud.getTempFileURL({
+            fileList: [{
+              fileID: fileId,
+              maxAge: 60 * 60,
+            }]
+          }).then(res => {
+            // console.log(res.fileList)
+            // _this.setData({
+            //   ['feedList[' + i + '].image']: res.fileList[0].tempFileURL
+            // })
+            select_list[i].image = res.fileList[0].tempFileURL;
+          })
+        }
+        if (audioFile) {
           wx.cloud.downloadFile({
-            fileID: fileId,
+            fileID: audioFile,
             success: res => {
-              console.log(res.tempFilePath)
-              select_list[i] = res.tempFilePath;
+              // feedList[i].audio = res.tempFilePath
+              // _this.setData({
+              //   ['feedList[' + length + '].audio']: res.tempFilePath,
+              //   ['feedList[' + length + '].bl']: false
+              // })
+              select_list[i].audio = res.tempFilePath;
+              select_list[i].bl = false;
             }
           })
         }
@@ -77,7 +99,7 @@ Page({
       //下次跳过读取
       shipLength +=1;
       feedList = feedList.concat(select_list)
-      //console.log(feedList)
+      console.log(feedList)
       _this.setData({
         feedList: feedList
       })
@@ -101,5 +123,53 @@ Page({
   requestFlag: false,
   getFeeds: function () {
     var that = this
-  }
+  },
+  //音频播放  
+  audioPlay: function (e) {
+    console.log(e)
+    var _this = this
+    let index = e.currentTarget.id
+    myaudio.src = this.data.feedList[index].audio
+
+    //切换显示状态
+    for (let i = 0; i < this.data.feedList.length; i++) {
+      this.setData({
+        ['feedList[' + i + '].bl']: false
+      })
+    }
+    this.setData({
+      ['feedList[' + index + '].bl']: true
+    })
+
+    myaudio.play();
+
+    // 开始监听
+    myaudio.onPlay(() => {
+      console.log('play')
+      // _this.setData({
+      //   ['feedList['+ index +'].bl']: true
+      // })
+    })
+
+    // 结束监听
+    myaudio.onEnded(() => {
+      console.log('end')
+      _this.setData({
+        ['feedList[' + index + '].bl']: false
+      })
+    })
+
+  },
+
+  // 音频停止
+  audioStop: function (e) {
+    var that = this
+    let index = e.currentTarget.id
+    //切换显示状态
+
+    this.setData({
+      ['feedList[' + index + '].bl']: false
+    })
+    myaudio.stop();
+  },
 })
