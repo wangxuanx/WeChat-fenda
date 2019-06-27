@@ -125,6 +125,9 @@ Page({
     // 注意需要调动后端接口
     var _this = this;
     var _event = event;
+    const relationCollection = wx.cloud.database().collection("relation")
+    const userCollection = wx.cloud.database().collection("user")
+    
     wx.showModal({
       content: '确定要取消关注 ' + event.target.dataset.followName + ' 吗？',
       success(res) {
@@ -137,8 +140,6 @@ Page({
           // 调用服务器接口
           var fan_id = app.globalData.userInfo._openid
           var follow_id = top20userInfo[event.target.dataset.followId]._openid
-          const relationCollection = wx.cloud.database().collection("relation")
-          const userCollection = wx.cloud.database().collection("user")
 
           relationCollection.where({
             fan: fan_id,
