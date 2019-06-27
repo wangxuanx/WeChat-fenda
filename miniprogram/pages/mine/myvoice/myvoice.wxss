@@ -17,13 +17,13 @@
 .cu-card {
   margin-left: 0rpx;
   margin-right: 0rpx; 
-  margin-bottom: 0rpx;
-  margin-top: -5px;
+  margin-bottom: -10rpx;
+  margin-top: 0px;
 }
 
 .cu-item {
   border-bottom: 1rpx solid #ddd;
-  box-shadow: 0px 0px 5px #ccc;
+  box-shadow: 0px 0px 10px #ccc;
 }
 
 .bg-color {
