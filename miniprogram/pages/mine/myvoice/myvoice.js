@@ -48,7 +48,7 @@ Page({
   },
   fetchVoiceList() {
     let _this = this
-    let voice = wx.cloud.database().collection('voice-test')
+    let voice = wx.cloud.database().collection('my-voice')
     
     let userid = app.globalData.userInfo._openid;
 
