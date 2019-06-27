@@ -17,8 +17,8 @@
 .cu-card {
   margin-left: 0rpx;
   margin-right: 0rpx; 
-  margin-bottom: 0rpx;
-  margin-top: -5px;
+  margin-bottom: -10rpx;
+  margin-top: 0px;
 }
 
 .cu-item {
