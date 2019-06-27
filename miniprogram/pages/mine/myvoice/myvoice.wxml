@@ -11,11 +11,9 @@
                 {{item.date}}
               </view>
             </view>
-            <!-- <button class="cu-btn block line-grey btnRight" id="{{index}}" catchtap="toFollow">
-                <text class="{{item.followed? '':'cuIcon-add'}}"></text>{{item.followed? "已关注":"关注"}}</button> -->
           </view>
         </view>
-        <view class="text-content">
+        <view class="text-content-myview">
           {{item.text}}
         </view>
         <view wx:if= "{{item.image.length}}" class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">

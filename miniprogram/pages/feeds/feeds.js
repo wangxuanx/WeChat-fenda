@@ -34,50 +34,22 @@ Page({
       this.fetchVoiceList()
   },
   fetchVoiceList() {
+    console.log('voice')
     let _this = this
     wx.cloud.init()
-    let user = wx.cloud.database().collection('user')
-    let voice = wx.cloud.database().collection('my-voice')
-    user.where({
-      _openid : app.globalData.userInfo._openid
-    }).get().then(res => {
-      let follow_list = res.data[0].follow_list
-      _this.setData({
-        followList: follow_list
-      })
-      let feedList = _this.data.feedList
-      for (let i = 0; i < 10; i++) {
-        let select_list = []
-        voice.skip(feedList.length).limit(10).get().then( res => {
-          select_list = res.data
-          for (let j = 0; j < select_list.length; j++) {
-            if (follow_list.includes(select_list[j]._openid)) {
-              let fileId = select_list[j].image
-              if (fileId) {
-                wx.cloud.downloadFile({
-                  fileID: fileId,
-                  success: res => {
-                    console.log(res.tempFilePath)
-                    _this.setData({
-                      ['feedList['+j+'].image']: res.tempFilePath
-                    })
-                  }
-                })
-              }
-              user.where({
-                _openid: select_list[j]._openid
-              }).get().then( res => {
-                select_list[j].userInfo = res.data[0]
-                feedList = feedList.concat(select_list[j])
-                _this.setData({
-                  feedList: feedList
-                })
-              })
-            }
-          }
+    wx.cloud.callFunction({
+      name: 'getVoice',
+      data: {
+        feedList: _this.data.feedList
+      },
+      success: res => {
+        console.log(res)
+        _this.setData({
+          feedList: res.result.feedList
         })
-        if (select_list.length < 9) break;
-        if (feedList.length > 9) break
+      },
+      fail: error => {
+        console.log(error)
       }
     })
   },
