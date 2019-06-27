@@ -65,62 +65,38 @@ Page({
               }]
             }).then(res => {
               // console.log(res.fileList)
-               _this.setData({
+              _this.setData({
                 ['feedList['+ length +'].image']: res.fileList[0].tempFileURL
               })
             }).catch(error => {
-  // handle error
-})
-          //   wx.cloud.downloadFile({
-          //     fileID: image_file
-          //     success: res => {
-          //     // console.log(res)
-          //     _this.setData({
-          //       ['feedList['+ length +'].image']: res.tempFilePath
-          //     })
-          //   }
-          // })
+            })
           }
           let fileId = feedList[i].audio
           if (fileId.length) {
-           wx.cloud.downloadFile({
-            fileID: fileId,
-            success: res => {
-              feedList[i].audio = res.tempFilePath
+            wx.cloud.getTempFileURL({
+            fileList: [{
+              fileID: fileId,
+              maxAge: 60 * 60, 
+            }]
+          }).then(res => {
+              // feedList[i].audio = res.tempFilePath
               _this.setData({
-                ['feedList['+ length +'].audio']: res.tempFilePath,
+                ['feedList['+ length +'].audio']: res.fileList[0].tempFileURL,
                 ['feedList['+ length +'].bl']: false
               })
-            }
-          })
-         }
-       }
-
-     //   for (let i = 0; i < feedList.length; i++) {
-     //    let fileId = feedList[i].audio
-     //    if (fileId.length) {
-     //     wx.cloud.downloadFile({
-     //      fileID: fileId,
-     //      success: res => {
-     //        feedList[i].audio = res.tempFilePath
-     //        _this.setData({
-     //          ['feedList['+_this.data.length + i +'].audio']: res.tempFilePath,
-     //          ['feedList['+_this.data.length + i +'].bl']: false
-     //        })
-     //      }
-     //    })
-     //   }
-     // }
-     _this.setData({
-      feedList: _this.data.feedList.concat(feedList),
-      count: res.result.event.count,
-      onloading: false
-    })
-   },
-   fail: error => {
-    console.log(error)
-  }
-})
+            })
+        }
+      }
+      _this.setData({
+        feedList: _this.data.feedList.concat(feedList),
+        count: res.result.event.count,
+        onloading: false
+      })
+    },
+    fail: error => {
+      console.log(error)
+    }
+  })
   },
   toFollow(event){
     var index = event.currentTarget.id;
@@ -197,9 +173,6 @@ lower: function () {
     // 开始监听
     myaudio.onPlay(() => {
       console.log('play')
-      // _this.setData({
-      //   ['feedList['+ index +'].bl']: true
-      // })
     })
 
     // 结束监听
@@ -209,29 +182,16 @@ lower: function () {
         ['feedList['+ index +'].bl']: false
       })
     })
-
   },
 
   // 音频停止
   audioStop: function (e) {
     var that = this
     let index = e.currentTarget.id
-    //切换显示状态
-
     this.setData({
       ['feedList['+ index +'].bl']: false
     })    
-    myaudio.stop();
+    myaudio.stop()
   },
-  // lisentPlay() {
-  //   myaudio.onPlay(() => {
-  //     console.log('play')
-  //   })
-  //   myaudio.onEnded(() => {
-  //     console.log('end')
-  //     _this.setData({
-  //       ['feedList[' + index + '].bl']: false
-  //     })
-  //   })
-  // }
+  
 })
