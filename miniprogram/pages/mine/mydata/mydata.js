@@ -36,9 +36,15 @@ Page({
     })
 
   },
+  
   changeSign: function() {             //修改签名函数
     wx.navigateTo({
       url: '/pages/mine/mydata/changesign/changesign',
     })
+  },
+
+  onShow() { //返回显示页面状态函数
+    //可以进行局部优化
+    this.onLoad()//再次加载，实现返回上一页页面刷新
   }
 })
