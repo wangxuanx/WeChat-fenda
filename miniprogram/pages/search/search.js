@@ -38,14 +38,14 @@ Page({
           }).get().then(fd => {
             var changeId = 'hotMasters[' + rk + '].if_follow';
             if (fd.data.length > 0) {
-              this.setData({
+              _this.setData({
                 [changeId]: true
               })
               top20userInfo[rk].if_follow = true;
               console.log("已关注\n")
             }
             else {
-              this.setData({
+              _this.setData({
                 [changeId]: false
               })
               top20userInfo[rk].if_follow = false;
@@ -69,9 +69,9 @@ Page({
 
   handleFollowTap: function (event) {
     // console.log(event)
-    var changeId = 'hotMasters[' + event.target.dataset.followId + '].if_follow';
     this.setData({
-      [changeId]: true
+      ['hotMasters[' + event.target.dataset.followId + '].if_follow']: true,
+      ['hotMasters[' + event.target.dataset.followId + '].fan_num']: this.data.hotMasters[event.target.dataset.followId].fan_num+1
     })
 
     // 添加关注关系
@@ -131,9 +131,9 @@ Page({
       success(res) {
         if (res.confirm) {
           // console.log('用户点击确定');
-          var changeId = 'hotMasters[' + event.target.dataset.followId + '].if_follow';
           _this.setData({
-            [changeId]: false
+            ['hotMasters[' + event.target.dataset.followId + '].if_follow']: false,
+            ['hotMasters[' + event.target.dataset.followId + '].fan_num']: _this.data.hotMasters[event.target.dataset.followId].fan_num - 1
           })
           // 调用服务器接口
           var fan_id = app.globalData.userInfo._openid
