@@ -21,7 +21,6 @@ Page({
       _openid: _.neq(app.globalData.userInfo._openid)
     }).get({
       success: res => {
-        // console.log(res)
         _this.setData({
           hotMasters: res.data
         })
@@ -127,7 +126,7 @@ Page({
     var _event = event;
     const relationCollection = wx.cloud.database().collection("relation")
     const userCollection = wx.cloud.database().collection("user")
-    
+
     wx.showModal({
       content: '确定要取消关注 ' + event.target.dataset.followName + ' 吗？',
       success(res) {
