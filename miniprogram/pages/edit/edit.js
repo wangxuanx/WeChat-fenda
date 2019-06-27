@@ -5,87 +5,44 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {
-    images: [],
-    setInter: '',
-    num: 0,
-    tempFilePath: '',
-    isHidePlaceholder: false,
-    inputdata: "",
-  },
-
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+   data: {
+    image: '',
+    text: '',
+    audio: '',
+     setInter: '',
+     num: 0,
+     tempFilePath: '',
+     isHidePlaceholder: false,
   },
 
   toSubmit() {
-    wx.navigateBack({
-      delta: 1
+    wx.cloud.init()
+    let _this = this
+    wx.cloud.callFunction({
+      name: 'upLoadVoice',
+      data: {
+        image: _this.data.image,
+        text: _this.data.text,
+        audio: _this.data.audio
+      },
+      success: res => {
+        wx.navigateBack({
+          delta: 1
+        })
+      }, 
+      fail: res => {
+        console.log(res)
+      }
     })
   },
   upLoadImage() {
     var that = this
-    console.log(this.data.inputdata)
     wx.chooseImage({
       success: function(res) {
         console.log(res)
         count: 1;
-        console.log(res.tempFilePaths)
         that.setData({
-          images: res.tempFilePaths,
+          image: res.tempFilePaths[0],
         })
       },
     })
@@ -103,21 +60,24 @@ Page({
     recorderManager.start(options);
     var that = this
     if(this.data.num!=0) {
-      this.data.num = 0
+      clearInterval(this.data.setInter)
+      this.setData({
+        num: 0
+      })
       recorderManager.stop();
       recorderManager.onStop((res) => {
         console.log('重新录音', res.tempFilePath)
-        clearInterval(this.data.setInter)
+      })
+    }
+    this.setData({
+      setInter: setInterval(
+        function () {
+          var numVal = that.data.num + 1
+          that.setData({
+            num: numVal
+          })
+        } , 1000)
     })
-    } 
-    that.data.setInter = setInterval(
-      function () {
-        var numVal = that.data.num + 1;
-        that.setData({
-          num: numVal
-        });
-      }
-      , 1000)
     recorderManager.onStart(() => {
       console.log('recorder start');
     });
@@ -129,43 +89,27 @@ Page({
   stop: function () {
     recorderManager.stop();
     recorderManager.onStop((res) => {
-      this.tempFilePath = res.tempFilePath;
       console.log('停止录音', res.tempFilePath)
       clearInterval(this.data.setInter)
       this.setData({
-        tempFilePath: res
+        audio: res.tempFilePath
       })
-      console.log(this.data.tempFilePath)
     })
   },
   play: function () {
     innerAudioContext.autoplay = true
-    innerAudioContext.src = this.tempFilePath,
-      innerAudioContext.onPlay(() => {
-        console.log('开始播放')
-      })
+    innerAudioContext.src = this.data.audio,
+    innerAudioContext.onPlay(() => {
+      console.log('开始播放')
+    })
     innerAudioContext.onError((res) => {
       console.log(res.errMsg)
       console.log(res.errCode)
     })
   },
-  // textarea 输入时触发
-  getTextareaInput: function (e) {
-    var that = this;
-    if (e.detail.cursor > 0) {
-      that.setData({
-        isHidePlaceholder: true
-      })
-    } else {
-      that.setData({
-        isHidePlaceholder: false
-      })
-    }
-  },
   inputedit(e) {
-    let name = e.currentTarget.dataset.name;
-    let nameMap = {}
-    nameMap[name] = e.detail && e.detail.value
-    this.setData(nameMap)
+    this.setData({
+      text: e.detail.value
+    })
   }
 })

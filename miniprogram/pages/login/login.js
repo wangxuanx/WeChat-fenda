@@ -15,14 +15,14 @@ Page({
         if (res.authSetting['scope.userInfo']) {
           wx.getUserInfo({
             success: function (res) {
-              console.log(res)
+              // console.log(res)
               wx.cloud.callFunction({
                 name: 'login',
                 success: log_res => {
-                  console.log(log_res)
+                  // console.log(log_res)
                   res.userInfo._openid = log_res.result.openid
                   app.globalData.userInfo = res.userInfo
-                  console.log(app.globalData)
+                  // console.log(app.globalData)
                   wx.reLaunch({
                     url: '../feeds/feeds',
                   })
