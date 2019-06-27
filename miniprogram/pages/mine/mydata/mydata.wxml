@@ -10,7 +10,7 @@
       <text>签名</text>
     </view>
     <view class="user-signs">
-      <text>喜欢唱、跳、rap、篮球，机你太美。</text>
+      <text>{{userSign}}</text>
     </view>
   </view>
 
