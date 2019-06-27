@@ -23,7 +23,7 @@
     "navigationBarBackgroundColor": "#81d4fa",
     "navigationBarTitleText": "个人界面",
     "navigationBarTextStyle": "white",
-    "enablePullDownRefresh": false
+    "enablePullDownRefresh": true
   },
   "tabBar": {
     "color": "#767676",

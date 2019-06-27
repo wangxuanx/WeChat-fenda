@@ -19,7 +19,7 @@
         <view class="text-content">
           {{item.text}}
         </view>
-        <view wx:if= "{{item.image}}" class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
+        <view wx:if= "{{item.image.length}}" class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
           <view class="bg-img {{isCard?'':'only-img'}}" style="background-image:url({{item.image}});">
           </view>
         </view>
@@ -30,7 +30,9 @@
     </view>
 	</block>
 </scroll-view>
-  <view class="cu-item addAction">
-    <navigator url="/pages/edit/edit" hover-class="hover"><text class="cuIcon-roundaddfill bg-color"></text>
+<view class="cu-item addAction">
+    <navigator url="/pages/edit/edit" class="chover">
+      <image class="img-plus"src="/img/cross.png"></image>
+      <!--<text class="cuIcon-roundaddfill bg-color plus"></text>-->
     </navigator>
-  </view>
+</view>

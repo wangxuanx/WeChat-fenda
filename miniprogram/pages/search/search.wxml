@@ -14,7 +14,7 @@
 <view class="column-title">热推名人</view>
 <view class="column-wrapper">
 	<view wx:for="{{hotMasters}}" wx:key="" id='{{index}}'>
-		<view class="master-info" bindtap="toPerson" data-master="czy" data-user-id="{{id}}">
+		<view class="master-info" bindtap="toPerson" data-index="{{index}}" data-user-id="{{id}}">
 			<image class="cu-avatar round" src="{{item.avatarUrl}}"></image>
 			<view class="master-brief">
 				<view class="master-user text-orange text-xl">{{item.nickName}}</view>

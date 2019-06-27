@@ -4,13 +4,6 @@ var app = getApp()
 Page({
     data: { 
         hidden: true,
-        motto: 'Hello World',
-        userInfo: {},
-        fllowList: [
-          "Maxing",
-        ],
-        page: 1,
-        pages: 0,
         feedList: [],
         followList: []
     },
@@ -20,9 +13,11 @@ Page({
       url: '../logs/logs'
     })
   },
-  onLoad: function() {
+
+  onShow: function() {
     this.fetchVoiceList();
   },
+
   onPullDownRefresh: function () {
     wx.showNavigationBarLoading()
     this.setData({
@@ -35,6 +30,7 @@ Page({
     }, 1000);
   },
   onReachBottom: function() {
+    console.log('bottom')
       this.fetchVoiceList()
   },
   fetchVoiceList() {
@@ -56,6 +52,18 @@ Page({
           select_list = res.data
           for (let j = 0; j < select_list.length; j++) {
             if (follow_list.includes(select_list[j]._openid)) {
+              let fileId = select_list[j].image
+              if (fileId) {
+                wx.cloud.downloadFile({
+                  fileID: fileId,
+                  success: res => {
+                    console.log(res.tempFilePath)
+                    _this.setData({
+                      ['feedList['+j+'].image']: res.tempFilePath
+                    })
+                  }
+                })
+              }
               user.where({
                 _openid: select_list[j]._openid
               }).get().then( res => {
@@ -118,14 +126,7 @@ Page({
   },
   lower: function () {
     console.log("到底啦")
-    if (this.requestFlag === false) {
-      this.requestFlag = true
-      this.setData({
-        hidden: false
-      })
-      var that = this
-      setTimeout(that.getFeeds, 3000)
-    }
+    this.fetchVoiceList()
   },
   requestFlag: false,
   getFeeds: function () {
