@@ -25,6 +25,7 @@ Page({
     })
     
     this.fetchVoiceList();
+    console.log(this.data.feedList);
   },
   //事件处理函数
   bindViewTap: function () {
@@ -51,7 +52,7 @@ Page({
     console.log('bottom')
     this.fetchVoiceList()
   },
-  fetchVoiceList() {
+  fetchVoiceList: function() {
     let _this = this
     let voice = wx.cloud.database().collection('my-voice')
     
@@ -68,6 +69,7 @@ Page({
         let fileId = select_list[i].image;
         let audioFile =select_list[i].audio;
         if (fileId) {
+          console.log(fileId)
           wx.cloud.getTempFileURL({
             fileList: [{
               fileID: fileId,
@@ -99,7 +101,7 @@ Page({
       //下次跳过读取
       shipLength +=1;
       feedList = feedList.concat(select_list)
-      console.log(feedList)
+      //console.log(feedList)
       _this.setData({
         feedList: feedList
       })
