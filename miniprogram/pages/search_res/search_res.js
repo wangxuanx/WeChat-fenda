@@ -74,15 +74,17 @@ Page({
     //console.log(this.data)
   },
   handleFollowTap: function (event) {
-    console.log(event)
-    var changeId = 'users[' + event.target.dataset.followId + '].if_follow';
+    // console.log(event)
     this.setData({
-      [changeId]: true
+      ['users[' + event.target.dataset.followId + '].if_follow']: true,
+      ['users[' + event.target.dataset.followId + '].fan_num']: this.data.users[event.target.dataset.followId].fan_num + 1
     })
+
     // 添加关注关系
     const relationCollection = wx.cloud.database().collection("relation")
     const userCollection = wx.cloud.database().collection("user")
     const _ = wx.cloud.database().command;
+
     var fan_id = app.globalData.userInfo._openid
     var follow_id = top20userInfo[event.currentTarget.dataset.followId]._openid
     relationCollection.where({
@@ -95,24 +97,32 @@ Page({
             fan: fan_id,
             follow: follow_id
           },
-          success() {
+          success: res => {
+            console.log(res)
             userCollection.where({
               _openid: fan_id
-            }).update({
-              follow_list: _.push(follow_id),
-              follow_num: _.inc(1)
-            }).then(res => { console.log("更新粉丝follow列表") })
-            userCollection.where({
-              _openid: follow_id
-            }).update({
-              fan_list: _.push(fan_id),
-              fan_num: _.inc(1)
-            }).then(res => { console.log("更新被关注者fan列表") })
-            console.log("添加关注成功\n")
+            }).get().then(fd => {
+              userCollection.doc(fd.data[0]._id).update({
+                data: {
+                  follow_list: _.push(follow_id),
+                  follow_num: _.inc(1)
+                },
+                success: res => { // 用户follow列表更新成功
+                  console.log(res)
+                  wx.cloud.callFunction({ // 更新被关注则fan列表
+                    name: 'updateFanList',
+                    data: {
+                      userInfo: app.globalData.userInfo,
+                      follow_id: top20userInfo[event.currentTarget.dataset.followId]._openid
+                    },
+                    success: res => { console.log(res) }
+                  })
+                }
+              })
+            })
           }
         })
       }
-      else { console.log("已存在关注关系\n") }
     })
   },
 
@@ -121,19 +131,22 @@ Page({
     // 注意需要调动后端接口
     var _this = this;
     var _event = event;
+    const relationCollection = wx.cloud.database().collection("relation")
+    const userCollection = wx.cloud.database().collection("user")
+
     wx.showModal({
       content: '确定要取消关注 ' + event.target.dataset.followName + ' 吗？',
       success(res) {
         if (res.confirm) {
           // console.log('用户点击确定');
-          var changeId = 'users[' + event.target.dataset.followId + '].if_follow';
           _this.setData({
-            [changeId]: false
+            ['users[' + event.target.dataset.followId + '].if_follow']: false,
+            ['users[' + event.target.dataset.followId + '].fan_num']: _this.data.users[event.target.dataset.followId].fan_num - 1
           })
           // 调用服务器接口
           var fan_id = app.globalData.userInfo._openid
           var follow_id = top20userInfo[event.target.dataset.followId]._openid
-          const relationCollection = wx.cloud.database().collection("relation")
+
           relationCollection.where({
             fan: fan_id,
             follow: follow_id
@@ -141,52 +154,48 @@ Page({
             if (res.data.length > 0) {
               relationCollection.doc(res.data[0]._id).remove({
                 success() {
+                  console.log("删除relation记录成功")
                   var fan2follow_list = []
-                  var fan2follow_num
+                  var fan2follow_num = 0
+                  var fan2follow_id = 0
                   userCollection.where({
                     _openid: fan_id
-                  }).get().then(res => {
-                    fan2follow_list = res.data.follow_list
-                    fan2follow_num = res.data.follow_num
-                    var index = fan2follow_list.indexOf(follow_id);
-                    if (index > -1) {
-                      fan2follow_list.splice(index, 1);
-                      fan2follow_num--
-                    }
+                  }).get({
+                    success: fd => {
+                      fan2follow_id = fd.data[0]._id
+                      fan2follow_list = fd.data[0].follow_list
+                      fan2follow_num = fd.data[0].follow_num
+                      var index = fan2follow_list.indexOf(follow_id);
+                      if (index > -1) {
+                        fan2follow_list.splice(index, 1);
+                        fan2follow_num--
+                        userCollection.doc(fan2follow_id).update({
+                          data: {
+                            follow_list: fan2follow_list,
+                            follow_num: fan2follow_num
+                          },
+                          success() { // 更新用户follow列表成功
+                            console.log("更新粉丝follow列表")
+                            wx.cloud.callFunction({ // 更新被关注则fan列表
+                              name: 'updateFollowList',
+                              data: {
+                                userInfo: app.globalData.userInfo,
+                                follow_id: top20userInfo[event.currentTarget.dataset.followId]._openid
+                              },
+                              success: res => { console.log(res) }
+                            })
+                          }
+                        })
+                      }
+                    },
+                    fail: res => { console.log(res) }
                   })
-                  userCollection.where({
-                    _openid: fan_id
-                  }).update({
-                    follow_list: fan2follow_list,
-                    follow_num: fan2follow_num
-                  }).then(res => { console.log("更新粉丝follow列表") })
-
-                  var follow2fan_list = []
-                  var follow2fan_num
-                  userCollection.where({
-                    _openid: fan_id
-                  }).get().then(res => {
-                    follow2fan_list = res.data.fan_list
-                    follow2fan_num = res.data.fan_num
-                    var index = follow2fan_list.indexOf(fan_id);
-                    if (index > -1) {
-                      follow2fan_list.splice(index, 1);
-                      follow2fan_num--
-                    }
-                  })
-                  userCollection.where({
-                    _openid: follow_id
-                  }).update({
-                    fan_list: follow2fan_list,
-                    fan_num: follow2fan_num
-                  }).then(res => { console.log("更新被关注者fan列表") })
-                  console.log("数据库取消关注成功\n")
                 },
-                fail() { console.log("数据库关注关系删除失败\n") }
+                fail() { console.log("数据库关注关系删除失败") }
               })
             }
             else {
-              console.log("不存在关注关系\n")
+              console.log("不存在关注关系")
             }
           })
         } else if (res.cancel) {
@@ -247,7 +256,9 @@ Page({
 
   //跳转函数
   toPerson: function (event) {
-    var targetUrl = '/pages/person/person?id=' + event.currentTarget.dataset.userId;
+    console.log(this.data.users);
+    let _openid = this.data.users[event.currentTarget.dataset.index]._openid
+    var targetUrl = '/pages/person/person?_openid=' + _openid;
     console.log(event);
     wx.navigateTo({
       url: targetUrl//实际路径要写全

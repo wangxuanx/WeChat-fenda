@@ -2,7 +2,7 @@
 
 <view class="column-wrapper">
   <view wx:for="{{hotMasters}}" wx:key="" id='{{index}}'>
-    <view class="master-info" bindtap="toPerson" data-master="czy" data-user-id="{{id}}">
+    <view class="master-info" bindtap="toPerson" data-index="{{index}}" data-master="czy" data-user-id="{{id}}">
       <image class="cu-avatar round" src="{{item.avatarUrl}}"></image>
       <view class="master-brief">
         <view class="master-user text-orange text-xl">{{item.nickName}}</view>
@@ -13,4 +13,8 @@
       <view class="cu-btn sm bg-grey" data-follow-id="{{index}}" wx:else catchtap="handleNotFollowTap" data-follow-name="{{item.nickName}}">已收听</view>
     </view>
   </view>
+
+</view>
+<view wx:if="{{isEmpty}}">
+  <view class='no-message'>空空如也~</view>
 </view>

@@ -1,0 +1,127 @@
+/* miniprogram/pages/mine/mypage/mypage.wxss */
+/*@import "../../colorui/main.wxss";
+@import "../../colorui/icon.wxss";*/
+
+.userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+}
+
+.userinfo-avatar {
+    width: 150rpx;
+    height: 150rpx;
+    margin: 30rpx;
+    border-radius: 50%;
+}
+
+.userinfo-nickname {
+  font-size: 50rpx;
+  color: #000000;
+}
+
+.userinfo-dig {
+    margin: 15rpx auto;
+    padding: 20rpx 25rpx;
+    border-radius: 10rpx;
+    background-color: #f85f48;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.userinfo-desc {
+    color: #bbb;
+    font-size: 14rpx;
+    margin-bottom: 20rpx;
+}
+
+.profile-wrapper, .account-wrapper {
+    background-color: #fff;
+    margin-bottom: 20rpx;
+}
+
+.profile, .account {
+    display: flex;
+    padding: 30rpx;
+    align-items: center;
+    flex-direction: row;
+    border-bottom: 1rpx solid #f0f0f0;
+}
+
+.profile-item, .account-item {
+    flex: 1;
+    font-size: 24rpx;
+}
+
+.profile-arrow, .account-arrow {
+    width: 32rpx;
+    height: 32rpx;
+}
+
+.btn-quit {
+  margin: 15rpx;
+}
+
+.userinfo-qianming{
+  margin: 15rpx;
+  font-size: 30rpx;
+  width: 80%;
+  text-align: center;
+}
+.userInfo-follow{
+  width: 100%;
+  border: 1rpx solid #bbb;
+  border-left: none;
+  border-right: none;
+  display: flex;
+  justify-content:space-between;
+}
+
+.follow{
+  border-right: 1rpx solid #bbb;
+  width: 100%;
+  font-size: 23rpx;
+  text-align: center;
+}
+
+.cuIcon-favorfill .attentionfill .margin-top-sm{
+  width: 100%;
+  font-size: 30rpx;
+  text-align: center;
+}
+
+.cu-card.dynamic>.cu-item>.text-content {
+  overflow: visible;
+  padding: 30rpx 45rpx 0;
+  min-height: 30rpx;
+  height: auto;
+}
+
+.cu-card>.cu-item {
+  padding-bottom: 30rpx;
+  border-bottom: 1rpx solid #000;
+}
+
+.voice{
+  font-size: 33rpx;
+  padding: 15rpx 15rpx 15rpx 30rpx;
+  text-align: left;
+}
+
+
+.date-style {
+  padding-top: 15rpx;
+}
+
+.text-bold{
+  margin-left: 10px;
+}
+
+.no-voice{
+  margin-top: 30px;
+  text-align: center;
+  font-size: 20px;
+  color: #888;
+  letter-spacing: 5px;
+}

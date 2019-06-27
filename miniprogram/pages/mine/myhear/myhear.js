@@ -4,7 +4,8 @@ let top20userInfo
 
 Page({
   data: {
-    hotMasters: []
+    hotMasters: [],
+    isEmpty:true
   },
 
   onLoad: function () {
@@ -30,8 +31,15 @@ Page({
             console.log(res)
             follow_info = res.data
             for (var idx in follow_info) {
+              _this.setData({
+                isEmpty:false
+              })
               follow_info[idx].if_follow = true
+              this.setData({
+                ['hotMasters[' + idx + '].if_follow']: true,
+              })
             }
+            top20userInfo = follow_info
             _this.setData({
               hotMasters: follow_info
             })
@@ -43,18 +51,18 @@ Page({
 
   //跳转函数
   toPerson: function (event) {
-    var targetUrl = '/pages/person/person?id=' + event.currentTarget.dataset.userId;
-    console.log(event);
+    console.log(event)
+    var targetUrl = '/pages/person/person?_openid=' + top20userInfo[event.currentTarget.dataset.index]._openid;
     wx.navigateTo({
-      url: targetUrl//实际路径要写全
+      url: targetUrl
     })
   },
 
   handleFollowTap: function (event) {
     // console.log(event)
-    var changeId = 'hotMasters[' + event.target.dataset.followId + '].if_follow';
     this.setData({
-      [changeId]: true
+      ['hotMasters[' + event.target.dataset.followId + '].if_follow']: true,
+      ['hotMasters[' + event.target.dataset.followId + '].fan_num']: this.data.hotMasters[event.target.dataset.followId].fan_num + 1
     })
 
     // 添加关注关系
@@ -90,8 +98,7 @@ Page({
                     name: 'updateFanList',
                     data: {
                       userInfo: app.globalData.userInfo,
-                      top20userInfo: top20userInfo,
-                      followId: event.currentTarget.dataset.followId
+                      follow_id: follow_id
                     },
                     success: res => { console.log(res) }
                   })
@@ -114,9 +121,9 @@ Page({
       success(res) {
         if (res.confirm) {
           // console.log('用户点击确定');
-          var changeId = 'hotMasters[' + event.target.dataset.followId + '].if_follow';
           _this.setData({
-            [changeId]: false
+            ['hotMasters[' + event.target.dataset.followId + '].if_follow']: false,
+            ['hotMasters[' + event.target.dataset.followId + '].fan_num']: _this.data.hotMasters[event.target.dataset.followId].fan_num - 1
           })
           // 调用服务器接口
           var fan_id = app.globalData.userInfo._openid
@@ -157,8 +164,7 @@ Page({
                               name: 'updateFollowList',
                               data: {
                                 userInfo: app.globalData.userInfo,
-                                top20userInfo: top20userInfo,
-                                followId: event.currentTarget.dataset.followId
+                                follow_id: follow_id
                               },
                               success: res => { console.log(res) }
                             })
@@ -183,4 +189,9 @@ Page({
       }
     })
   },
+
+  onShow() { //返回显示页面状态函数
+    //可以进行局部优化
+    this.onLoad()//再次加载，实现返回上一页页面刷新
+  }
 })

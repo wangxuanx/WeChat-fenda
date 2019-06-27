@@ -15,7 +15,8 @@
     "pages/edit/edit",
     "pages/mine/myhear/myhear",
     "pages/mine/hearme/hearme",
-    "pages/mine/myvoice/myvoice"
+    "pages/mine/myvoice/myvoice",
+    "pages/mine/mypage/mypage"
   ],
   "window": {
     "backgroundTextStyle": "light",

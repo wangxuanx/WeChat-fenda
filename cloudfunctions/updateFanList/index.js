@@ -14,8 +14,10 @@ exports.main = async (event, context) => {
   const _ = cloud.database().command;
 
   var fan_id = event.userInfo.openId
-  var follow_id = event.top20userInfo[event.followId]._openid
+  var follow_id = event.follow_id
   var follow2fan_id = 0
+
+  /*follow_id的fan列表中添加fan_id */
 
   debugInfo.push("test debug info")
   await userCollection.where({

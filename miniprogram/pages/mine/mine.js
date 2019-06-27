@@ -88,7 +88,7 @@ Page({
     },
     mypage: function() {                //跳转到用户自己的主页
       wx.navigateTo({
-        url: '/pages/person/person',
+        url: '/pages/mine/mypage/mypage',
       })
     },
     normalsetting: function() {             //跳转到通用设置界面
