@@ -31,6 +31,9 @@ Page({
             follow_info = res.data
             for (var idx in follow_info) {
               follow_info[idx].if_follow = true
+              this.setData({
+                ['hotMasters[' + idx + '].if_follow']: true,
+              })
             }
             top20userInfo = follow_info
             _this.setData({
@@ -45,21 +48,9 @@ Page({
   //跳转函数
   toPerson: function (event) {
     console.log(event)
-    var follow_list = []
-    const userCollection = wx.cloud.database().collection("user")
-    userCollection.where({
-      _openid: app.globalData.userInfo._openid
-    }).get({
-      success: res => {
-        console.log(res)
-        follow_list = res.data[0].follow_list
-        var targetUrl = '/pages/person/person?_openid=' + follow_list[event.currentTarget.dataset.index];
-        console.log(targetUrl)
-        wx.navigateTo({
-          url: targetUrl
-        })
-      },
-      fail: res => { console.log(res) }
+    var targetUrl = '/pages/person/person?_openid=' + top20userInfo[event.currentTarget.dataset.index]._openid;
+    wx.navigateTo({
+      url: targetUrl
     })
   },
 
@@ -194,4 +185,9 @@ Page({
       }
     })
   },
+
+  onShow() { //返回显示页面状态函数
+    //可以进行局部优化
+    this.onLoad()//再次加载，实现返回上一页页面刷新
+  }
 })

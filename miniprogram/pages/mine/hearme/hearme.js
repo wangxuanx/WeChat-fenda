@@ -22,8 +22,8 @@ Page({
       _openid: app.globalData.userInfo._openid
     }).get({
       success: res => {
-        fan_list = res.data[0].fan_list
-        follow_list = res.data[0].follow_list
+        fan_list = res.data[0].fan_list // 用户粉丝列表
+        follow_list = res.data[0].follow_list // 用户关注列表
         console.log(fan_list)
         // 添加页面数据
         userCollection.where({
@@ -33,11 +33,17 @@ Page({
             console.log(res)
             fan_info = res.data
             for (var idx in fan_info) {
-              if (fan_info[idx]._openid in follow_list) {
+              if (follow_list.includes(fan_info[idx]._openid)) {
                 fan_info[idx].if_follow = true
+                this.setData({
+                  ['hotMasters[' + idx + '].if_follow']: true,
+                })
               }
               else {
                 fan_info[idx].if_follow = false
+                this.setData({
+                  ['hotMasters[' + idx + '].if_follow']: false,
+                })
               }
             }
             top20userInfo = fan_info
@@ -53,22 +59,9 @@ Page({
   //跳转函数
   toPerson: function (event) {
     console.log(event)
-    const userCollection = wx.cloud.database().collection("user")
-    var fan_list = []
-    userCollection.where({
-      _openid: app.globalData.userInfo._openid
-    }).get({
-      success: res => {
-        console.log(res)
-        fan_list = res.data[0].fan_list
-        console.log(fan_list)
-        var targetUrl = '/pages/person/person?_openid=' + fan_list[event.currentTarget.dataset.index];
-        console.log(targetUrl)
-        wx.navigateTo({
-          url: targetUrl
-        })
-      },
-      fail: res => { console.log(res)}
+    var targetUrl = '/pages/person/person?_openid=' + top20userInfo[event.currentTarget.dataset.index]._openid;
+    wx.navigateTo({
+      url: targetUrl
     })
   },
 
@@ -203,4 +196,5 @@ Page({
       }
     })
   },
+
 })
