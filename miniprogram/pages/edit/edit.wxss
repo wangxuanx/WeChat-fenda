@@ -2,7 +2,7 @@
 /* .bg {
   background-color: #fff;
   height: 100%;
-}
+} 
 .edit-content {
   font-size: 30rpx;
   border: 1rpx dashed #bbb;
@@ -68,7 +68,6 @@
 .page-box{
   margin-left: 2%;
   margin-right: 2%;
-  margin-top: 2%;
   height: 100%;
 }
 
