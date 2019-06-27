@@ -1,13 +1,15 @@
 <!--miniprogram/pages/edit/edit.wxml-->
-<view class="edit-content">
-  <textarea rows="20" cols="20" class="content" bindinput='inputText' placeholder="请输入正文"></textarea>
-</view>
-<view class="imageArea"  catchtap="upLoadImage">
-  <view>
-    <text class="text-style">上传图片(可选)</text>
-      <view>
-        <image src="{{image}}" class="q-image" mode="scaleToFill" data-idx="{{index}}"></image>
-      </view>
+<!-- <view class="bg">
+  <view class="edit-content">
+    <textarea rows="20" cols="20" class="content" placeholder="请输入正文。。。"></textarea>
+  </view>
+  <view class="imageArea"  catchtap="upLoadImage">
+      <text wx:if="{{images.length==0}}" class="text-style">上传图片(可选)</text>
+      <block wx:for="{{images}}" wx:key="*this" class="q-image-wrap">
+        <view>
+          <image src="{{item}}" class="q-image" mode="scaleToFill" data-idx="{{index}}"></image>
+        </view>
+      </block>
   </view>
   <view class="grid col-3 padding-sm distant">
     <view class="margin-tb-sm text-center">
@@ -25,6 +27,42 @@
   </view>
   <view class="submit-btn">
     <button class="cu-btn bg-blue btn-color margin-tb-sm lg" catchtap="toSubmit">提交</button>
+  </view>
+</view> -->
+<view class="bg">
+  <view class="page-box">
+    <view class="wrap padding-top">
+      <view class="header">正文</view>
+      <view class="content padding-bottom">
+        <textarea class='detail-textarea' data-name="inputdata" placeholder="说点什么吧..." value="{{inputdata}}" bindinput="inputedit"></textarea>
+      </view>
+    </view>
+    <view class="wrap">
+      <view class="header padding-top">图片(可选)
+        <button class="img-add" catchtap="upLoadImage">Add</button>
+      </view>
+      <view class="content">
+        <block wx:for="{{images}}" wx:key="*this" class="q-image-wrap">
+          <view>
+            <image src="{{item}}" class="q-image" wx:if="images.length!=0" mode="scaleToFill" data-idx="{{index}}"></image>
+          </view>
+        </block>
+      </view>
+    </view>
+    <view class="wrap padding-top">
+      <view class="header">
+        <text>录音(可选)</text>
+      </view>
+      <view class="cu-bar tabbar border shop content">
+        <text class="int-clock">{{num}}s</text>
+        <view class="light1 submit btn-style" catchtap="start">开始</view>
+        <view class="light2 submit btn-style" catchtap="stop">完成</view>
+        <view class="light3 submit btn-style" catchtap="play">播放</view>
+      </view>
+    </view>
+    <view class="submit-padding">
+      <button class="cu-btn block margin-tb-sm lg" type="" catchtap="toSubmit">提交</button> 
+    </view>
   </view>
 </view>
 
