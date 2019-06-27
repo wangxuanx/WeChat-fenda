@@ -1,23 +1,24 @@
+<view>
 <scroll-view scroll-y="true" style="height: 100%;" bindscrolltoupper="upper" bindscrolltolower="lower">
 	<block wx:for="{{feedList}}" wx:key="item._id" id="{{index}}">
     <view class="cu-card dynamic {{isCard?'no-card':''}}">
       <view class="cu-item shadow">
         <view class="cu-list menu-avatar">
           <view class="cu-item">
-            <view class="cu-avatar round lg" style="background-image:url({{item.userInfo.avatarUrl}});"></view>
+            <view class="cu-avatar round lg" style="background-image:url({{userInfo.avatarUrl}});"></view>
             <view class="content flex-sub">
-              <view>{{item.userInfo.nickName}}</view>
+              <view>{{userInfo.nickName}}</view>
               <view class="text-gray text-sm flex justify-between date-style">
                 {{item.date}}
               </view>
             </view>
           </view>
         </view>
-        <view class="text-content-myview">
+        <view class="text-content">
           {{item.text}}
         </view>
-        <view>
-          <image class="bg-img" src="{{item.image_group}}" mode="widthFix"></image>
+        <view wx:if= "{{item.image}}" class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
+        <image src='{{item.image}}'></image>
         </view>
         <view class="text-gray text-lg text-right padding">
           <text id="{{index}}" class="cuIcon-appreciatefill margin-lr-xs {{item.thumbs? 'turnRed':''}}" catchtap="toLike"></text>{{item.praise}}
@@ -26,3 +27,4 @@
     </view>
 	</block>
 </scroll-view>
+</view>

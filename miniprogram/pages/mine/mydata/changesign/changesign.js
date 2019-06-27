@@ -30,9 +30,9 @@ Page({
           },
           success: res => { 
             console.log(res)
-            wx.navigateTo({
-              url: '/pages/mine/mydata/mydata',
-            })  
+            wx.navigateBack({
+              delta: 1
+            })
           },
           fail: res => { console.log(res)}
         })
