@@ -46,6 +46,9 @@
       </block>
     </view>
   </scroll-view>
-  <view class="no-voice" >空空如也~</view>
+  <view wx:if="{{feedList.text!='' && feedList.audio!='' && feedList.image!=''}}">
+    <view class="no-voice" >空空如也~</view>
+  </view>
+  
 </view>
 
