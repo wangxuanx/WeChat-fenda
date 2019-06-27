@@ -1,0 +1,51 @@
+<!--miniprogram/pages/mine/mypage/mypage.wxml-->
+<!--mine.wxml-->
+<view>
+	<view class="userinfo">
+		<image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+		<view class="name">
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      <!-- <text class="cuIcon-male" style="color:#000; font-size:45rpx;"></text> -->
+    </view>
+    <text class="userinfo-qianming">{{userInfo.desc}}</text>
+
+ <view class="padding flex text-center text-grey bg-white follow">
+    <view class="flex flex-sub flex-direction solid-right">
+      <view class="text-xxl text-orange text-bold">{{userInfo.fan_num}}</view>
+      <view class="margin-top-sm">
+        <text class="cuIcon-attentionfill" style="font-size:28rpx;"></text><text style="font-size:28rpx; font-weight:bold;">收听</text></view>
+    </view>
+    <view class="flex flex-sub flex-direction">
+      <view class="text-xxl text-blue text-bold">{{userInfo.follow_num}}</view>
+      <view class="margin-top-sm">
+        <text class="cuIcon-favorfill" style="font-size:28rpx;"></text> <text style="font-size:28rpx; font-weight:bold;">听众</text></view>
+    </view>
+  </view>
+
+  <view style="background-color:#eee; width:100%; height:20rpx;"></view>
+  <view class="shadow voice" style="width:100%;">
+      <text class="cuIcon-sound" style="font-size:40rpx;"></text>
+      <text class="text-bold" style="text-align:left;">我的心声</text>
+  </view>
+  </view>
+  
+
+  <scroll-view scroll-y="true" style="height: 100%;" bindscrolltoupper="upper" bindscrolltolower="lower">
+    <view  wx:if="{{feedList.text && feedList.audio && feedList.image}}">
+      <block wx:for="{{feedList}}" wx:key="item._id" id="{{index}}">
+        <view class="cu-card dynamic {{isCard?'no-card':''}}">
+          <view class="cu-item shadow">
+            <view class="text-content">
+              {{item.text}}
+            </view>
+            <view wx:if= "{{item.image}}" class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
+              <image src='{{item.image}}'></image>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+  <view class="no-voice" >空空如也~</view>
+</view>
+
