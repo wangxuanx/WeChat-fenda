@@ -10,7 +10,7 @@
       <text>签名</text>
     </view>
     <view class="user-signs">
-      <text>{{userSign}}</text>
+      <text class="changed-sign">{{userSign}}</text>
     </view>
   </view>
 
