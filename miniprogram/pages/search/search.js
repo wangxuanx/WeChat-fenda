@@ -101,14 +101,13 @@ Page({
                   follow_list: _.push(follow_id),
                   follow_num: _.inc(1)
                 },
-                success: res => {
+                success: res => { // 用户follow列表更新成功
                   console.log(res)
-                  wx.cloud.callFunction({
+                  wx.cloud.callFunction({ // 更新被关注则fan列表
                     name: 'updateFanList',
                     data: {
                       userInfo: app.globalData.userInfo,
-                      top20userInfo: top20userInfo,
-                      followId: event.currentTarget.dataset.followId
+                      follow_id: top20userInfo[event.currentTarget.dataset.followId]._openid
                     },
                     success: res => { console.log(res) }
                   })
@@ -126,6 +125,9 @@ Page({
     // 注意需要调动后端接口
     var _this = this;
     var _event = event;
+    const relationCollection = wx.cloud.database().collection("relation")
+    const userCollection = wx.cloud.database().collection("user")
+    
     wx.showModal({
       content: '确定要取消关注 ' + event.target.dataset.followName + ' 吗？',
       success(res) {
@@ -138,8 +140,6 @@ Page({
           // 调用服务器接口
           var fan_id = app.globalData.userInfo._openid
           var follow_id = top20userInfo[event.target.dataset.followId]._openid
-          const relationCollection = wx.cloud.database().collection("relation")
-          const userCollection = wx.cloud.database().collection("user")
 
           relationCollection.where({
             fan: fan_id,
@@ -168,14 +168,13 @@ Page({
                             follow_list: fan2follow_list,
                             follow_num: fan2follow_num
                           },
-                          success() {
+                          success() { // 更新用户follow列表成功
                             console.log("更新粉丝follow列表")
-                            wx.cloud.callFunction({
+                            wx.cloud.callFunction({ // 更新被关注则fan列表
                               name: 'updateFollowList',
                               data: {
                                 userInfo: app.globalData.userInfo,
-                                top20userInfo: top20userInfo,
-                                followId: event.currentTarget.dataset.followId
+                                follow_id: top20userInfo[event.currentTarget.dataset.followId]._openid
                               },
                               success: res => { console.log(res) }
                             })
