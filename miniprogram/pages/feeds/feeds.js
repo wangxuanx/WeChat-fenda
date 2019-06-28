@@ -179,7 +179,7 @@ Page({
     if(_this.data.feedList[index].is_like){
       // 取消点赞
       console.log("取消点赞")
-      console.log(typeof (_this.data.feedList[index].like_num))
+      // console.log(typeof (_this.data.feedList[index].like_num))
       _this.setData({
         ['feedList[' + index + '].is_like']: false,
         ['feedList[' + index + '].like_num']: _this.data.feedList[index].like_num-1
@@ -198,18 +198,25 @@ Page({
       })
         
       // 修改voice表点赞数
-      var like_num = voiceCollection.doc(voice_id).like_num
-      console.log(typeof(like_num))
-
-      wx.cloud.callFunction({ // 被取消点赞voice点赞数-1
-        name: 'updateLikeNum',
-        data: {
-          voice_id: voice_id,
-          is_like: false,
-          like_num: like_num
-        },
-        success: res => { console.log(res) }
+      voiceCollection.where({
+        _id: voice_id
+      }).get({
+        success: res => {
+          var like_num = res.data[0].like_num
+          wx.cloud.callFunction({ // 被取消点赞voice点赞数-1
+            name: 'updateLikeNum',
+            data: {
+              voice_id: voice_id,
+              is_like: false,
+              like_num: like_num
+            },
+            success: res => { console.log(res) }
+          })
+        }
       })
+      // console.log(typeof(like_num))
+
+      
     }
     else{
       // 点亮点赞
