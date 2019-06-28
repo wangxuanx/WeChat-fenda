@@ -20,6 +20,20 @@ Page({
       _this.fetchVoiceList()
     })
   },
+  onPullDownRefresh: function () {
+    var _this = this;
+    console.log("用户下拉")
+    wx.showNavigationBarLoading()
+    shipLength = 0;
+    setTimeout(() => {
+      wx.hideNavigationBarLoading()
+      wx.stopPullDownRefresh()
+      _this.setData({
+        feedList: []
+      })
+      _this.fetchVoiceList();
+    }, 1000);
+  },
   
   lower: function () {
     console.log("到底啦")

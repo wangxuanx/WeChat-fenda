@@ -1,6 +1,8 @@
 //feeds.js
 //获取应用实例
 var app = getApp()
+const myaudio = wx.createInnerAudioContext()
+myaudio.autoplay = true
 Page({
   data: {
     userInfo: {},
@@ -8,6 +10,7 @@ Page({
   },
   onLoad: function (options) {
     let _openid = options._openid
+    // console.log(this.data)
     let _this = this
     let user = wx.cloud.database().collection('user')
     user.where({
@@ -70,26 +73,86 @@ Page({
     let voice = wx.cloud.database().collection('my-voice')
     voice.where({
       _openid : _this.data.userInfo._openid
-    }).limit(10).get().then(res => {
-      console.log(_this.data.userInfo._openid, res)
-     let feedList = _this.data.feedList
-     feedList = feedList.concat(res.data.feedList)
-     for (let j = 0; j < res.data.length; j++) {
-      let fileID = res.data[j].image
-      if (fileID) {
-        wx.cloud.downloadFile({
-          fileID: fileID,
+    }).orderBy('date', 'desc').limit(10).get().then(res => {
+      console.log(res)
+      let feedList = res.data
+      _this.setData({
+        feedList: feedList
+      })
+      for (let j = 0; j < feedList.length; j++) {
+        let fileID = feedList[j].image
+        if (fileID.length) {
+          wx.cloud.getTempFileURL({
+           fileList: [{
+            fileID: fileID,
+            maxAge: 60 * 60, 
+          }],
           success: res => {
             _this.setData({
-              ['feedList['+ _this.data.feedList.length+j+'].image']: res.tempFilePath
+              ['feedList['+ j +'].image']: res.fileList[0].tempFileURL
             })
           }
         })
+        }
+        let audio_file = feedList[j].audio
+        if (audio_file.length) {
+          wx.cloud.getTempFileURL({
+            fileList: [{
+              fileID: audio_file,
+              maxAge: 60 * 60, 
+            }],
+            success: res => {
+              _this.setData({
+                ['feedList['+ j +'].audio']: res.fileList[0].tempFileURL,
+                ['feedList['+ j +'].bl']: false
+              })
+            }
+          })
+        }
       }
-    }
-    _this.setData({
-      feedList: feedList
     })
-  })
   },
+   //音频播放  
+  audioPlay: function (e) {
+    console.log(e)
+    var _this = this
+    let index = e.currentTarget.id
+    myaudio.src = this.data.feedList[index].audio
+
+    //切换显示状态
+    for (let i = 0; i < this.data.feedList.length; i++) {
+      this.setData({
+        ['feedList['+ i +'].bl']: false
+      })
+    }
+    this.setData({
+      ['feedList['+ index +'].bl']: true
+    })
+
+    myaudio.play();
+
+    // 开始监听
+    myaudio.onPlay(() => {
+      console.log('play')
+    })
+
+    // 结束监听
+    myaudio.onEnded(() => {
+      console.log('end')
+      _this.setData({
+        ['feedList['+ index +'].bl']: false
+      })
+    })
+  },
+
+  // 音频停止
+  audioStop: function (e) {
+    var that = this
+    let index = e.currentTarget.id
+    this.setData({
+      ['feedList['+ index +'].bl']: false
+    })    
+    myaudio.stop()
+  },
+
 })

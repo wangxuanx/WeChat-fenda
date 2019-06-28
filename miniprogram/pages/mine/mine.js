@@ -42,6 +42,7 @@ Page({
         //console.info("show")
     },
 
+
     loadProfile: function(e) {
         console.log(e.target)
     },

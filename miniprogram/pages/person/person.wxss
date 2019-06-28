@@ -184,3 +184,22 @@
 .turnRed {
   color: red;
 }*/
+.output-audio { 
+  width: 180rpx; 
+  margin-top: 20rpx;
+  margin-left: 30rpx;
+  margin-bottom: -10rpx;
+}
+.output-audio .audio{  
+  color: #fff;
+  padding: 20rpx; border-radius: 10rpx;background-color: #eee;
+  border: 1px solid #f0f0f0; overflow: hidden; 
+}
+.output-audio .audio .ico{
+  color: #fff;
+   width: 26rpx; height: 30rpx; float: left; 
+}
+.loading-wrap {
+  display: flex;
+  justify-content: center;
+}

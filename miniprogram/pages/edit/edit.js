@@ -16,6 +16,10 @@ Page({
   },
 
   toSubmit() {
+    wx.showToast({
+      title: '上传中',
+      icon: 'loading'
+    })
     wx.cloud.init()
     let _this = this
     let image = this.data.image, audio = this.data.audio
@@ -47,6 +51,7 @@ Page({
                 },
                 success: res => {
                  // console.log(res)
+                 wx.hideToast()
                  wx.navigateBack({
                   delta: 1
                 })
@@ -63,6 +68,7 @@ Page({
               },
               success: res => {
                  // console.log(res)
+                 wx.hideToast()
                  wx.navigateBack({
                   delta: 1
                 })
@@ -87,6 +93,7 @@ Page({
             },
             success: res => {
                  // console.log(res)
+                 wx.hideToast()
                  wx.navigateBack({
                   delta: 1
                 })

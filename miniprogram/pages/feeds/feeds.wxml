@@ -21,7 +21,7 @@
         <view wx:if= "{{item.image}}" class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
         <image src="{{item.image}}"></image>
         </view>
-        <view class='output-audio' wx:if="{{item.audio!=''}}">
+        <view class='output-audio' wx:if="{{item.audio}}">
 
           <!-- 默认状态 -->
           <view class='audio' wx:if="{{item.bl==false}}" catchtap='audioPlay' id="{{index}}" data-bl="{{item.bl}}">
