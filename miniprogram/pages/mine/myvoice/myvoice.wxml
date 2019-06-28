@@ -1,4 +1,6 @@
 <!--index.wxml-->
+<include src="../../../utils/toast/toast.wxml" />
+
 <view>
 <scroll-view scroll-y="true" style="height: 100%;" bindscrolltoupper="upper" bindscrolltolower="lower">
 	<block wx:for="{{feedList}}" wx:key="item._id" id="{{index}}">
@@ -12,6 +14,10 @@
               <view class="text-gray text-sm flex justify-between date-style">
                 {{item.date}}
               </view>
+            </view>
+            
+            <view>
+              <button class="cu-btn lines-grey sm" catchtap="deleteVoice" style="margin-right:10rpx" data-index="{{index}}">删除</button>
             </view>
           </view>
         </view>

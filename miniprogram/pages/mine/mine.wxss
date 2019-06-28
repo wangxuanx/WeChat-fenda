@@ -1,4 +1,5 @@
 /**mine.wxss**/
+@import "../../utils/toast/toast.wxss";
 
 .userinfo {
     display: flex;

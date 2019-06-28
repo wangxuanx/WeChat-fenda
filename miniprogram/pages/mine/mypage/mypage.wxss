@@ -96,17 +96,18 @@
   padding: 30rpx 45rpx 0;
   min-height: 30rpx;
   height: auto;
+  border-radius: 10px;
 }
 
-.cu-card>.cu-item {
-  padding-bottom: 30rpx;
-  border-bottom: 1rpx solid #000;
+.cu-item{
+  box-shadow: 0px 0px 10px #ccc;
 }
 
 .voice{
   font-size: 33rpx;
   padding: 15rpx 15rpx 15rpx 30rpx;
   text-align: left;
+  box-shadow: 0px 0px 10px #ccc;
 }
 
 
@@ -124,4 +125,29 @@
   font-size: 20px;
   color: #888;
   letter-spacing: 5px;
+}
+
+.output-audio { 
+  width: 180rpx; 
+  margin-top: 20rpx;
+  margin-left: 30rpx;
+  margin-bottom: -10rpx;
+}
+.output-audio .audio{  
+  color: #fff;
+  padding: 20rpx; border-radius: 10rpx;background-color: #eee;
+  border: 1px solid #f0f0f0; overflow: hidden; 
+}
+.output-audio .audio .ico{
+  color: #fff;
+   width: 26rpx; height: 30rpx; float: left; 
+}
+.loading-wrap {
+  display: flex;
+  justify-content: center;
+}
+.loading{
+  text-align: center;
+  height: 60rpx;
+  width: 240rpx;
 }
