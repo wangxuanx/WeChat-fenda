@@ -11,6 +11,8 @@ Page({
     userInfo: null
   },
   onLoad: function(){
+    // console.log("我的心声onload");
+    // console.log(shipLength);
     wx.cloud.init()
     var _this = this;
     let userid = app.globalData.userInfo._openid;
@@ -24,6 +26,7 @@ Page({
       //console.log(res.data[0].avatarUrl);
     })
     
+    shipLength = 0;
     this.fetchVoiceList();
     console.log(this.data.feedList);
   },
