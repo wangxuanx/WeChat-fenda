@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view>
-<scroll-view scroll-y="true" style="height: 100%;" bindscrolltoupper="upper" bindscrolltolower="lower">
-	<block wx:for="{{feedList}}" wx:key="item._id" id="{{index}}">
+  <scroll-view scroll-y="true" style="height: 100%;" bindscrolltoupper="upper" bindscrolltolower="lower">
+   <block wx:for="{{feedList}}" wx:key="item._id" id="{{index}}">
     <view class="cu-card dynamic {{isCard?'no-card':''}}">
       <view class="cu-item shadow">
         <view class="cu-list menu-avatar">
@@ -19,7 +19,7 @@
           {{item.text}}
         </view>
         <view wx:if= "{{item.image}}" class="grid flex-sub padding-lr {{isCard?'col-3 grid-square':'col-1'}}">
-        <image src="{{item.image}}"></image>
+          <image src="{{item.image}}"></image>
         </view>
         <view class='output-audio' wx:if="{{item.audio}}">
 
@@ -33,19 +33,46 @@
             <image class='ico' src='../../img/yuyin-gif.gif' />
           </view>
 
-          </view>
+        </view>
         <view class="text-gray text-lg text-right padding">
-        <text class='cuIcon-commentfill margin-lr-xs' bindtap='submitComment' id="{{index}}"></text>
+          <text class='cuIcon-commentfill margin-lr-xs' bindtap='toComment' id="{{index}}"></text>{{item.comment.comment_num || 0}}
           <text id="{{index}}" class="cuIcon-appreciatefill margin-lr-xs {{item.is_like? 'turnRed':''}}" catchtap="toLike"></text>{{item.like_num}}
         </view>
+        <view class="cu-bar input" wx:if="{{item.toComment}}">
+          <input class="solid-bottom" value="{{comment}}" bindinput="inputComment"  maxlength="300" cursor-spacing="10"></input>
+          <view class="action">
+          </view>
+          <button class="cu-btn bg-blue shadow" bindtap="submitComment">发送</button>
+        </view>
+        <view class="comments" wx:if="{{item.comment}}">
+          <view class="bgGray" wx:if="{{item.comment.comment_list.length>0}}">
+           <!--  <view class="padding-top comment-style {{folded ? 'commentfolded':'commentunfolded'}}">
+              <view wx:for="{{item.comment_list}}">
+                <span class="blue-font">{{item.nickName}}</span>:{{item.content}}
+              </view>
+            </view> -->
+
+            <view>
+              <view wx:for="{{item.comment.comment_list}}" wx:for-item="comment" class="comment">
+                <span class="blue-font">{{comment.nickName}}</span>:{{comment.content}}
+              </view>
+            </view>
+            <!-- <view class="cu-item comment-header">
+              <view class="content comment-title">
+                <view class="cuIcon-unfold text-blue comment-icon {{rotate ? 'translateXY' :''}}" catchtap="unFold"></view>
+              </view>
+            </view> -->
+          </view>
+        </view>
+
       </view>
     </view>
-	</block>
+  </block>
   <view wx:if="{{onloading}}" class="loading-wrap"><image class="loading" src="../../img/loading.gif" binderror="" bindload=""></image></view>
 </scroll-view>
 <view class="cu-item addAction">
-    <navigator url="/pages/edit/edit" class="chover">
-      <image class="img-plus"src="/img/cross.png"></image>
-    </navigator>
+  <navigator url="/pages/edit/edit" class="chover">
+    <image class="img-plus"src="/img/cross.png"></image>
+  </navigator>
 </view>
 </view>

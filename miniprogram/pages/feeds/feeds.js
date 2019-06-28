@@ -10,7 +10,7 @@ Page({
     followList: [],
     count: 0,
     length:0,
-    comment: '测试',
+    comment: '',
     comment_index: 0
   },
 
@@ -74,32 +74,32 @@ Page({
           let fileId = feedList[i].audio
           if (fileId.length) {
             wx.cloud.getTempFileURL({
-            fileList: [{
-              fileID: fileId,
-              maxAge: 60 * 60, 
-            }]
-          }).then(res => {
+              fileList: [{
+                fileID: fileId,
+                maxAge: 60 * 60, 
+              }]
+            }).then(res => {
               // feedList[i].audio = res.tempFilePath
               _this.setData({
                 ['feedList['+ length +'].audio']: res.fileList[0].tempFileURL,
                 ['feedList['+ length +'].bl']: false
               })
             })
+          }
         }
-      }
-      _this.setData({
-        feedList: _this.data.feedList.concat(feedList),
-        count: res.result.event.count,
-        onloading: false
-      })
-      this.fetchLike()
+        _this.setData({
+          feedList: _this.data.feedList.concat(feedList),
+          count: res.result.event.count,
+          onloading: false
+        })
+        this.fetchLike()
 
-    },
-    fail: error => {
-      console.log(error)
-    }
-  })
- },
+      },
+      fail: error => {
+        console.log(error)
+      }
+    })
+  },
 
   toFollow(event){
     var index = event.currentTarget.id;
@@ -134,7 +134,7 @@ Page({
         _voiceid: voice_id
       }).get({
         success: res => {
-          console.log(res)
+          // console.log(res)
           var changeId = 'feedList[' + idx + '].is_like';
           if(res.data.length>0){
             // 已点赞
@@ -196,7 +196,7 @@ Page({
           })
         }
       })
-        
+
       // 修改voice表点赞数
       voiceCollection.where({
         _id: voice_id
@@ -254,51 +254,88 @@ Page({
       })
       
     }
+  },
+
+  toPerson: function (e) {
+    console.log(e)
+    wx.navigateTo({
+      url: '../person/person?master=' + e.target.dataset.master
+    })
+  },
+
+  upper: function () {
+
+  },
+
+  lower: function () {
+    this.fetchVoiceList()
+    this.setData({
+      onloading: true
+    })
+  },
+  // InputBlur: function(e) {
+  //   this.setData({
+  //     ['feedList['+this.data.comment_index+'].toComment']: false
+  //   })
+  // },
+  toComment: function (e) {
+    console.log(e.currentTarget.id)
+   this.setData({
+    comment_index: e.currentTarget.id
+  })
+   if (this.data.feedList[e.currentTarget.id].toComment) {
+     this.setData({
+      ['feedList['+e.currentTarget.id+'].toComment']: false
+    })
+   } else {
+     this.setData({
+      ['feedList['+e.currentTarget.id+'].toComment']: true
+    })
+   }
+ },
+ unFold: function (e) {
+
+ },
+ inputComment:function(e) {
+  console.log(e)
+  this.setData({
+    comment: e.detail.value
+  })
  },
 
- toPerson: function (e) {
-  console.log(e)
-  wx.navigateTo({
-    url: '../person/person?master=' + e.target.dataset.master
+ submitComment: function (e) {
+  let _this = this
+  let ob = {
+    nickName: app.globalData.userInfo.nickName,
+    content: this.data.comment
+  }
+  let item_comment =  this.data.feedList[this.data.comment_index].comment
+  console.log(item_comment)
+  if (item_comment.comment_list) {
+    item_comment.comment_list.push(ob)
+    item_comment.comment_num++
+  } else {
+    item_comment.comment_list = [ob]
+    item_comment.comment_num = 1
+  }
+  console.log(item_comment)
+  wx.cloud.init()
+  wx.cloud.callFunction({
+    name: 'upDateComment',
+    data: {
+      _id: this.data.feedList[this.data.comment_index]._id,
+      comment: item_comment
+    },
+    success: res=> { 
+      _this.setData({
+        ['feedList['+_this.data.comment_index+'].comment']: item_comment,
+        comment: '',
+         ['feedList['+_this.data.comment_index+'].comment.comment_num']: _this.data.feedList[_this.data.comment_index].comment.comment_num++ || 0
+    })
+    },
+    fail: res => {console.log(res)},
   })
 },
-
-upper: function () {
-
-},
-
-lower: function () {
-  this.fetchVoiceList()
-  this.setData({
-    onloading: true
-  })
-},
- toComment: function (e) {
-
-  },
-
-  submitComment: function (e) {
-    console.log(e)
-    this.setData({
-      comment_index: e.currentTarget.id
-    })
-    this.data.feedList[this.data.comment_index].comment.comment_list.push({
-      nickName: app.globalData.userInfo.nickName,
-      content: this.data.comment
-    })
-    this.data.feedList[this.data.comment_index].comment.comment_num++
-     console.log(this.data.feedList[this.data.comment_index].comment.comment_list)
-    wx.cloud.init()
-    wx.cloud.callFunction({
-      name: 'upDateComment',
-      data: {
-        _id: this.data.feedList[this.data.comment_index]._id,
-        comment: this.data.feedList[this.data.comment_index].comment
-      },
-      success: res=> {console.log(res)},
-      fail: res => {console.log(res)},
-    })
-  },
 
   //音频播放  
   audioPlay: function (e) {

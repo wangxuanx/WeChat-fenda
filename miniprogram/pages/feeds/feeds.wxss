@@ -84,3 +84,82 @@
   height: 60rpx;
   width: 240rpx;
 }
+
+.comments {
+  margin-left: 30rpx;
+  margin-right: 66rpx;
+  margin-bottom: 30rpx;
+  background-color: #eee;
+  border-radius: 10rpx;
+  font-size: 30rpx;
+}
+
+.comment {
+  padding-left: 10rpx;
+  padding-top: 10rpx;
+  padding-bottom: 10rpx;
+  letter-spacing: 3rpx;
+}
+
+.blue-font {
+  color: #1e99e5;
+}
+
+.comment-header .cu-item {
+  background-color: #eee;
+  border-bottom: 1rpx solid #ccc;
+}
+
+.comment-title {
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  padding-right: 20rpx;
+  font-size: 30rpx;
+}
+
+.comment-icon {
+  float: right;
+  padding-top: 20rpx;
+}
+.bgGray {
+  background-color: #eee;
+  border: 1rpx solid #ccc;
+  min-height: 80rpx;
+  border-radius: 10rpx;
+}
+
+.translateXY {
+  transform: rotate(180deg);
+}
+
+.commentfolded {
+  height: 0;
+  overflow: hidden;
+}
+
+.padding-top {
+  padding-top: 5%;
+}
+
+.commentunfolded {
+  height: auto;
+}
+
+.comment-style {
+  font-size: 30rpx;
+  letter-spacing: 3rpx;
+  margin-top: 10rpx;
+  padding-left: 10rpx;
+  padding-bottom: 10rpx;
+}
+
+.cu-bar.input {
+  background-color: transparent;
+  border: 1rpx solid #eee;
+  border-radius: 4rpx;
+}
+
+.cu-bar.input input {
+  border: 1rpx solid #eee;
+}
+
