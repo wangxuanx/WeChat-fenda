@@ -1,6 +1,7 @@
 
 //获取应用实例
 var app = getApp()
+var shipLength = 0;
 Page({
   data: {
     userInfo: {},

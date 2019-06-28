@@ -2,6 +2,7 @@
 //获取应用实例
 var app = getApp()
 const myaudio = wx.createInnerAudioContext()
+var toast = require('../../../utils/toast/toast.js');
 myaudio.autoplay = true
 var shipLength = 0;
 Page({
@@ -104,7 +105,7 @@ Page({
       //下次跳过读取
       shipLength +=1;
       feedList = feedList.concat(select_list)
-      //console.log(feedList)
+      console.log(feedList)
       _this.setData({
         feedList: feedList
       })
@@ -177,4 +178,30 @@ Page({
     })
     myaudio.stop();
   },
+
+  deleteVoice:function(event){
+    var _this = this;
+    wx.showModal({
+      content: '确定要删除这条动态吗？',
+      success(res) {
+        var feedList = _this.data.feedList
+        var deleteId = feedList[event.target.dataset.index]._id;
+        wx.cloud.init()
+        let voice = wx.cloud.database().collection('my-voice')
+        voice.doc(deleteId).remove({
+          success: function () {
+            toast.showToast(_this, "删除成功！", 1500, true);
+            feedList.splice(deleteId, 1);
+            _this.setData({
+              feedList: feedList
+            })
+          },
+          fail: function () {
+            toast.showToast(_this, "删除失败！", 1000, true);
+          }
+        })
+      }
+    })
+
+  }
 })
