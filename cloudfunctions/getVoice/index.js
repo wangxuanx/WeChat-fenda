@@ -16,7 +16,7 @@ exports.main = async (event, context) => {
     follow_list = res.data[0].follow_list
   })
   
-  while (feedList.length < 10) {
+  while (feedList.length < 9) {
     res = await getFeeds(wxContext.OPENID, follow_list, feedList, event.count)
     feedList = res.feedList
     event.count = res.count

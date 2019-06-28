@@ -35,7 +35,8 @@
 
           </view>
         <view class="text-gray text-lg text-right padding">
-          <text id="{{index}}" class="cuIcon-appreciatefill margin-lr-xs {{item.thumbs? 'turnRed':''}}" catchtap="toLike"></text>{{item.praise}}
+        <text class='cuIcon-commentfill margin-lr-xs' bindtap='submitComment' id="{{index}}"></text>
+          <text id="{{index}}" class="cuIcon-appreciatefill margin-lr-xs {{item.is_like? 'turnRed':''}}" catchtap="toLike"></text>{{item.like_num}}
         </view>
       </view>
     </view>

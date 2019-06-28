@@ -9,13 +9,13 @@ Page({
     feedList: [],
     followList: [],
     count: 0,
-    length:0
+    length:0,
+    comment: '测试',
+    comment_index: 0
   },
-  onload: function() {
-    this.lisentPlay()
-  },
+
   onShow: function() {
-    this.fetchVoiceList();
+    this.fetchVoiceList()
   },
 
   onPullDownRefresh: function () {
@@ -92,12 +92,15 @@ Page({
         count: res.result.event.count,
         onloading: false
       })
+      this.fetchLike()
+
     },
     fail: error => {
       console.log(error)
     }
   })
-  },
+ },
+
   toFollow(event){
     var index = event.currentTarget.id;
     console.log(index);
@@ -113,24 +116,137 @@ Page({
       })
     }
   },
+
+  fetchLike(){
+    // 获取点赞关系
+    let _this = this
+    let feedList = _this.data.feedList
+    const likeCollection = wx.cloud.database().collection("like-relation")
+    const voiceCollection = wx.cloud.database().collection("my-voice")
+    
+    var user_id = app.globalData.userInfo._openid
+    console.log(feedList)
+    for(let idx in feedList){
+      // console.log(feedList[idx])
+      var voice_id = feedList[idx]._id
+      likeCollection.where({
+        _userid: user_id,
+        _voiceid: voice_id
+      }).get({
+        success: res => {
+          console.log(res)
+          var changeId = 'feedList[' + idx + '].is_like';
+          if(res.data.length>0){
+            // 已点赞
+            _this.setData({
+              [changeId]: true
+            })
+          }
+          else{
+            // 未点赞
+            _this.setData({
+              [changeId]: false
+            })
+          }
+        },
+        fail: res => { console.log(res)}
+      })
+      voiceCollection.where({
+        _id: voice_id
+      }).get({
+        success: res => {
+          let like_num = res.data[0].like_num
+          console.log(typeof (like_num))
+          _this.setData({
+            ['feedList[' + idx + '].like_num']: like_num
+          })
+        }
+      })
+    }
+
+  },
+
   toLike: function (event) {
-   var index = event.currentTarget.id;
-   if (this.data.feedList[index]) {
-     var hasChange = this.data.feedList[index].thumbs;
-     if (hasChange !== undefined) {
-       var onum = this.data.feedList[index].praise;
-       if(hasChange) {
-         this.data.feedList[index].praise = (onum - 1);
-         this.data.feedList[index].thumbs = false;
-       }else {
-         this.data.feedList[index].praise = (onum + 1);
-         this.data.feedList[index].thumbs = true;
-       }
-       this.setData({
-         feedList: this.data.feedList
-       })
-     }
-   }
+    console.log(event)
+    wx.cloud.init()
+    var _this = this
+    var index = event.currentTarget.id;
+    var user_id = app.globalData.userInfo._openid
+    var voice_id = _this.data.feedList[index]._id
+    const likeCollection = wx.cloud.database().collection("like-relation")
+    const voiceCollection = wx.cloud.database().collection("my-voice")
+
+    if(_this.data.feedList[index].is_like){
+      // 取消点赞
+      console.log("取消点赞")
+      console.log(typeof (_this.data.feedList[index].like_num))
+      _this.setData({
+        ['feedList[' + index + '].is_like']: false,
+        ['feedList[' + index + '].like_num']: _this.data.feedList[index].like_num-1
+      })
+      // 修改like表点赞关系
+      likeCollection.where({
+        _userid: user_id,
+        _voiceid: voice_id
+      }).get({
+        success: res => {
+          likeCollection.doc(res.data[0]._id).remove({
+            success: res => { console.log(res) },
+            fail: res => { console.log(res) }
+          })
+        }
+      })
+        
+      // 修改voice表点赞数
+      var like_num = voiceCollection.doc(voice_id).like_num
+      console.log(typeof(like_num))
+
+      wx.cloud.callFunction({ // 被取消点赞voice点赞数-1
+        name: 'updateLikeNum',
+        data: {
+          voice_id: voice_id,
+          is_like: false,
+          like_num: like_num
+        },
+        success: res => { console.log(res) }
+      })
+    }
+    else{
+      // 点亮点赞
+      console.log("点亮点赞")
+      _this.setData({
+        ['feedList[' + index + '].is_like']: true,
+        ['feedList[' + index + '].like_num']: _this.data.feedList[index].like_num+1
+      })
+      // 修改like表点赞关系
+      likeCollection.add({
+        data: {
+          _userid: user_id,
+          _voiceid: voice_id
+        },
+        success: res => { console.log(res) },
+        fail: res => { console.log(res) }
+      })
+      // 修改voice表点赞数
+      voiceCollection.where({
+        _id: voice_id
+      }).get({
+        success: res => {
+          var like_num = res.data[0].like_num
+          console.log(typeof (like_num))
+          wx.cloud.callFunction({ // 被点赞voice点赞数+1
+            name: 'updateLikeNum',
+            data: {
+              voice_id: voice_id,
+              is_like: true,
+              like_num: like_num
+            },
+            success: res => { console.log(res) }
+          })
+        }
+      })
+      
+    }
  },
 
  toPerson: function (e) {
@@ -150,6 +266,32 @@ lower: function () {
     onloading: true
   })
 },
+ toComment: function (e) {
+
+  },
+
+  submitComment: function (e) {
+    console.log(e)
+    this.setData({
+      comment_index: e.currentTarget.id
+    })
+    this.data.feedList[this.data.comment_index].comment.comment_list.push({
+      nickName: app.globalData.userInfo.nickName,
+      content: this.data.comment
+    })
+    this.data.feedList[this.data.comment_index].comment.comment_num++
+     console.log(this.data.feedList[this.data.comment_index].comment.comment_list)
+    wx.cloud.init()
+    wx.cloud.callFunction({
+      name: 'upDateComment',
+      data: {
+        _id: this.data.feedList[this.data.comment_index]._id,
+        comment: this.data.feedList[this.data.comment_index].comment
+      },
+      success: res=> {console.log(res)},
+      fail: res => {console.log(res)},
+    })
+  },
 
   //音频播放  
   audioPlay: function (e) {

@@ -1,6 +1,7 @@
 // miniprogram/pages/edit/edit.js
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext()
+let app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -48,6 +49,8 @@ Page({
                   audio: audio,
                   image: image,
                   date: db.serverDate(),
+                  like_num: 0,
+                  comment: {}
                 },
                 success: res => {
                  // console.log(res)
@@ -65,6 +68,8 @@ Page({
                 audio: audio,
                 image: image,
                 date: db.serverDate(),
+                like_num: 0,
+                comment: {}
               },
               success: res => {
                  // console.log(res)
@@ -90,6 +95,8 @@ Page({
               audio: audio,
               image: image,
               date: db.serverDate(),
+              like_num: 0,
+              comment: {}
             },
             success: res => {
                  // console.log(res)
@@ -100,9 +107,27 @@ Page({
                }
              })
         })
+      } else {
+         voice.add({
+            data: {
+              text: _this.data.text,
+              audio: audio,
+              image: image,
+              date: db.serverDate(),
+              like_num: 0,
+              comment: {}
+            },
+            success: res => {
+                 // console.log(res)
+                 wx.hideToast()
+                 app.globalData.count = 0
+                 wx.navigateBack({
+                  delta: 1
+                })
+               }
+             })
+        }
       }
-
-    }
   },
   upLoadImage() {
     var that = this

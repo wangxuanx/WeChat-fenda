@@ -3,7 +3,7 @@
     <view class="wrap padding-top">
       <view class="header">正文</view>
       <view class="content padding-bottom">
-        <textarea class='detail-textarea' placeholder="说点什么吧..." bindinput="inputedit"></textarea>
+        <textarea class='detail-textarea' placeholder="说点什么吧..." bindinput="inputedit" value="{{text}}"></textarea>
       </view>
     </view>
     <view class="wrap">
